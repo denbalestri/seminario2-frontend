@@ -8,6 +8,15 @@ import { useSelector } from "react-redux";
 import { OBRAS_URL } from "../../constants/URIs";
 import "antd/dist/antd.css";
 
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+}
+
 const ProfessionalCard = ({
   firstName,
   lastName,
@@ -33,26 +42,31 @@ const ProfessionalCard = ({
   };
 
   const onSubmit = () => {
-    const body = {
-      contenido: file.originFileObj,
-      genero: "Poesia",
-      nombreObra: file.name,
-      nombreUsuarioAutor: user.username,
-      nombreUsuarioProfesional: username,
-      formatoArchivodeObra: file.type,
-    };
-    setLoading(true);
+    getBase64(file.originFileObj).then((encodedFile) => {
+      const body = JSON.stringify({
+        contenido: encodedFile,
+        genero: "Poesia",
+        nombreObra: file.name,
+        nombreUsuarioAutor: user.username,
+        nombreUsuarioProfesional: username,
+        formatoArchivodeObra: file.type,
+      });
 
-    fetch(OBRAS_URL, {
-      method: "POST",
-      headers: {},
-      body,
-    })
-      .then((response) => response.json())
-      .then((success) => console.log(success))
-      .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
-    console.log(file);
+      setLoading(true);
+
+      fetch(OBRAS_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body,
+      })
+        .then((response) => response.json())
+        .then((success) => console.log(success))
+        .catch((error) => console.log(error))
+        .finally(() => setLoading(false));
+    });
   };
 
   return (
