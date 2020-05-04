@@ -45,7 +45,7 @@ const ProfessionalCard = ({
     getBase64(file.originFileObj).then((encodedFile) => {
       const body = JSON.stringify({
         contenido: encodedFile,
-        genero: "Poesia",
+        genero: "Romantico",
         nombreObra: file.name,
         nombreUsuarioAutor: user.username,
         nombreUsuarioProfesional: username,
