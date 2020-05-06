@@ -23,6 +23,7 @@ const ProfessionalCard = ({
   avatar,
   description,
   username,
+  openNotification,
 }) => {
   const [file, setFile] = useState({});
   const [fileList, setFileList] = useState([]);
@@ -63,8 +64,20 @@ const ProfessionalCard = ({
         body,
       })
         .then((response) => response.json())
-        .then((success) => console.log(success))
-        .catch((error) => console.log(error))
+        .then((success) => {
+          openNotification(
+            "success",
+            "Exito!",
+            "La obra se ha enviado exitosamente!"
+          );
+        })
+        .catch((error) => {
+          openNotification(
+            "error",
+            "Error",
+            "La obra no se ha podido enviar, Por favor intente nuevamente"
+          );
+        })
         .finally(() => setLoading(false));
     });
   };

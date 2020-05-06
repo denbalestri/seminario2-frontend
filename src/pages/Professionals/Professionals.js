@@ -2,6 +2,7 @@
 
 import React from "react";
 import MainLayout from "../../components/Layout";
+import { notification } from "antd";
 import ProfessionalCard from "../../components/ProfessionalCard";
 
 const professionals = [
@@ -32,6 +33,13 @@ const professionals = [
 ];
 
 const Professionals = (props) => {
+  const openNotification = (type, message, description) => {
+    notification[type]({
+      message: message,
+      description: description,
+    });
+  };
+
   return (
     <MainLayout>
       <section
@@ -46,6 +54,7 @@ const Professionals = (props) => {
         {professionals.map((professional, index) => {
           const professionalCardProps = {
             key: index,
+            openNotification,
             ...professional,
           };
 
