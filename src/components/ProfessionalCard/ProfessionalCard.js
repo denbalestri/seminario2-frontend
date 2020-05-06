@@ -63,20 +63,15 @@ const ProfessionalCard = ({
         },
         body,
       })
-        .then((response) => response.json())
-        .then((success) => {
-          openNotification(
-            "success",
-            "Exito!",
-            "La obra se ha enviado exitosamente!"
-          );
+        .then((response) => {
+          if (response.status === 200) {
+            openNotification("success");
+          } else {
+            openNotification("error");
+          }
         })
         .catch((error) => {
-          openNotification(
-            "error",
-            "Error",
-            "La obra no se ha podido enviar, Por favor intente nuevamente"
-          );
+          console.log(error);
         })
         .finally(() => setLoading(false));
     });

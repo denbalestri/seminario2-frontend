@@ -3,6 +3,7 @@
 import React from "react";
 import MainLayout from "../../components/Layout";
 import { notification } from "antd";
+import statusesMappings from "../../constants/Notification";
 import ProfessionalCard from "../../components/ProfessionalCard";
 
 const professionals = [
@@ -33,10 +34,10 @@ const professionals = [
 ];
 
 const Professionals = (props) => {
-  const openNotification = (type, message, description) => {
+  const openNotification = (type) => {
     notification[type]({
-      message: message,
-      description: description,
+      message: statusesMappings[type].message,
+      description: statusesMappings[type].description,
     });
   };
 
