@@ -73,7 +73,11 @@ const ProfessionalCard = ({
         .catch((error) => {
           console.log(error);
         })
-        .finally(() => setLoading(false));
+        .finally(() => {
+          setLoading(false);
+          setFileList([]);
+          setFile({});
+        });
     });
   };
 
