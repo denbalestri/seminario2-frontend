@@ -1,6 +1,4 @@
-/** @format */
-
-import React, { Fragment } from "react";
+import React, { useState } from "react";
 import { List, Avatar, Space } from "antd";
 import Button from "../../components/Button";
 import Comment from "../../components/Comment";
@@ -15,7 +13,42 @@ const IconText = ({ icon, text, onClick }) => (
   </Space>
 );
 
-const UI_List = ({
+const ListItem = ({ title, avatar, href, description, content }) => {
+  const [openComments, setOpenComments] = useState(false);
+
+  const onClickComment = () => {
+    setOpenComments(!openComments);
+  };
+
+  return (
+    <List.Item
+      key={title}
+      actions={[
+        <IconText
+          icon={FileTwoTone}
+          text="Archivo"
+          key="list-vertical-star-o"
+        />,
+        <IconText
+          icon={MessageOutlined}
+          text="Comentar"
+          key="list-vertical-message"
+          onClick={onClickComment}
+        />,
+      ]}
+    >
+      <List.Item.Meta
+        avatar={<Avatar src={avatar} />}
+        title={<a href={href}>{title}</a>}
+        description={description}
+      />
+      {content}
+      {openComments && <Comment />}
+    </List.Item>
+  );
+};
+
+const WorkToReviseList = ({
   listRevisedWorks,
   openComments,
   onClickComment,
@@ -26,42 +59,10 @@ const UI_List = ({
       {...othersProps}
       itemLayout="vertical"
       size="large"
-      pagination={{
-        onChange: (page) => {
-          console.log(page);
-        },
-        pageSize: 3,
-      }}
       dataSource={listRevisedWorks}
-      renderItem={(item) => (
-        <Fragment>
-          <List.Item
-            key={item.title}
-            actions={[
-              <IconText
-                icon={FileTwoTone}
-                text="Archivo"
-                key="list-vertical-star-o"
-              />,
-              <IconText
-                icon={MessageOutlined}
-                text="Comentar"
-                key="list-vertical-message"
-                onClick={onClickComment}
-              />,
-            ]}
-          >
-            <List.Item.Meta
-              avatar={<Avatar src={item.avatar} />}
-              title={<a href={item.href}>{item.title}</a>}
-              description={item.description}
-            />
-            {item.content}
-          </List.Item>
-        </Fragment>
-      )}
+      renderItem={(item, index) => <ListItem key={index} {...item} />}
     />
   );
 };
 
-export default UI_List;
+export default WorkToReviseList;

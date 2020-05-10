@@ -44,7 +44,7 @@ const UI_Comment = () => {
   };
 
   const handleSubmit = () => {
-    setSubmitting(true);
+    //setSubmitting(true);
     setComments([
       {
         author: "Nicolas Fuentes",

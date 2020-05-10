@@ -33,7 +33,7 @@ const MainLayout = ({ children }) => {
           style={{ width: 400 }}
         />
       </nav>
-      {children}
+      <div class="mainContent">{children}</div>
     </main>
   );
 };

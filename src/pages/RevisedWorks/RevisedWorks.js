@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import React from "react";
 import MainLayout from "../../components/Layout";
 import List from "../../components/List";
 const listRevisedWorks = [
@@ -20,12 +20,6 @@ const listRevisedWorks = [
 ];
 
 const RevisedWork = () => {
-  const [pagination, setPagination] = useState(0);
-  const [openComments, setOpenComments] = useState(0);
-
-  const onClickComment = () => {
-    setOpenComments(!openComments);
-  };
   return (
     <MainLayout>
       <section
@@ -37,12 +31,7 @@ const RevisedWork = () => {
           height: "100%",
         }}
       >
-        <List
-          openComments={openComments}
-          listRevisedWorks={listRevisedWorks}
-          onClickComment={onClickComment}
-        />
-        ;
+        <List listRevisedWorks={listRevisedWorks} />;
       </section>
     </MainLayout>
   );
