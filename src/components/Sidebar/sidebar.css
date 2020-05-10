@@ -1,0 +1,110 @@
+.sidebar {
+  align-self: flex-start;
+}
+
+svg.svg-inline--fa {
+  margin-right: 5px;
+}
+
+span.anticon.anticon-menu-unfold.bm-icon {
+  font-size: 30px;
+  color: #1f5180;
+}
+
+span.anticon.anticon-menu-fold.bm-cross {
+  font-size: 30px;
+  color: #009688;
+}
+
+span.ant-avatar.bm-item.ant-avatar-circle.ant-avatar-icon {
+  margin: 0 auto;
+  pointer-events: none;
+  background-color: #009688;
+}
+
+a.bm-item.nombre {
+  text-align: center;
+  font-size: 1.4vw;
+  margin-top: 1vw;
+  padding-bottom: 3vw;
+  padding-left: 0;
+  padding-right: 0;
+  color: #0ac3b2;
+}
+
+a.nombreUsuario {
+  text-align: center;
+  font-size: 1vw;
+  margin-top: 1vw;
+  padding-bottom: 3vw;
+  padding-left: 0;
+  padding-right: 0;
+  color: #0ac3b2;
+}
+
+#page-wrap {
+  text-align: center;
+
+  /* Prevent sidebar from showing a scrollbar on page */
+  overflow: auto;
+}
+
+/* Individual item */
+.bm-item {
+  padding: 15px 30px;
+  display: block;
+  color: rgba(255, 255, 255, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: color 0.2s;
+  font-size: 0.9vw;
+  font-family: "Poppins", Roboto, Arial, sans-serif;
+}
+
+a.bm-item.menu-item:hover {
+  background-color: #009688;
+}
+
+/* Change color on hover */
+.bm-item:hover {
+  color: white;
+}
+
+.bm-burger-button {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  left: 0px;
+  top: 0.5vw;
+}
+
+.bm-burger-bars {
+  background: #373a47;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+  height: 40px;
+  width: 40px;
+}
+
+/* General sidebar styles */
+.bm-menu {
+  background: #32373d;
+  padding: 2.5em 0 0;
+  font-size: 1.15em;
+}
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+  fill: #373a47;
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+  color: #b8b7ad;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
