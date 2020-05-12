@@ -51,7 +51,12 @@ const UI_Modal = ({ visible, loading, autor, onCancel, onSendFeedback }) => {
         <Button type="" onClick={onCancel}>
           Cancelar
         </Button>,
-        <Button type="primary" loading={loading} onClick={onLocalSendFeedback}>
+        <Button
+          type="primary"
+          loading={loading}
+          onClick={onLocalSendFeedback}
+          disabled={!fileList.length}
+        >
           Enviar
         </Button>,
       ]}
