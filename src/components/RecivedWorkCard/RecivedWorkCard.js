@@ -6,12 +6,18 @@ import { EditOutlined, FileTextTwoTone, UserOutlined } from "@ant-design/icons";
 
 import Button from "../../components/Button";
 const { Meta } = Card;
-const RecivedWorkCard = ({ loading, title, description, openModal, autor }) => {
+const RecivedWorkCard = ({
+  loading,
+  title,
+  description,
+  openModal,
+  author,
+}) => {
   const onClickDownload = () => {
     //download the file
   };
   const onClickSendMessage = () => {
-    openModal(autor);
+    openModal(author);
   };
   return (
     <Card
@@ -33,7 +39,7 @@ const RecivedWorkCard = ({ loading, title, description, openModal, autor }) => {
       <Skeleton loading={loading} avatar active>
         <Meta
           avatar={<Avatar icon={<UserOutlined />} size="large" />}
-          title={autor}
+          title={author}
           description={description}
         />
       </Skeleton>

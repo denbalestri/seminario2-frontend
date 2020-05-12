@@ -4,38 +4,36 @@ import React, { useState, useEffect } from "react";
 import RecivedWorkCard from "../../components/RecivedWorkCard";
 import MainLayout from "../../components/Layout";
 import Modal from "../../components/Modal";
+import { OBRAS_SINCORREGIR_URL } from "../../constants/URIs";
 
-const recivedWorkList = [
-  {
-    title: "La chica en la oscuridad",
-    autor: "Sebastian Rios",
-    description:
-      "Realizada por el Autor Sebastian, esta obra es del genero drama que cuenta de una chica que busca en su pasado mas oscuro, su verdadera identidad",
-  },
-  {
-    title: "La chica en la oscuridad",
-    autor: "Luciana Martinez",
-    description:
-      "Realizada por el Autor Sebastian, esta obra es del genero drama que cuenta de una chica que busca en su pasado mas oscuro, su verdadera identidad",
-  },
-  {
-    title: "La chica en la oscuridad",
-    autor: "Maria Luz",
-    description:
-      "Realizada por el Autor Sebastian, esta obra es del genero drama que cuenta de una chica que busca en su pasado mas oscuro, su verdadera identidad",
-  },
-];
 const RecivedWork = () => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [recivedWork, setRecivedWork] = useState([]);
   const [autor, setAutor] = useState("");
   useEffect(() => {
-    // get all works
+    getWorks();
   }, []);
+
+  const getWorks = () => {
+    fetch(OBRAS_SINCORREGIR_URL, {
+      method: "GET",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    })
+      .then((response) => {
+        const literaryWork = response.data;
+        setRecivedWork(literaryWork);
+      })
+      .catch((error) => console.log(error));
+  };
 
   const onCancel = () => {
     setVisible(false);
   };
+
   const onSendFeedback = (feedback) => {
     setVisible(false);
     console.log(feedback);
@@ -48,11 +46,13 @@ const RecivedWork = () => {
   };
   return (
     <MainLayout>
-      {recivedWorkList.map((work, index) => {
+      {recivedWork.map((work, index) => {
         const recivedWorkProps = {
           key: index,
           openModal: openModal,
-          ...work,
+          title: work.nombreObra,
+          author: `${work.nombreAutor} ${work.apellidoAutor}`,
+          description: `El genero de esta obra es ${work.genero}`,
         };
         return <RecivedWorkCard {...recivedWorkProps} />;
       })}
