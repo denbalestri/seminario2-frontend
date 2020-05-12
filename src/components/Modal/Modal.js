@@ -28,7 +28,7 @@ const UI_Modal = ({ visible, loading, autor, onCancel, onSendFeedback }) => {
   };
 
   const uploadProps = {
-    name: "obra",
+    name: "obra-corregida",
     customRequest: ({ onSuccess }) => setTimeout(() => onSuccess("ok"), 0),
     fileList,
     onChange: handleChange,
