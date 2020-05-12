@@ -1,11 +1,39 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
+import { SEARCHPROFESSIONAL_URL } from "../../constants/URIs";
+import { useDispatch } from "react-redux";
+import { setProfessionals } from "../../redux/actions/professionals";
 import { Input } from "antd";
-
+import { debounce } from "lodash";
 const { Search } = Input;
 
 const MainLayout = ({ children }) => {
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
+  const onSearch = (professional) => {
+    setLoading(true);
+    fetch(SEARCHPROFESSIONAL_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: professional,
+    })
+      .then((response) => {
+        const professionals = response.data;
+        dispatch(setProfessionals(professionals));
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false));
+  };
+
+  const onChange = debounce((professional) => {
+    if (professional !== "") onSearch(professional);
+  }, 1000);
+
   return (
     <main
       style={{
@@ -28,9 +56,11 @@ const MainLayout = ({ children }) => {
         }}
       >
         <Search
-          placeholder="Busqueda por profesional o genero"
-          onSearch={(value) => console.log(value)}
+          placeholder="Busqueda por profesional"
+          onSearch={(professional) => onSearch(professional)}
           style={{ width: 400 }}
+          loading={loading}
+          onChange={onChange}
         />
       </nav>
       {children}

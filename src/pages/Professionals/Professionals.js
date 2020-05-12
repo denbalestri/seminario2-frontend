@@ -1,10 +1,11 @@
 /** @format */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MainLayout from "../../components/Layout";
 import ProfessionalCard from "../../components/ProfessionalCard";
+import { useSelector } from "react-redux";
 
-const professionals = [
+const professionalsList = [
   {
     firstName: "Eduardo",
     lastName: "Lopez",
@@ -32,6 +33,16 @@ const professionals = [
 ];
 
 const Professionals = (props) => {
+  const [professionals, setProfessionals] = useState([]);
+  const professionalsSearched = useSelector((state) => state.professionals);
+
+  useEffect(() => {
+    setProfessionals(professionalsSearched);
+  }, [professionalsSearched]);
+
+  useEffect(() => {
+    setProfessionals(professionalsList);
+  }, []);
   return (
     <MainLayout>
       <section
