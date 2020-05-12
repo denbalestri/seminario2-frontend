@@ -36,8 +36,9 @@ const RecivedWork = () => {
   const onCancel = () => {
     setVisible(false);
   };
-  const onSendMessage = () => {
+  const onSendFeedback = (feedback) => {
     setVisible(false);
+    console.log(feedback);
     //send data to backend
   };
 
@@ -59,7 +60,7 @@ const RecivedWork = () => {
         visible={visible}
         autor={autor}
         onCancel={onCancel}
-        onSendMenssage={onSendMessage}
+        onSendFeedback={onSendFeedback}
       />
     </MainLayout>
   );

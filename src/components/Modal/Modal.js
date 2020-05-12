@@ -2,16 +2,36 @@
 
 import React, { useState, useEffect } from "react";
 import { Modal } from "antd";
+import { Upload } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 import Button from "../../components/Button";
 import { Input } from "antd";
 
 const { TextArea } = Input;
 
-const UI_Modal = ({ visible, loading, autor, onCancel, onSendMenssage }) => {
+const UI_Modal = ({ visible, loading, autor, onCancel, onSendFeedback }) => {
+  const [fileList, setFileList] = useState([]);
+  const [file, setFile] = useState({});
   const [feedback, setFeedback] = useState("");
 
-  const onLocalSendMessage = () => {
-    onSendMenssage(feedback);
+  const onLocalSendFeedback = () => {
+    const feedbackList = {
+      message: feedback,
+      file,
+    };
+    onSendFeedback(feedbackList);
+  };
+
+  const handleChange = (info) => {
+    setFile(info.file);
+    setFileList(info.fileList.slice(-1));
+  };
+
+  const uploadProps = {
+    name: "obra",
+    customRequest: ({ onSuccess }) => setTimeout(() => onSuccess("ok"), 0),
+    fileList,
+    onChange: handleChange,
   };
 
   useEffect(() => {
@@ -31,7 +51,7 @@ const UI_Modal = ({ visible, loading, autor, onCancel, onSendMenssage }) => {
         <Button type="" onClick={onCancel}>
           Cancelar
         </Button>,
-        <Button type="primary" loading={loading} onClick={onLocalSendMessage}>
+        <Button type="primary" loading={loading} onClick={onLocalSendFeedback}>
           Enviar
         </Button>,
       ]}
@@ -42,6 +62,13 @@ const UI_Modal = ({ visible, loading, autor, onCancel, onSendMenssage }) => {
         onChange={onChange}
         autoSize={{ minRows: 2, maxRows: 6 }}
       />
+      <section style={{ marginTop: 20 }}>
+        <Upload {...uploadProps} onChange={handleChange}>
+          <Button type="">
+            <UploadOutlined /> Elegir archivo
+          </Button>
+        </Upload>
+      </section>
     </Modal>
   );
 };

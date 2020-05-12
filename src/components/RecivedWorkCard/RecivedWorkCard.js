@@ -25,7 +25,7 @@ const RecivedWorkCard = ({ loading, title, description, openModal, autor }) => {
         </Button>,
         <Button type="" onClick={onClickDownload}>
           {" "}
-          Descargar Obra literaria
+          Descargar obra literaria
           <FileTextTwoTone />
         </Button>,
       ]}
