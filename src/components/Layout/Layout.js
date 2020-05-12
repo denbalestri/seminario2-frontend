@@ -1,16 +1,31 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SEARCHPROFESSIONAL_URL } from "../../constants/URIs";
 import { useDispatch } from "react-redux";
 import { setProfessionals } from "../../redux/actions/professionals";
 import { Input } from "antd";
 import { debounce } from "lodash";
+import { PROFESSIONALS_PATH } from "../../constants/PathNames";
 const { Search } = Input;
 
 const MainLayout = ({ children }) => {
+  const [placeholder, setPlaceholder] = useState("");
+  const [searchHide, setSearchHide] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+
+  const checkPath = () => {
+    if (window.location.pathname === PROFESSIONALS_PATH) {
+      setPlaceholder("Busqueda por profesional");
+    } else {
+      setSearchHide(true);
+    }
+  };
+
+  useEffect(() => {
+    checkPath();
+  }, []);
 
   const onSearch = (professional) => {
     setLoading(true);
@@ -55,13 +70,17 @@ const MainLayout = ({ children }) => {
           justifyContent: "center",
         }}
       >
-        <Search
-          placeholder="Busqueda por profesional"
-          onSearch={(professional) => onSearch(professional)}
-          style={{ width: 400 }}
-          loading={loading}
-          onChange={onChange}
-        />
+        {!searchHide ? (
+          <Search
+            placeholder={placeholder}
+            onSearch={(professional) => onSearch(professional)}
+            style={{ width: 400 }}
+            loading={loading}
+            onChange={onChange}
+          />
+        ) : (
+          ""
+        )}
       </nav>
       {children}
     </main>
