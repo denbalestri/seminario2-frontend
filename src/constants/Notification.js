@@ -9,5 +9,5 @@ export default {
     message: "Exito",
     description: "La obra se ha enviado exitosamente!",
   },
-  info: { message: "Informacion", description: "lalala" },
+  info: { message: "Informacion", description: "" },
 };

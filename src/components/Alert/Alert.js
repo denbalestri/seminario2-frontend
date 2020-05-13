@@ -10,8 +10,8 @@ const UI_Alert = ({ message, type, showIcon, closable, ...othersProps }) => {
       message={message}
       type={type}
       showIcon={showIcon}
-      {...othersProps}
       closable={closable}
+      {...othersProps}
     />
   );
 };
