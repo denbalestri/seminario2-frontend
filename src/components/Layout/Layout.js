@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { SEARCHPROFESSIONAL_URL } from "../../constants/URIs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setProfessionals } from "../../redux/actions/professionals";
 import { Input } from "antd";
 import { debounce } from "lodash";
@@ -13,6 +13,7 @@ const MainLayout = ({ children }) => {
   const [placeholder, setPlaceholder] = useState("");
   const [searchHide, setSearchHide] = useState(false);
   const [loading, setLoading] = useState(false);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const checkPath = () => {
@@ -29,7 +30,7 @@ const MainLayout = ({ children }) => {
 
   const onSearch = (professional) => {
     setLoading(true);
-    fetch(SEARCHPROFESSIONAL_URL, {
+    fetch(SEARCHPROFESSIONAL_URL(user.username), {
       method: "POST",
       mode: "no-cors",
       headers: {
