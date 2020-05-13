@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import RecivedWorkCard from "../../components/RecivedWorkCard";
 import MainLayout from "../../components/Layout";
-
+import { useSelector } from "react-redux";
 import Modal from "../../components/Modal";
 import { OBRAS_SINCORREGIR_URL } from "../../constants/URIs";
 
@@ -12,22 +12,22 @@ const RecivedWork = () => {
   const [visible, setVisible] = useState(false);
   const [recivedWork, setRecivedWork] = useState("");
   const [autor, setAutor] = useState("");
+  const user = useSelector((state) => state.user);
+
   useEffect(() => {
     getWorks();
   }, []);
 
   const getWorks = () => {
-    fetch(OBRAS_SINCORREGIR_URL, {
+    fetch(OBRAS_SINCORREGIR_URL(user.username), {
       method: "GET",
-      mode: "no-cors",
+      mode: "cors",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json",
       },
     })
-      .then((response) => {
-        const literaryWork = response.data;
-        setRecivedWork(literaryWork);
-      })
+      .then((response) => console.log(response))
+      .then((success) => console.log(success))
       .catch((error) => console.log(error));
   };
 
@@ -53,6 +53,7 @@ const RecivedWork = () => {
             key: index,
             openModal: openModal,
             title: work.nombreObra,
+            nameWork: work.nombreObra,
             author: `${work.nombreAutor} ${work.apellidoAutor}`,
             description: `El genero de esta obra es ${work.genero}`,
           };

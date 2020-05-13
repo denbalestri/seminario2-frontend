@@ -3,9 +3,9 @@
 import { SET_USER } from "../actions/actionTypes.json";
 
 const initialState = {
-  firstName: "Denis",
-  lastName: "Balestri",
-  username: "dbalestri",
+  firstName: "Santiago",
+  lastName: "Rico",
+  username: "srico",
 };
 
 export default function user(state = initialState, action) {
