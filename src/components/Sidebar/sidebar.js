@@ -17,7 +17,7 @@ import {
 } from "../../constants/sidebarItems";
 import "./sidebar.css";
 
-const Sidebar = ({ className, ...othersProps }) => {
+const Sidebar = () => {
   const user = useSelector((state) => state.user);
   const [sidebarItems, setSidebarItems] = useState([]);
 
