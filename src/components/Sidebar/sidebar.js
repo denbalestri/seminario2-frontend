@@ -1,12 +1,15 @@
+/** @format */
+
 import React from "react";
 import { slide as Menu } from "react-burger-menu";
 import { Avatar } from "antd";
+import { useSelector } from "react-redux";
 import {
   UserOutlined,
   MenuUnfoldOutlined,
-  MenuFoldOutlined
+  MenuFoldOutlined,
 } from "@ant-design/icons";
-import PropTypes from "prop-types";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouseUser,
@@ -14,44 +17,45 @@ import {
   faUsers,
   faGraduationCap,
   faUserEdit,
-  faSignOutAlt
+  faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import "./sidebar.css";
-import store from "../../redux/store";
 
 const sidebar = [
   {
-    nombre: "Inicio",
-    icon: faHouseUser
+    name: "Inicio",
+    icon: faHouseUser,
+    href: "/",
   },
   {
-    nombre: "Mi Perfil",
-    icon: faAddressBook
+    name: "Mi Perfil",
+    icon: faAddressBook,
+    href: "/",
   },
   {
-    nombre: "Mis Grupos",
-    icon: faUsers
+    name: "Mis Grupos",
+    icon: faUsers,
+    href: "/",
   },
   {
-    nombre: "Profesionales",
-    icon: faGraduationCap
+    name: "Profesionales",
+    icon: faGraduationCap,
+    href: "/professionals",
   },
   {
-    nombre: "Revisiones",
-    icon: faUserEdit
+    name: "Revisiones",
+    icon: faUserEdit,
+    href: "/",
   },
   {
-    nombre: "Cerrar Sesión",
-    icon: faSignOutAlt
-  }
+    name: "Cerrar Sesión",
+    icon: faSignOutAlt,
+    href: "/",
+  },
 ];
 
-const Sidebar = ({
-  customBurgerIcon,
-  customCrossIcon,
-  className,
-  ...props
-}) => {
+const Sidebar = ({ className, ...othersProps }) => {
+  const user = useSelector((state) => state.user);
   return (
     <Menu
       className={"sidebar"}
@@ -61,26 +65,20 @@ const Sidebar = ({
       <Avatar size={150} src={""} icon={<UserOutlined />} />
 
       <a className="nombre">
-        {store.getState().user.firstName} {store.getState().user.lastName}
+        {user.firstName} {user.lastName}
         <br />
-        <a className="nombreUsuario">@{store.getState().user.username}</a>
+        <p className="nombreUsuario">@{user.username}</p>
       </a>
 
-      {sidebar.map(menuItem => {
+      {sidebar.map((menuItem, index) => {
         return (
-          <a className="menu-item">
-            <FontAwesomeIcon icon={menuItem.icon} /> {menuItem.nombre}
+          <a className="menu-item" key={index} href={menuItem.href}>
+            <FontAwesomeIcon icon={menuItem.icon} /> {menuItem.name}
           </a>
         );
       })}
     </Menu>
   );
-};
-
-Sidebar.propTypes = {
-  customBurgerIcon: PropTypes.string,
-  customCrossIcon: PropTypes.string,
-  className: PropTypes.string
 };
 
 export default Sidebar;

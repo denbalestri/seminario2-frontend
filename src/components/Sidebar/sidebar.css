@@ -1,3 +1,5 @@
+/** @format */
+
 .sidebar {
   align-self: flex-start;
 }
@@ -24,7 +26,7 @@ span.ant-avatar.bm-item.ant-avatar-circle.ant-avatar-icon {
 
 a.bm-item.nombre {
   text-align: center;
-  font-size: 1.4vw;
+  font-size: 1.9vw;
   margin-top: 1vw;
   padding-bottom: 3vw;
   padding-left: 0;
@@ -34,7 +36,7 @@ a.bm-item.nombre {
 
 a.nombreUsuario {
   text-align: center;
-  font-size: 1vw;
+  font-size: 1.9vw;
   margin-top: 1vw;
   padding-bottom: 3vw;
   padding-left: 0;
@@ -56,7 +58,7 @@ a.nombreUsuario {
   color: rgba(255, 255, 255, 0.6);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   transition: color 0.2s;
-  font-size: 0.9vw;
+  font-size: 1.4vw;
   font-family: "Poppins", Roboto, Arial, sans-serif;
 }
 
