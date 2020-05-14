@@ -1,6 +1,6 @@
 /** @format */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { slide as Menu } from "react-burger-menu";
 import { Avatar } from "antd";
 import { useSelector } from "react-redux";
@@ -12,50 +12,20 @@ import {
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faHouseUser,
-  faAddressBook,
-  faUsers,
-  faGraduationCap,
-  faUserEdit,
-  faSignOutAlt,
-} from "@fortawesome/free-solid-svg-icons";
+  sidebarItemsAuthor,
+  sidebarItemsProfessional,
+} from "../../constants/sidebarItems";
 import "./sidebar.css";
-
-const sidebar = [
-  {
-    name: "Inicio",
-    icon: faHouseUser,
-    href: "/",
-  },
-  {
-    name: "Mi Perfil",
-    icon: faAddressBook,
-    href: "/",
-  },
-  {
-    name: "Mis Grupos",
-    icon: faUsers,
-    href: "/",
-  },
-  {
-    name: "Profesionales",
-    icon: faGraduationCap,
-    href: "/professionals",
-  },
-  {
-    name: "Revisiones",
-    icon: faUserEdit,
-    href: "/",
-  },
-  {
-    name: "Cerrar Sesión",
-    icon: faSignOutAlt,
-    href: "/",
-  },
-];
 
 const Sidebar = ({ className, ...othersProps }) => {
   const user = useSelector((state) => state.user);
+  const [sidebarItems, setSidebarItems] = useState([]);
+
+  useEffect(() => {
+    if (user.rol === "Autor") setSidebarItems(sidebarItemsAuthor);
+    else setSidebarItems(sidebarItemsProfessional);
+  }, []);
+
   return (
     <Menu
       className={"sidebar"}
@@ -70,7 +40,7 @@ const Sidebar = ({ className, ...othersProps }) => {
         <p className="nombreUsuario">@{user.username}</p>
       </a>
 
-      {sidebar.map((menuItem, index) => {
+      {sidebarItems.map((menuItem, index) => {
         return (
           <a className="menu-item" key={index} href={menuItem.href}>
             <FontAwesomeIcon icon={menuItem.icon} /> {menuItem.name}
