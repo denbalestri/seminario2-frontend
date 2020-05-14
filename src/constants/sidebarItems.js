@@ -60,7 +60,7 @@ export const sidebarItemsProfessional = [
   {
     name: "Obras literarias",
     icon: faGraduationCap,
-    href: "/professionals",
+    href: "/reviced-work",
   },
   {
     name: "Devoluciones",
