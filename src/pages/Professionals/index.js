@@ -1,5 +1,3 @@
-/** @format */
-
-import Professionals from "./Professionals";
+import Professionals from './Professionals';
 
 export default Professionals;

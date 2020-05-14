@@ -1,3 +1,1 @@
-/** @format */
-
-export const PROFESSIONALS_PATH = "/professionals";
+export const PROFESSIONALS_PATH = '/professionals';
