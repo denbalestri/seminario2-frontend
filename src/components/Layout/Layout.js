@@ -1,5 +1,3 @@
-/** @format */
-
 import React from "react";
 import { Input } from "antd";
 import SideBar from "../Sidebar";
@@ -15,7 +13,8 @@ const MainLayout = ({ children }) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "stretch",
-        flexDirection: "column"
+        flexDirection: "column",
+        backgroundColor: "#d2d2d2",
       }}
     >
       <div className="sidebar">
@@ -26,14 +25,14 @@ const MainLayout = ({ children }) => {
           height: 50,
           padding: 10,
           width: "100%",
-          backgroundColor: "#CCC",
+          backgroundColor: "#40a9ff",
           display: "flex",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
         <Search
           placeholder="Busqueda por profesional o genero"
-          onSearch={value => console.log(value)}
+          onSearch={(value) => console.log(value)}
           style={{ width: 400 }}
         />
       </nav>
