@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Comment, Avatar, Form, Button, List, Input } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 import moment from "moment";
 
 const { TextArea } = Input;
@@ -15,12 +16,20 @@ const CommentList = ({ comments }) => (
   />
 );
 
-const Editor = ({ onChange, onSubmit, submitting, value }) => (
+const Editor = ({ onChange, onSubmit, submitting, value, onCancel }) => (
   <div>
     <Form.Item>
       <TextArea rows={4} onChange={onChange} value={value} />
     </Form.Item>
     <Form.Item>
+      <Button
+        htmlType="cancel"
+        onClick={onCancel}
+        type=""
+        style={{ marginRight: 10 }}
+      >
+        Cancelar
+      </Button>
       <Button
         htmlType="submit"
         loading={submitting}
@@ -33,7 +42,7 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
   </div>
 );
 
-const UI_Comment = () => {
+const UI_Comment = ({ onCancel }) => {
   const [comments, setComments] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [comment, setComment] = useState("");
@@ -48,8 +57,7 @@ const UI_Comment = () => {
     setComments([
       {
         author: "Nicolas Fuentes",
-        avatar:
-          "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+        avatar: "",
         content: <p>{comment}</p>,
         datetime: moment().fromNow(),
       },
@@ -60,16 +68,12 @@ const UI_Comment = () => {
     <div>
       {comments.length > 0 && <CommentList comments={comments} />}
       <Comment
-        avatar={
-          <Avatar
-            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            alt="Han Solo"
-          />
-        }
+        avatar={<Avatar icon={<UserOutlined />} alt="usuario" />}
         content={
           <Editor
             onChange={handleChange}
             onSubmit={handleSubmit}
+            onCancel={onCancel}
             submitting={submitting}
             value={comment}
           />

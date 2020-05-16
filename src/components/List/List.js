@@ -1,8 +1,10 @@
+/** @format */
+
 import React, { useState } from "react";
 import { List, Avatar, Space } from "antd";
 import Button from "../../components/Button";
 import Comment from "../../components/Comment";
-import { MessageOutlined, FileTwoTone } from "@ant-design/icons";
+import { MessageOutlined, FileTwoTone, UserOutlined } from "@ant-design/icons";
 
 const IconText = ({ icon, text, onClick }) => (
   <Space>
@@ -13,11 +15,15 @@ const IconText = ({ icon, text, onClick }) => (
   </Space>
 );
 
-const ListItem = ({ title, avatar, href, description, content }) => {
+const ListItem = ({ title, href, description, content }) => {
   const [openComments, setOpenComments] = useState(false);
 
   const onClickComment = () => {
     setOpenComments(!openComments);
+  };
+
+  const onCancel = () => {
+    setOpenComments(false);
   };
 
   return (
@@ -38,12 +44,12 @@ const ListItem = ({ title, avatar, href, description, content }) => {
       ]}
     >
       <List.Item.Meta
-        avatar={<Avatar src={avatar} />}
+        avatar={<Avatar icon={<UserOutlined />} />}
         title={<a href={href}>{title}</a>}
         description={description}
       />
       {content}
-      {openComments && <Comment />}
+      {openComments && <Comment onCancel={onCancel} />}
     </List.Item>
   );
 };
