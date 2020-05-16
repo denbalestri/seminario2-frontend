@@ -8,7 +8,7 @@ const professionals = [
   {
     firstName: "Eduardo",
     lastName: "Lopez",
-    username: "EduardoLopez",
+    username: "srico",
     avatar: "",
     description: "Experto en Novelas Romanticas",
     id: 1,
@@ -16,7 +16,7 @@ const professionals = [
   {
     firstName: "Silvia",
     lastName: "Carrozo",
-    username: "SilviaCarrozo",
+    username: "srico",
     avatar: "",
     description: "Experto en Poesia",
     id: 2,
@@ -24,7 +24,7 @@ const professionals = [
   {
     firstName: "Nicolas",
     lastName: "Fuentes",
-    username: "NicolasFuentes",
+    username: "srico",
     avatar: "",
     description: "Experto en Novelas",
     id: 3,

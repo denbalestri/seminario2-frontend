@@ -56,7 +56,7 @@ const ProfessionalCard = ({
 
       fetch(OBRAS_URL, {
         method: "POST",
-        mode: "no-cors",
+        mode: "cors",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },

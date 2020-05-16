@@ -46,6 +46,7 @@ const UI_Modal = ({ visible, loading, autor, onCancel, onSendFeedback }) => {
   return (
     <Modal
       visible={visible}
+      onCancel={onCancel}
       title={`Enviar mensaje a ${autor}`}
       footer={[
         <Button type="" onClick={onCancel}>
@@ -55,7 +56,7 @@ const UI_Modal = ({ visible, loading, autor, onCancel, onSendFeedback }) => {
           type="primary"
           loading={loading}
           onClick={onLocalSendFeedback}
-          disabled={!fileList.length}
+          disabled={!feedback}
         >
           Enviar
         </Button>,

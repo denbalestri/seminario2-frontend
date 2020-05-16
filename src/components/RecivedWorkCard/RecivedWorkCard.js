@@ -44,17 +44,19 @@ const downloadFile = (blob, fileName) => {
 };
 
 const RecivedWorkCard = ({
-  loading,
   title,
   description,
   openModal,
   nameWork,
   author,
+  username,
 }) => {
   const [file, setFile] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const onClickDownload = () => {
-    fetch(OBRAS_CONTENIDO_URL(nameWork, author), {
+    setLoading(true);
+    fetch(OBRAS_CONTENIDO_URL(nameWork, username), {
       method: "GET",
       mode: "cors",
       headers: {
@@ -62,16 +64,23 @@ const RecivedWorkCard = ({
       },
     })
       .then((response) => {
-        const file = response.data;
+        return response.json();
+      })
+      .then((response) => {
+        const file = response.json();
         const fileConverted = base64ToBlob(file);
+        console.log(response.json());
         downloadFile(fileConverted, "file");
         setFile(fileConverted);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false));
   };
+
   const onClickSendMessage = () => {
     openModal(author);
   };
+
   return (
     <Card
       style={{ width: "80vw", marginTop: 20 }}
@@ -82,14 +91,14 @@ const RecivedWorkCard = ({
           Enviar Mensaje
           <EditOutlined />
         </Button>,
-        <Button type="" onClick={onClickDownload}>
+        <Button type="" onClick={onClickDownload} loading={loading}>
           {" "}
           Descargar obra literaria
           <FileTextTwoTone />
         </Button>,
       ]}
     >
-      <Skeleton loading={loading} avatar active>
+      <Skeleton loading={false} avatar active>
         <Meta
           avatar={<Avatar icon={<UserOutlined />} size="large" />}
           title={author}

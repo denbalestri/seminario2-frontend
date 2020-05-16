@@ -5,6 +5,7 @@ import RecivedWorkCard from "../../components/RecivedWorkCard";
 import MainLayout from "../../components/Layout";
 import { useSelector } from "react-redux";
 import Modal from "../../components/Modal";
+import { Spin } from "antd";
 import { OBRAS_SINCORREGIR_URL } from "../../constants/URIs";
 
 const RecivedWork = () => {
@@ -19,16 +20,24 @@ const RecivedWork = () => {
   }, []);
 
   const getWorks = () => {
+    setLoading(true);
     fetch(OBRAS_SINCORREGIR_URL(user.username), {
       method: "GET",
       mode: "cors",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
     })
-      .then((response) => console.log(response))
-      .then((success) => console.log(success))
-      .catch((error) => console.log(error));
+      .then((response) => {
+        return response.json();
+      })
+      .then((response) => {
+        const recivedWork = response;
+        if (recivedWork === []) setRecivedWork("");
+        else setRecivedWork(recivedWork);
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false));
   };
 
   const onCancel = () => {
@@ -55,10 +64,22 @@ const RecivedWork = () => {
             title: work.nombreObra,
             nameWork: work.nombreObra,
             author: `${work.nombreAutor} ${work.apellidoAutor}`,
+            username: work.userAutor,
             description: `El genero de esta obra es ${work.genero}`,
           };
           return <RecivedWorkCard {...recivedWorkProps} />;
         })
+      ) : loading ? (
+        <section
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          }}
+        >
+          <Spin tip="Cargando..." size="large" />
+        </section>
       ) : (
         <section>
           <p
