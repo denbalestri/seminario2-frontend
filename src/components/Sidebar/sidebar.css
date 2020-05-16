@@ -22,26 +22,12 @@ span.ant-avatar.bm-item.ant-avatar-circle.ant-avatar-icon {
   background-color: rgb(64, 169, 255);
 }
 
-span.nombre {
+p.nombre {
   cursor: default;
   text-align: center;
-  font-size: 1.4vw;
-  margin-top: 1vw;
-  padding-bottom: 3vw;
-  padding-left: 0;
-  padding-right: 0;
+  font-size: 2em;
   color: rgb(64, 169, 255);
-}
-
-span.nombreUsuario {
-  cursor: default;
-  text-align: center;
-  font-size: 1vw;
-  margin-top: 1vw;
-  padding-bottom: 3vw;
-  padding-left: 0;
-  padding-right: 0;
-  color: rgb(64, 169, 255);
+  margin-bottom: 15px;
 }
 
 #page-wrap {
@@ -58,7 +44,6 @@ span.nombreUsuario {
   color: rgba(255, 255, 255, 0.6);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   transition: color 0.2s;
-  font-size: 0.9vw;
   font-family: "Poppins", Roboto, Arial, sans-serif;
 }
 
