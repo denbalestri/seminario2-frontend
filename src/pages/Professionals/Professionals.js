@@ -45,6 +45,7 @@ const Professionals = (props) => {
       >
         {professionals.map((professional, index) => {
           const professionalCardProps = {
+            professional: `${professional.firstName} ${professional.lastName}`,
             key: index,
             ...professional,
           };

@@ -67,10 +67,10 @@ const RecivedWorkCard = ({
         return response.json();
       })
       .then((response) => {
-        const file = response.json();
+        const file = response.contenido;
+        const nameWork = response.nombreObra;
         const fileConverted = base64ToBlob(file);
-        console.log(response.json());
-        downloadFile(fileConverted, "file");
+        downloadFile(fileConverted, `file`);
         setFile(fileConverted);
       })
       .catch((error) => console.log(error))

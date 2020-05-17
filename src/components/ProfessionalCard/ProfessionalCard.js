@@ -1,52 +1,27 @@
-/** @format */
-
-import React, { useState } from "react";
-import { Avatar, Card, Upload } from "antd";
-import { UploadOutlined, UserOutlined } from "@ant-design/icons";
-import Button from "../Button";
+import React, { useState, Fragment } from "react";
+import { Avatar, Card } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { OBRAS_URL } from "../../constants/URIs";
+import { getBase64 } from "../../constants/base64";
+import ModalSendWork from "../ModalSendWork";
 import "antd/dist/antd.css";
 
-function getBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
-}
-
-const ProfessionalCard = ({
-  firstName,
-  lastName,
-  avatar,
-  description,
-  username,
-}) => {
-  const [file, setFile] = useState({});
-  const [fileList, setFileList] = useState([]);
+const ProfessionalCard = ({ professional, avatar, description, username }) => {
   const [loading, setLoading] = useState(false);
+  const [visibleModal, setVisibleModal] = useState(false);
   const user = useSelector((state) => state.user);
 
-  const handleChange = (info) => {
-    setFile(info.file);
-    setFileList(info.fileList.slice(-1));
+  const onClickCard = () => {
+    setVisibleModal(true);
   };
 
-  const uploadProps = {
-    name: "obra",
-    customRequest: ({ onSuccess }) => setTimeout(() => onSuccess("ok"), 0),
-    fileList,
-    onChange: handleChange,
-  };
-
-  const onSubmit = () => {
+  const onSubmit = ({ nameWork, file }) => {
     getBase64(file.originFileObj).then((encodedFile) => {
       const body = JSON.stringify({
         contenido: encodedFile,
         genero: "Romantico",
-        nombreObra: file.name,
+        nombreObra: nameWork,
         nombreUsuarioAutor: user.username,
         nombreUsuarioProfesional: username,
         formatoArchivodeObra: file.type,
@@ -65,41 +40,36 @@ const ProfessionalCard = ({
         .then((response) => response.json())
         .then((success) => console.log(success))
         .catch((error) => console.log(error))
-        .finally(() => setLoading(false));
+        .finally(() => {
+          setLoading(false);
+          setVisibleModal(false);
+        });
     });
   };
 
+  const onCancelModal = () => {
+    setVisibleModal(false);
+  };
+
   return (
-    <Card style={{ width: "80vw" }}>
-      <section style={{ display: "flex" }}>
-        <Avatar size={100} src={avatar} icon={<UserOutlined />} />
-        <aside style={{ marginLeft: 10, marginTop: 10 }}>
-          <p>{`${firstName} ${lastName}`}</p>
-          <p>{description}</p>
-        </aside>
-      </section>
-      <section
-        style={{
-          marginTop: 10,
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <Upload {...uploadProps} onChange={handleChange}>
-          <Button type="">
-            <UploadOutlined /> Elegir archivo
-          </Button>
-        </Upload>
-        <Button
-          size={100}
-          disabled={!fileList.length}
-          onClick={onSubmit}
-          loading={loading}
-        >
-          Enviar obra
-        </Button>
-      </section>
-    </Card>
+    <Fragment>
+      <Card style={{ width: "80vw" }} hoverable onClick={onClickCard}>
+        <section style={{ display: "flex" }}>
+          <Avatar size={100} src={avatar} icon={<UserOutlined />} />
+          <aside style={{ marginLeft: 10, marginTop: 10 }}>
+            <p>{professional}</p>
+            <p>{description}</p>
+          </aside>
+        </section>
+      </Card>
+      <ModalSendWork
+        visible={visibleModal}
+        onSendWork={onSubmit}
+        onCancel={onCancelModal}
+        professional={professional}
+        loading={loading}
+      />
+    </Fragment>
   );
 };
 

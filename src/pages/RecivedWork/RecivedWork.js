@@ -6,10 +6,12 @@ import MainLayout from "../../components/Layout";
 import { useSelector } from "react-redux";
 import Modal from "../../components/Modal";
 import { Spin } from "antd";
+import { getBase64 } from "../../constants/base64";
 import { OBRAS_SINCORREGIR_URL } from "../../constants/URIs";
 
 const RecivedWork = () => {
   const [loading, setLoading] = useState(false);
+  const [loadingFeedback, setLoadingFeedback] = useState(false);
   const [visible, setVisible] = useState(false);
   const [recivedWork, setRecivedWork] = useState("");
   const [autor, setAutor] = useState("");
@@ -45,9 +47,17 @@ const RecivedWork = () => {
   };
 
   const onSendFeedback = (feedback) => {
-    setVisible(false);
-    console.log(feedback);
-    //send data to backend
+    setLoadingFeedback(true);
+    const file = feedback.file;
+    if (file) {
+      getBase64(file.originFileObj).then((encodedFile) => {
+        const body = JSON.stringify({
+          contenido: encodedFile,
+          nombreUsuarioAutor: autor,
+          nombreUsuarioProfesional: user.username,
+        });
+      });
+    }
   };
 
   const openModal = (autor) => {
@@ -98,6 +108,7 @@ const RecivedWork = () => {
         visible={visible}
         autor={autor}
         onCancel={onCancel}
+        loading={loadingFeedback}
         onSendFeedback={onSendFeedback}
       />
     </MainLayout>

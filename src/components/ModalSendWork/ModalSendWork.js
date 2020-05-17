@@ -1,25 +1,31 @@
-/** @format */
-
 import React, { useState, useEffect } from "react";
-import { Modal } from "antd";
-import { Upload } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { Modal, Upload, Input } from "antd";
+import { UploadOutlined, ReadOutlined } from "@ant-design/icons";
+import isEmpty from "lodash/isEmpty";
 import Button from "../../components/Button";
-import { Input } from "antd";
 
-const { TextArea } = Input;
-
-const UI_Modal = ({ visible, loading, autor, onCancel, onSendFeedback }) => {
+const ModalSendWork = ({
+  visible,
+  loading,
+  professional,
+  onCancel,
+  onSendWork,
+}) => {
   const [fileList, setFileList] = useState([]);
-  const [file, setFile] = useState(null);
-  const [feedback, setFeedback] = useState("");
+  const [file, setFile] = useState({});
+  const [nameWork, setNameWork] = useState("");
 
-  const onLocalSendFeedback = () => {
-    const feedbackList = {
-      message: feedback,
+  useEffect(() => {
+    setFile({});
+    setFileList([]);
+  }, [visible]);
+
+  const onLocalSendWork = () => {
+    const work = {
+      nameWork,
       file,
     };
-    onSendFeedback(feedbackList);
+    onSendWork(work);
   };
 
   const handleChange = (info) => {
@@ -28,26 +34,26 @@ const UI_Modal = ({ visible, loading, autor, onCancel, onSendFeedback }) => {
   };
 
   const uploadProps = {
-    name: "obra-corregida",
+    name: "obra",
     customRequest: ({ onSuccess }) => setTimeout(() => onSuccess("ok"), 0),
     fileList,
     onChange: handleChange,
   };
 
   useEffect(() => {
-    setFeedback("");
+    setNameWork("");
   }, [visible]);
 
-  const onChange = (e) => {
-    const feedback = e.target.value;
-    setFeedback(feedback);
+  const onChangeNameWork = (e) => {
+    const nameWork = e.target.value;
+    setNameWork(nameWork);
   };
 
   return (
     <Modal
       visible={visible}
       onCancel={onCancel}
-      title={`Enviar mensaje a ${autor}`}
+      title={`Enviar obra a ${professional}`}
       footer={[
         <Button type="" onClick={onCancel}>
           Cancelar
@@ -55,18 +61,19 @@ const UI_Modal = ({ visible, loading, autor, onCancel, onSendFeedback }) => {
         <Button
           type="primary"
           loading={loading}
-          onClick={onLocalSendFeedback}
-          disabled={!feedback}
+          onClick={onLocalSendWork}
+          disabled={isEmpty(file)}
         >
           Enviar
         </Button>,
       ]}
     >
-      <TextArea
-        placeholder="Escriba aqui su devolucion de la obra literaria..."
-        value={feedback}
-        onChange={onChange}
-        autoSize={{ minRows: 2, maxRows: 6 }}
+      <Input
+        placeholder="Nombre de la obra..."
+        prefix={<ReadOutlined />}
+        value={nameWork}
+        style={{ marginTop: 10, width: 300 }}
+        onChange={onChangeNameWork}
       />
       <section style={{ marginTop: 20 }}>
         <Upload {...uploadProps} onChange={handleChange}>
@@ -79,4 +86,4 @@ const UI_Modal = ({ visible, loading, autor, onCancel, onSendFeedback }) => {
   );
 };
 
-export default UI_Modal;
+export default ModalSendWork;
