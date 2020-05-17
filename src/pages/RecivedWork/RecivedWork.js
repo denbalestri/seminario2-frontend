@@ -13,7 +13,7 @@ const RecivedWork = () => {
   const [loading, setLoading] = useState(false);
   const [loadingFeedback, setLoadingFeedback] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [recivedWork, setRecivedWork] = useState("");
+  const [recivedWork, setRecivedWork] = useState([]);
   const [autor, setAutor] = useState("");
   const user = useSelector((state) => state.user);
 
@@ -66,7 +66,7 @@ const RecivedWork = () => {
   };
   return (
     <MainLayout>
-      {recivedWork ? (
+      {recivedWork.length > 0 ? (
         recivedWork.map((work, index) => {
           const recivedWorkProps = {
             key: index,

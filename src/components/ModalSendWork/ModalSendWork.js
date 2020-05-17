@@ -3,6 +3,8 @@ import { Modal, Upload, Input } from "antd";
 import { UploadOutlined, ReadOutlined } from "@ant-design/icons";
 import isEmpty from "lodash/isEmpty";
 import Button from "../../components/Button";
+import Select from "../Select";
+const optionItems = ["Objetiva", "Subjetiva", "Crítica impresionista"];
 
 const ModalSendWork = ({
   visible,
@@ -14,7 +16,7 @@ const ModalSendWork = ({
   const [fileList, setFileList] = useState([]);
   const [file, setFile] = useState({});
   const [nameWork, setNameWork] = useState("");
-
+  const [reviewSelected, setReviewSelected] = useState([]);
   useEffect(() => {
     setFile({});
     setFileList([]);
@@ -42,11 +44,16 @@ const ModalSendWork = ({
 
   useEffect(() => {
     setNameWork("");
+    setReviewSelected([]);
   }, [visible]);
 
   const onChangeNameWork = (e) => {
     const nameWork = e.target.value;
     setNameWork(nameWork);
+  };
+
+  const onChangeSelected = (review) => {
+    setReviewSelected(review);
   };
 
   return (
@@ -68,6 +75,12 @@ const ModalSendWork = ({
         </Button>,
       ]}
     >
+      <Select
+        placeholder="Seleccione un nivel de critica"
+        optionItems={optionItems}
+        valueSelected={reviewSelected}
+        onChange={onChangeSelected}
+      />
       <Input
         placeholder="Nombre de la obra..."
         prefix={<ReadOutlined />}
