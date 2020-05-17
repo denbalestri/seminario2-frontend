@@ -1,12 +1,10 @@
-/** @format */
-
 import React, { useState, useEffect } from "react";
 import { Modal } from "antd";
 import { Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import Button from "../../components/Button";
 import { Input } from "antd";
-
+import Rating from "../Rating";
 const { TextArea } = Input;
 
 const UI_Modal = ({ visible, loading, autor, onCancel, onSendFeedback }) => {
@@ -68,6 +66,7 @@ const UI_Modal = ({ visible, loading, autor, onCancel, onSendFeedback }) => {
         onChange={onChange}
         autoSize={{ minRows: 2, maxRows: 6 }}
       />
+      <Rating />
       <section style={{ marginTop: 20 }}>
         <Upload {...uploadProps} onChange={handleChange}>
           <Button type="">
