@@ -4,8 +4,20 @@ import { UploadOutlined, ReadOutlined } from "@ant-design/icons";
 import isEmpty from "lodash/isEmpty";
 import Button from "../../components/Button";
 import Select from "../Select";
-const optionItems = ["Objetiva", "Subjetiva", "Crítica impresionista"];
-
+const optionItemsReview = ["Objetiva", "Subjetiva", "Crítica impresionista"];
+const optionItemsGenre = [
+  "Romantico",
+  "Aventura",
+  "Accion",
+  "Terror",
+  "Suspenso",
+  "Drama",
+];
+const initialState = {
+  nameWork: "",
+  review: [],
+  genre: [],
+};
 const ModalSendWork = ({
   visible,
   loading,
@@ -15,8 +27,7 @@ const ModalSendWork = ({
 }) => {
   const [fileList, setFileList] = useState([]);
   const [file, setFile] = useState({});
-  const [nameWork, setNameWork] = useState("");
-  const [reviewSelected, setReviewSelected] = useState([]);
+  const [form, setForm] = useState(initialState);
   useEffect(() => {
     setFile({});
     setFileList([]);
@@ -24,7 +35,7 @@ const ModalSendWork = ({
 
   const onLocalSendWork = () => {
     const work = {
-      nameWork,
+      form,
       file,
     };
     onSendWork(work);
@@ -43,17 +54,26 @@ const ModalSendWork = ({
   };
 
   useEffect(() => {
-    setNameWork("");
-    setReviewSelected([]);
+    setForm(initialState);
   }, [visible]);
 
   const onChangeNameWork = (e) => {
     const nameWork = e.target.value;
-    setNameWork(nameWork);
+    setForm({ ...form, nameWork });
   };
 
-  const onChangeSelected = (review) => {
-    setReviewSelected(review);
+  const onChangeReview = (review) => {
+    setForm({
+      ...form,
+      review,
+    });
+  };
+
+  const onChangeGenre = (genre) => {
+    setForm({
+      ...form,
+      genre,
+    });
   };
 
   return (
@@ -77,14 +97,20 @@ const ModalSendWork = ({
     >
       <Select
         placeholder="Seleccione un nivel de critica"
-        optionItems={optionItems}
-        valueSelected={reviewSelected}
-        onChange={onChangeSelected}
+        optionItems={optionItemsReview}
+        valueSelected={form.review}
+        onChange={onChangeReview}
+      />
+      <Select
+        placeholder="Seleccione el genero"
+        optionItems={optionItemsGenre}
+        valueSelected={form.genre}
+        onChange={onChangeGenre}
       />
       <Input
         placeholder="Nombre de la obra..."
         prefix={<ReadOutlined />}
-        value={nameWork}
+        value={form.nameWork}
         style={{ marginTop: 10, width: 300 }}
         onChange={onChangeNameWork}
       />

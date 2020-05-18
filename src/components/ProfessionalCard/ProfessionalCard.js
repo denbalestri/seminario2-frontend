@@ -16,12 +16,12 @@ const ProfessionalCard = ({ professional, avatar, description, username }) => {
     setVisibleModal(true);
   };
 
-  const onSubmit = ({ nameWork, file }) => {
+  const onSubmit = ({ form, file }) => {
     getBase64(file.originFileObj).then((encodedFile) => {
       const body = JSON.stringify({
         contenido: encodedFile,
-        genero: "Romantico",
-        nombreObra: nameWork,
+        genero: form.genre,
+        nombreObra: form.nameWork,
         nombreUsuarioAutor: user.username,
         nombreUsuarioProfesional: username,
         formatoArchivodeObra: file.type,
