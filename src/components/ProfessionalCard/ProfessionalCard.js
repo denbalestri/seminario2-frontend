@@ -2,7 +2,7 @@ import React, { useState, Fragment } from "react";
 import { Avatar, Card } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
-import { OBRAS_URL } from "../../constants/URIs";
+import { SERVIDOR } from "../../constants/URIs";
 import { getBase64 } from "../../constants/base64";
 import ModalSendWork from "../ModalSendWork";
 import "antd/dist/antd.css";
@@ -29,7 +29,7 @@ const ProfessionalCard = ({ professional, avatar, description, username }) => {
 
       setLoading(true);
 
-      fetch(OBRAS_URL, {
+      fetch(SERVIDOR.OBRAS_URL, {
         method: "POST",
         mode: "cors",
         headers: {

@@ -1,9 +1,29 @@
-/** @format */
+const SERVER_URL = "http://localhost:8080/ProyectoTextos";
 
-const BASE_URL = "http://localhost:8080/ProyectoTextos";
+const INICIO_URL = "/";
+const PERFIL_URL = "/perfil";
+const GRUPOS_URL = "/grupos";
+const REVISIONES_URL = "/revisiones";
+const NOTFOUND_URL = "*";
+const PROFESIONALES_URL = "/profesionales";
+const TRABAJOS_URL = "/trabajos";
+const DEVOLUCIONES_URL = "/devoluciones";
 
-export const OBRAS_URL = `${BASE_URL}/obras`;
-export const OBRAS_SINCORREGIR_URL = (username) =>
-  `${BASE_URL}/ObraSinCorregirPorProfesional?nombreUsuarioProfesional=${username}`;
-export const OBRAS_CONTENIDO_URL = (nameWork, author) =>
-  `${BASE_URL}/ContenidoObras?nombreObra=${nameWork}&userAutor=${author}`;
+export const CLIENTE = {
+  INICIO_URL,
+  PERFIL_URL,
+  GRUPOS_URL,
+  REVISIONES_URL,
+  PROFESIONALES_URL,
+  TRABAJOS_URL,
+  DEVOLUCIONES_URL,
+  NOTFOUND_URL,
+};
+
+export const SERVIDOR = {
+  OBRAS_URL: `${SERVER_URL}/obras`,
+  OBRAS_SINCORREGIR_URL: (username) =>
+    `${SERVER_URL}/ObraSinCorregirPorProfesional?nombreUsuarioProfesional=${username}`,
+  OBRAS_CONTENIDO_URL: (nameWork, author) =>
+    `${SERVER_URL}/ContenidoObras?nombreObra=${nameWork}&userAutor=${author}`,
+};

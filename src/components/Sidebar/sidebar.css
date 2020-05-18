@@ -1,0 +1,97 @@
+.sidebar {
+  align-self: flex-start;
+}
+
+svg.svg-inline--fa {
+  margin-right: 5px;
+}
+
+span.anticon.anticon-menu-unfold.bm-icon {
+  font-size: 30px;
+  color: #1f5180;
+}
+
+span.anticon.anticon-menu-fold.bm-cross {
+  font-size: 30px;
+  color: rgb(64, 169, 255);
+}
+
+span.ant-avatar.bm-item.ant-avatar-circle.ant-avatar-icon {
+  margin: 0 auto;
+  pointer-events: none;
+  background-color: rgb(64, 169, 255);
+}
+
+p.nombre {
+  cursor: default;
+  text-align: center;
+  font-size: 2em;
+  color: rgb(64, 169, 255);
+  margin-bottom: 15px;
+}
+
+#page-wrap {
+  text-align: center;
+
+  /* Prevent sidebar from showing a scrollbar on page */
+  overflow: auto;
+}
+
+/* Individual item */
+.bm-item {
+  padding: 15px 30px;
+  display: block;
+  color: rgba(255, 255, 255, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: color 0.2s;
+  font-family: "Poppins", Roboto, Arial, sans-serif;
+}
+
+a.bm-item.menu-item:hover {
+  background-color: rgb(64, 169, 255);
+}
+
+/* Change color on hover */
+.bm-item:hover {
+  color: white;
+}
+
+.bm-burger-button {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  left: 0px;
+  top: 10px;
+}
+
+.bm-burger-bars {
+  background: #373a47;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+  height: 40px;
+  width: 40px;
+}
+
+/* General sidebar styles */
+.bm-menu {
+  background: #32373d;
+  padding: 2.5em 0 0;
+  font-size: 1.15em;
+}
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+  fill: #373a47;
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+  color: #b8b7ad;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}

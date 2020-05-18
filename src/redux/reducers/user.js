@@ -6,6 +6,7 @@ const initialState = {
   firstName: "Santiago",
   lastName: "Rico",
   username: "srico",
+  rol: "Autor",
 };
 
 export default function user(state = initialState, action) {

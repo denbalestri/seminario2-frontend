@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Skeleton, Card, Avatar } from "antd";
 import { EditOutlined, FileTextTwoTone, UserOutlined } from "@ant-design/icons";
-import { OBRAS_CONTENIDO_URL } from "../../constants/URIs";
+import { SERVIDOR } from "../../constants/URIs";
 import Button from "../../components/Button";
 
 const { Meta } = Card;
@@ -56,7 +56,7 @@ const RecivedWorkCard = ({
 
   const onClickDownload = () => {
     setLoading(true);
-    fetch(OBRAS_CONTENIDO_URL(nameWork, username), {
+    fetch(SERVIDOR.OBRAS_CONTENIDO_URL(nameWork, username), {
       method: "GET",
       mode: "cors",
       headers: {

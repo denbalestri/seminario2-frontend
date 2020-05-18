@@ -1,7 +1,7 @@
-/** @format */
-
 import React from "react";
 import { Input } from "antd";
+import SideBar from "../Sidebar";
+
 const { Search } = Input;
 
 const MainLayout = ({ children }) => {
@@ -16,12 +16,15 @@ const MainLayout = ({ children }) => {
         flexDirection: "column",
       }}
     >
+      <div className="sidebar">
+        <SideBar />
+      </div>
       <nav
         style={{
           height: 50,
           padding: 10,
           width: "100%",
-          backgroundColor: "#CCC",
+          backgroundColor: "#40a9ff",
           display: "flex",
           justifyContent: "center",
         }}

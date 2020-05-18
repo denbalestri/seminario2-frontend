@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import Modal from "../../components/Modal";
 import { Spin } from "antd";
 import { getBase64 } from "../../constants/base64";
-import { OBRAS_SINCORREGIR_URL } from "../../constants/URIs";
+import { SERVIDOR } from "../../constants/URIs";
 
 const RecivedWork = () => {
   const [loading, setLoading] = useState(false);
@@ -23,7 +23,7 @@ const RecivedWork = () => {
 
   const getWorks = () => {
     setLoading(true);
-    fetch(OBRAS_SINCORREGIR_URL(user.username), {
+    fetch(SERVIDOR.OBRAS_SINCORREGIR_URL(user.username), {
       method: "GET",
       mode: "cors",
       headers: {
