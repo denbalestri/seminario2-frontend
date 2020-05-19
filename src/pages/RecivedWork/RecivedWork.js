@@ -1,20 +1,13 @@
-/** @format */
-
+import { Spin } from "antd";
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import RecivedWorkCard from "../../components/RecivedWorkCard";
 import MainLayout from "../../components/Layout";
-import { useSelector } from "react-redux";
-import Modal from "../../components/Modal";
-import { Spin } from "antd";
-import { getBase64 } from "../../constants/base64";
 import { SERVIDOR } from "../../constants/URIs";
 
 const RecivedWork = () => {
   const [loading, setLoading] = useState(false);
-  const [loadingFeedback, setLoadingFeedback] = useState(false);
-  const [visible, setVisible] = useState(false);
   const [recivedWork, setRecivedWork] = useState([]);
-  const [autor, setAutor] = useState("");
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -42,37 +35,15 @@ const RecivedWork = () => {
       .finally(() => setLoading(false));
   };
 
-  const onCancel = () => {
-    setVisible(false);
-  };
-
-  const onSendFeedback = (feedback) => {
-    setLoadingFeedback(true);
-    const file = feedback.file;
-    if (file) {
-      getBase64(file.originFileObj).then((encodedFile) => {
-        const body = JSON.stringify({
-          contenido: encodedFile,
-          nombreUsuarioAutor: autor,
-          nombreUsuarioProfesional: user.username,
-        });
-      });
-    }
-  };
-
-  const openModal = (autor) => {
-    setAutor(autor);
-    setVisible(true);
-  };
   return (
     <MainLayout>
       {recivedWork.length > 0 ? (
         recivedWork.map((work, index) => {
           const recivedWorkProps = {
             key: index,
-            openModal: openModal,
             title: work.nombreObra,
             nameWork: work.nombreObra,
+            userAuthor: work.userAutor,
             author: `${work.nombreAutor} ${work.apellidoAutor}`,
             username: work.userAutor,
             description: `El genero de esta obra es ${work.genero}`,
@@ -104,13 +75,6 @@ const RecivedWork = () => {
           <img src="../../../images/author.gif" alt="Sin resultados"></img>
         </section>
       )}
-      <Modal
-        visible={visible}
-        autor={autor}
-        onCancel={onCancel}
-        loading={loadingFeedback}
-        onSendFeedback={onSendFeedback}
-      />
     </MainLayout>
   );
 };

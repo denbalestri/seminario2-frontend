@@ -1,12 +1,21 @@
-/** @format */
-
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { Skeleton, Card, Avatar } from "antd";
 import { EditOutlined, FileTextTwoTone, UserOutlined } from "@ant-design/icons";
 import { SERVIDOR } from "../../constants/URIs";
 import Button from "../../components/Button";
-
+import Modal from "../../components/Modal";
+import { getBase64 } from "../../constants/base64";
+import { notification } from "antd";
+import statuses from "../../constants/Notification";
+import { useSelector } from "react-redux";
 const { Meta } = Card;
+
+const openNotification = (type) => {
+  notification[type]({
+    message: statuses.statusesRecivedWork[type].message,
+    description: statuses.statusesRecivedWork[type].description,
+  });
+};
 
 function base64ToBlob(file) {
   // extract content type and base64 payload from original string
@@ -46,13 +55,15 @@ const downloadFile = (blob, fileName) => {
 const RecivedWorkCard = ({
   title,
   description,
-  openModal,
   nameWork,
   author,
+  userAuthor,
   username,
 }) => {
-  const [file, setFile] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [loadingFeedback, setLoadingFeedback] = useState(false);
+  const user = useSelector((state) => state.user);
 
   const onClickDownload = () => {
     setLoading(true);
@@ -70,42 +81,94 @@ const RecivedWorkCard = ({
         const file = response.contenido;
         const nameWork = response.nombreObra;
         const fileConverted = base64ToBlob(file);
-        downloadFile(fileConverted, `file`);
-        setFile(fileConverted);
+        downloadFile(fileConverted, `Archivo-${nameWork}`);
       })
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
   };
 
+  const onSendFeedback = (feedback) => {
+    setLoadingFeedback(true);
+    const file = feedback.file;
+    if (file) {
+      getBase64(file.originFileObj).then((encodedFile) => {
+        const body = JSON.stringify({
+          contenidoCorreccion: encodedFile,
+          nombreObra: nameWork,
+          nombreUsuarioAutor: userAuthor,
+          mensajeCorreccion: feedback.message,
+          nombreUsuarioProfesional: user.username,
+        });
+
+        fetch(SERVIDOR.CORRECCIONES_URL, {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body,
+        })
+          .then((response) => {
+            if (response.status === 200) {
+              openNotification("success");
+            } else {
+              openNotification("error");
+            }
+          })
+          .catch((error) => console.log(error))
+          .finally(() => {
+            setLoadingFeedback(false);
+            setVisible(false);
+          });
+      });
+    }
+  };
+
+  const openModal = () => {
+    setVisible(true);
+  };
+
   const onClickSendMessage = () => {
-    openModal(author);
+    openModal();
+  };
+  const onCancel = () => {
+    setVisible(false);
   };
 
   return (
-    <Card
-      style={{ width: "80vw", marginTop: 20 }}
-      title={title}
-      actions={[
-        <Button type="" onClick={onClickSendMessage}>
-          {" "}
-          Enviar Mensaje
-          <EditOutlined />
-        </Button>,
-        <Button type="" onClick={onClickDownload} loading={loading}>
-          {" "}
-          Descargar obra literaria
-          <FileTextTwoTone />
-        </Button>,
-      ]}
-    >
-      <Skeleton loading={false} avatar active>
-        <Meta
-          avatar={<Avatar icon={<UserOutlined />} size="large" />}
-          title={author}
-          description={description}
-        />
-      </Skeleton>
-    </Card>
+    <Fragment>
+      <Card
+        style={{ width: "80vw", marginTop: 20 }}
+        title={title}
+        actions={[
+          <Button type="" onClick={onClickSendMessage}>
+            {" "}
+            Enviar Mensaje
+            <EditOutlined />
+          </Button>,
+          <Button type="" onClick={onClickDownload} loading={loading}>
+            {" "}
+            Descargar obra literaria
+            <FileTextTwoTone />
+          </Button>,
+        ]}
+      >
+        <Skeleton loading={false} avatar active>
+          <Meta
+            avatar={<Avatar icon={<UserOutlined />} size="large" />}
+            title={author}
+            description={description}
+          />
+        </Skeleton>
+      </Card>
+      <Modal
+        visible={visible}
+        author={author}
+        onCancel={onCancel}
+        loading={loadingFeedback}
+        onSendFeedback={onSendFeedback}
+      />
+    </Fragment>
   );
 };
 

@@ -1,11 +1,20 @@
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Avatar, Card } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
 import { SERVIDOR } from "../../constants/URIs";
 import { getBase64 } from "../../constants/base64";
 import ModalSendWork from "../ModalSendWork";
 import "antd/dist/antd.css";
+import { notification } from "antd";
+import statuses from "../../constants/Notification";
+
+const openNotification = (type) => {
+  notification[type]({
+    message: statuses.statusesProfessional[type].message,
+    description: statuses.statusesProfessional[type].description,
+  });
+};
 
 const ProfessionalCard = ({ professional, avatar, description, username }) => {
   const [loading, setLoading] = useState(false);
@@ -37,8 +46,13 @@ const ProfessionalCard = ({ professional, avatar, description, username }) => {
         },
         body,
       })
-        .then((response) => response.json())
-        .then((success) => console.log(success))
+        .then((response) => {
+          if (response.status === 200) {
+            openNotification("success");
+          } else {
+            openNotification("error");
+          }
+        })
         .catch((error) => console.log(error))
         .finally(() => {
           setLoading(false);
@@ -52,7 +66,7 @@ const ProfessionalCard = ({ professional, avatar, description, username }) => {
   };
 
   return (
-    <Fragment>
+    <>
       <Card style={{ width: "80vw" }} hoverable onClick={onClickCard}>
         <section style={{ display: "flex" }}>
           <Avatar size={100} src={avatar} icon={<UserOutlined />} />
@@ -69,7 +83,7 @@ const ProfessionalCard = ({ professional, avatar, description, username }) => {
         professional={professional}
         loading={loading}
       />
-    </Fragment>
+    </>
   );
 };
 

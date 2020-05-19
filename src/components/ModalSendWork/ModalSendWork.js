@@ -81,6 +81,11 @@ const ModalSendWork = ({
       visible={visible}
       onCancel={onCancel}
       title={`Enviar obra a ${professional}`}
+      bodyStyle={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-around",
+      }}
       footer={[
         <Button type="" onClick={onCancel}>
           Cancelar

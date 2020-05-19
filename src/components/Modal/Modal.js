@@ -7,7 +7,7 @@ import { Input } from "antd";
 import Rating from "../Rating";
 const { TextArea } = Input;
 
-const UI_Modal = ({ visible, loading, autor, onCancel, onSendFeedback }) => {
+const UI_Modal = ({ visible, loading, author, onCancel, onSendFeedback }) => {
   const [fileList, setFileList] = useState([]);
   const [file, setFile] = useState(null);
   const [feedback, setFeedback] = useState("");
@@ -45,7 +45,7 @@ const UI_Modal = ({ visible, loading, autor, onCancel, onSendFeedback }) => {
     <Modal
       visible={visible}
       onCancel={onCancel}
-      title={`Enviar mensaje a ${autor}`}
+      title={`Enviar mensaje a ${author}`}
       footer={[
         <Button type="" onClick={onCancel}>
           Cancelar
