@@ -20,4 +20,6 @@ export const CLIENTE = {
 
 export const SERVIDOR = {
   OBRAS_URL: `${SERVER_URL}/obras`,
+  SEARCHPROFESSIONAL_URL: professional =>
+    `${SERVER_URL}/usuarios?nombreUsuario=${professional}`,
 };

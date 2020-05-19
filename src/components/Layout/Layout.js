@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { SEARCHPROFESSIONAL_URL } from '../../constants/URIs';
 import { useDispatch } from 'react-redux';
 import { setProfessionals } from '../../redux/actions/professionals';
 import { Input } from 'antd';
 import { debounce } from 'lodash';
-import { PROFESSIONALS_PATH } from '../../constants/PathNames';
+import { SERVIDOR, CLIENTE } from '../../constants/URIs';
 import SideBar from '../Sidebar';
 
 const { Search } = Input;
@@ -16,7 +15,7 @@ const MainLayout = ({ children }) => {
   const dispatch = useDispatch();
 
   const checkPath = () => {
-    if (window.location.pathname === PROFESSIONALS_PATH) {
+    if (window.location.pathname === CLIENTE.PROFESIONALES_URL) {
       setPlaceholder('Busqueda por profesional');
     } else {
       setSearchHide(true);
@@ -31,7 +30,7 @@ const MainLayout = ({ children }) => {
     if (professional === '') return;
 
     setLoading(true);
-    fetch(SEARCHPROFESSIONAL_URL(professional), {
+    fetch(SERVIDOR.SEARCHPROFESSIONAL_URL(professional), {
       method: 'GET',
       mode: 'cors',
       headers: {
@@ -39,7 +38,10 @@ const MainLayout = ({ children }) => {
       },
     })
       .then(response => {
-        const professionals = response.data;
+        return response.json();
+      })
+      .then(response => {
+        const professionals = response;
         dispatch(setProfessionals(professionals));
       })
       .catch(error => console.log(error))

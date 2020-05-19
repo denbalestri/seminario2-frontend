@@ -5,27 +5,27 @@ import { useSelector } from 'react-redux';
 
 const professionalsList = [
   {
-    firstName: 'Eduardo',
-    lastName: 'Lopez',
+    nombre: 'Eduardo',
+    apellido: 'Lopez',
     username: 'EduardoLopez',
     avatar: '',
-    description: 'Experto en Novelas Romanticas',
+    genero: { descripcion: 'Romantico' },
     id: 1,
   },
   {
-    firstName: 'Silvia',
-    lastName: 'Carrozo',
+    nombre: 'Silvia',
+    apellido: 'Carrozo',
     username: 'SilviaCarrozo',
     avatar: '',
-    description: 'Experto en Poesia',
+    genero: { descripcion: 'Poesia' },
     id: 2,
   },
   {
-    firstName: 'Nicolas',
-    lastName: 'Fuentes',
+    nombre: 'Nicolas',
+    apellido: 'Fuentes',
     username: 'NicolasFuentes',
     avatar: '',
-    description: 'Experto en Novelas',
+    genero: { descripcion: 'Poesia' },
     id: 3,
   },
 ];
@@ -35,6 +35,7 @@ const Professionals = () => {
   const professionalsSearched = useSelector(state => state.professionals);
 
   useEffect(() => {
+    console.log(professionalsSearched);
     setProfessionals(professionalsSearched);
   }, [professionalsSearched]);
 
@@ -56,7 +57,9 @@ const Professionals = () => {
         {professionals.map((professional, index) => {
           const professionalCardProps = {
             key: index,
-            ...professional,
+            firstName: professional.nombre,
+            lastName: professional.apellido,
+            description: `Experto en el genero: ${professional.genero.descripcion}`,
           };
 
           return <ProfessionalCard {...professionalCardProps} />;
