@@ -1,3 +1,3 @@
-import ProfessionalCard from "./ProfessionalCard";
+import ProfessionalCard from './ProfessionalCard';
 
 export default ProfessionalCard;

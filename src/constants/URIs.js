@@ -1,13 +1,13 @@
-const SERVER_URL = "http://localhost:8080/ProyectoTextos";
+const SERVER_URL = 'http://localhost:8080/ProyectoTextos';
 
-const INICIO_URL = "/";
-const PERFIL_URL = "/perfil";
-const GRUPOS_URL = "/grupos";
-const REVISIONES_URL = "/revisiones";
-const NOTFOUND_URL = "*";
-const PROFESIONALES_URL = "/profesionales";
-const TRABAJOS_URL = "/trabajos";
-const DEVOLUCIONES_URL = "/devoluciones";
+const INICIO_URL = '/';
+const PERFIL_URL = '/perfil';
+const GRUPOS_URL = '/grupos';
+const REVISIONES_URL = '/revisiones';
+const NOTFOUND_URL = '*';
+const PROFESIONALES_URL = '/profesionales';
+const TRABAJOS_URL = '/trabajos';
+const DEVOLUCIONES_URL = '/devoluciones';
 
 export const CLIENTE = {
   INICIO_URL,
@@ -23,8 +23,10 @@ export const CLIENTE = {
 export const SERVIDOR = {
   OBRAS_URL: `${SERVER_URL}/obras`,
   CORRECCIONES_URL: `${SERVER_URL}/correcciones`,
-  OBRAS_SINCORREGIR_URL: (username) =>
+  OBRAS_SINCORREGIR_URL: username =>
     `${SERVER_URL}/ObraSinCorregirPorProfesional?nombreUsuarioProfesional=${username}`,
   OBRAS_CONTENIDO_URL: (nameWork, author) =>
     `${SERVER_URL}/ContenidoObras?nombreObra=${nameWork}&userAutor=${author}`,
+  SEARCHPROFESSIONAL_URL: professional =>
+    `${SERVER_URL}/usuarios?nombreUsuario=${professional}`,
 };
