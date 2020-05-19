@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import { Avatar, Card, Upload } from "antd";
-import { UploadOutlined, UserOutlined } from "@ant-design/icons";
-import Button from "../Button";
-import { useSelector } from "react-redux";
-import { SERVIDOR } from "../../constants/URIs";
-import "antd/dist/antd.css";
+import React, { useState } from 'react';
+import { Avatar, Card, Upload } from 'antd';
+import { UploadOutlined, UserOutlined } from '@ant-design/icons';
+import Button from '../Button';
+import { useSelector } from 'react-redux';
+import { SERVIDOR } from '../../constants/URIs';
+import 'antd/dist/antd.css';
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
+    reader.onerror = error => reject(error);
   });
 }
 
@@ -25,25 +25,25 @@ const ProfessionalCard = ({
   const [file, setFile] = useState({});
   const [fileList, setFileList] = useState([]);
   const [loading, setLoading] = useState(false);
-  const user = useSelector((state) => state.user);
+  const user = useSelector(state => state.user);
 
-  const handleChange = (info) => {
+  const handleChange = info => {
     setFile(info.file);
     setFileList(info.fileList.slice(-1));
   };
 
   const uploadProps = {
-    name: "obra",
-    customRequest: ({ onSuccess }) => setTimeout(() => onSuccess("ok"), 0),
+    name: 'obra',
+    customRequest: ({ onSuccess }) => setTimeout(() => onSuccess('ok'), 0),
     fileList,
     onChange: handleChange,
   };
 
   const onSubmit = () => {
-    getBase64(file.originFileObj).then((encodedFile) => {
+    getBase64(file.originFileObj).then(encodedFile => {
       const body = JSON.stringify({
         contenido: encodedFile,
-        genero: "Romantico",
+        genero: 'Romantico',
         nombreObra: file.name,
         nombreUsuarioAutor: user.username,
         nombreUsuarioProfesional: username,
@@ -53,23 +53,23 @@ const ProfessionalCard = ({
       setLoading(true);
 
       fetch(SERVIDOR.OBRAS_URL, {
-        method: "POST",
-        mode: "no-cors",
+        method: 'POST',
+        mode: 'no-cors',
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
         body,
       })
-        .then((response) => response.json())
-        .then((success) => console.log(success))
-        .catch((error) => console.log(error))
+        .then(response => response.json())
+        .then(success => console.log(success))
+        .catch(error => console.log(error))
         .finally(() => setLoading(false));
     });
   };
 
   return (
-    <Card style={{ width: "80vw" }}>
-      <section style={{ display: "flex" }}>
+    <Card style={{ width: '80vw' }}>
+      <section style={{ display: 'flex' }}>
         <Avatar size={100} src={avatar} icon={<UserOutlined />} />
         <aside style={{ marginLeft: 10, marginTop: 10 }}>
           <p>{`${firstName} ${lastName}`}</p>
@@ -79,8 +79,8 @@ const ProfessionalCard = ({
       <section
         style={{
           marginTop: 10,
-          display: "flex",
-          justifyContent: "space-between",
+          display: 'flex',
+          justifyContent: 'space-between',
         }}
       >
         <Upload {...uploadProps} onChange={handleChange}>
