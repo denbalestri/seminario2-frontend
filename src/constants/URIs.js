@@ -1,5 +1,23 @@
-const BASE_URL = 'http://localhost:8080/ProyectoTextos';
+const SERVER_URL = 'http://localhost:8080/ProyectoTextos';
 
-export const OBRAS_URL = `${BASE_URL}/obras`;
-export const SEARCHPROFESSIONAL_URL = username =>
-  `${BASE_URL}/usuarios?nombreUsuario=${username}`;
+const INICIO_URL = '/';
+const PERFIL_URL = '/perfil';
+const GRUPOS_URL = '/grupos';
+const REVISIONES_URL = '/revisiones';
+const PROFESIONALES_URL = '/profesionales';
+const TRABAJOS_URL = '/trabajos';
+const DEVOLUCIONES_URL = '/devoluciones';
+
+export const CLIENTE = {
+  INICIO_URL,
+  PERFIL_URL,
+  GRUPOS_URL,
+  REVISIONES_URL,
+  PROFESIONALES_URL,
+  TRABAJOS_URL,
+  DEVOLUCIONES_URL,
+};
+
+export const SERVIDOR = {
+  OBRAS_URL: `${SERVER_URL}/obras`,
+};

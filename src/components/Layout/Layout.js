@@ -5,6 +5,8 @@ import { setProfessionals } from '../../redux/actions/professionals';
 import { Input } from 'antd';
 import { debounce } from 'lodash';
 import { PROFESSIONALS_PATH } from '../../constants/PathNames';
+import SideBar from '../Sidebar';
+
 const { Search } = Input;
 
 const MainLayout = ({ children }) => {
@@ -58,14 +60,18 @@ const MainLayout = ({ children }) => {
         alignItems: 'center',
         justifyContent: 'stretch',
         flexDirection: 'column',
+        backgroundColor: '#d2d2d2',
       }}
     >
+      <div className="sidebar">
+        <SideBar />
+      </div>
       <nav
         style={{
           height: 50,
           padding: 10,
           width: '100%',
-          backgroundColor: '#CCC',
+          backgroundColor: '#40a9ff',
           display: 'flex',
           justifyContent: 'center',
         }}

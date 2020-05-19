@@ -3,7 +3,7 @@ import { Avatar, Card, Upload } from 'antd';
 import { UploadOutlined, UserOutlined } from '@ant-design/icons';
 import Button from '../Button';
 import { useSelector } from 'react-redux';
-import { OBRAS_URL } from '../../constants/URIs';
+import { SERVIDOR } from '../../constants/URIs';
 import 'antd/dist/antd.css';
 
 function getBase64(file) {
@@ -52,7 +52,7 @@ const ProfessionalCard = ({
 
       setLoading(true);
 
-      fetch(OBRAS_URL, {
+      fetch(SERVIDOR.OBRAS_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: {
