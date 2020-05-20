@@ -1,16 +1,16 @@
-import React, { useState, Fragment } from "react";
-import { Skeleton, Card, Avatar } from "antd";
-import { EditOutlined, FileTextTwoTone, UserOutlined } from "@ant-design/icons";
-import { SERVIDOR } from "../../constants/URIs";
-import Button from "../../components/Button";
-import Modal from "../../components/Modal";
-import { getBase64 } from "../../constants/base64";
-import { notification } from "antd";
-import statuses from "../../constants/Notification";
-import { useSelector } from "react-redux";
+import React, { useState, Fragment } from 'react';
+import { Skeleton, Card, Avatar } from 'antd';
+import { EditOutlined, FileTextTwoTone, UserOutlined } from '@ant-design/icons';
+import { SERVIDOR } from '../../constants/URIs';
+import Button from '../../components/Button';
+import Modal from '../../components/Modal';
+import { getBase64 } from '../../constants/base64';
+import { notification } from 'antd';
+import statuses from '../../constants/Notification';
+import { useSelector } from 'react-redux';
 const { Meta } = Card;
 
-const openNotification = (type) => {
+const openNotification = type => {
   notification[type]({
     message: statuses.statusesRecivedWork[type].message,
     description: statuses.statusesRecivedWork[type].description,
@@ -19,7 +19,7 @@ const openNotification = (type) => {
 
 function base64ToBlob(file) {
   // extract content type and base64 payload from original string
-  var pos = file.indexOf(";base64,");
+  var pos = file.indexOf(';base64,');
   var type = file.substring(5, pos);
   var base64 = file.substr(pos + 8);
 
@@ -41,9 +41,9 @@ function base64ToBlob(file) {
   return blob;
 }
 const downloadFile = (blob, fileName) => {
-  const a = document.createElement("a");
+  const a = document.createElement('a');
   document.body.appendChild(a);
-  a.style = "display: none";
+  a.style = 'display: none';
 
   var url = window.URL.createObjectURL(blob);
   a.href = url;
@@ -63,35 +63,35 @@ const RecivedWorkCard = ({
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [loadingFeedback, setLoadingFeedback] = useState(false);
-  const user = useSelector((state) => state.user);
+  const user = useSelector(state => state.user);
 
   const onClickDownload = () => {
     setLoading(true);
     fetch(SERVIDOR.OBRAS_CONTENIDO_URL(nameWork, username), {
-      method: "GET",
-      mode: "cors",
+      method: 'GET',
+      mode: 'cors',
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
     })
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((response) => {
+      .then(response => {
         const file = response.contenido;
         const nameWork = response.nombreObra;
         const fileConverted = base64ToBlob(file);
         downloadFile(fileConverted, `Archivo-${nameWork}`);
       })
-      .catch((error) => console.log(error))
+      .catch(error => console.log(error))
       .finally(() => setLoading(false));
   };
 
-  const onSendFeedback = (feedback) => {
+  const onSendFeedback = feedback => {
     setLoadingFeedback(true);
     const file = feedback.file;
     if (file) {
-      getBase64(file.originFileObj).then((encodedFile) => {
+      getBase64(file.originFileObj).then(encodedFile => {
         const body = JSON.stringify({
           contenidoCorreccion: encodedFile,
           nombreObra: nameWork,
@@ -101,21 +101,21 @@ const RecivedWorkCard = ({
         });
 
         fetch(SERVIDOR.CORRECCIONES_URL, {
-          method: "POST",
-          mode: "cors",
+          method: 'POST',
+          mode: 'cors',
           headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
+            'Content-Type': 'application/x-www-form-urlencoded',
           },
           body,
         })
-          .then((response) => {
+          .then(response => {
             if (response.status === 200) {
-              openNotification("success");
+              openNotification('success');
             } else {
-              openNotification("error");
+              openNotification('error');
             }
           })
-          .catch((error) => console.log(error))
+          .catch(error => console.log(error))
           .finally(() => {
             setLoadingFeedback(false);
             setVisible(false);
@@ -138,16 +138,21 @@ const RecivedWorkCard = ({
   return (
     <Fragment>
       <Card
-        style={{ width: "80vw", marginTop: 20 }}
+        style={{
+          width: '80vw',
+          marginTop: 20,
+          marginLeft: 'auto',
+          marginRight: 'auto',
+        }}
         title={title}
         actions={[
           <Button type="" onClick={onClickSendMessage}>
-            {" "}
+            {' '}
             Enviar Mensaje
             <EditOutlined />
           </Button>,
           <Button type="" onClick={onClickDownload} loading={loading}>
-            {" "}
+            {' '}
             Descargar obra literaria
             <FileTextTwoTone />
           </Button>,
