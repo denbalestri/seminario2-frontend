@@ -22,6 +22,7 @@ const RecievedWorkList = ({ works }) => {
           title: work.nombreObra,
           nameWork: work.nombreObra,
           userAuthor: work.userAutor,
+          avatar: '../../../images/person5.jpg',
           author: `${work.nombreAutor} ${work.apellidoAutor}`,
           username: work.userAutor,
           description: `El genero de esta obra es ${work.genero}`,

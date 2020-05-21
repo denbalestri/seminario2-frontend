@@ -59,6 +59,7 @@ const RecivedWorkCard = ({
   author,
   userAuthor,
   username,
+  avatar,
 }) => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -160,7 +161,9 @@ const RecivedWorkCard = ({
       >
         <Skeleton loading={false} avatar active>
           <Meta
-            avatar={<Avatar icon={<UserOutlined />} size="large" />}
+            avatar={
+              <Avatar icon={<UserOutlined />} src={avatar} size="large" />
+            }
             title={author}
             description={description}
           />

@@ -19,7 +19,6 @@ span.anticon.anticon-menu-fold.bm-cross {
 span.ant-avatar.bm-item.ant-avatar-circle.ant-avatar-icon {
   margin: 0 auto;
   pointer-events: none;
-  background-color: rgb(64, 169, 255);
 }
 
 p.nombre {
@@ -44,7 +43,7 @@ p.nombre {
   color: rgba(255, 255, 255, 0.6);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   transition: color 0.2s;
-  font-family: "Poppins", Roboto, Arial, sans-serif;
+  font-family: 'Poppins', Roboto, Arial, sans-serif;
 }
 
 a.bm-item.menu-item:hover {
