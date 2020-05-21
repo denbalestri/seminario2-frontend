@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { Modal } from "antd";
-import { Upload } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import Button from "../../components/Button";
-import { Input } from "antd";
-import Rating from "../Rating";
+import React, { useState, useEffect } from 'react';
+import { Modal } from 'antd';
+import { Upload } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import Button from '../../components/Button';
+import { Input } from 'antd';
 const { TextArea } = Input;
 
 const UI_Modal = ({ visible, loading, author, onCancel, onSendFeedback }) => {
   const [fileList, setFileList] = useState([]);
   const [file, setFile] = useState(null);
-  const [feedback, setFeedback] = useState("");
+  const [feedback, setFeedback] = useState('');
 
   const onLocalSendFeedback = () => {
     const feedbackList = {
@@ -20,23 +19,23 @@ const UI_Modal = ({ visible, loading, author, onCancel, onSendFeedback }) => {
     onSendFeedback(feedbackList);
   };
 
-  const handleChange = (info) => {
+  const handleChange = info => {
     setFile(info.file);
     setFileList(info.fileList.slice(-1));
   };
 
   const uploadProps = {
-    name: "obra-corregida",
-    customRequest: ({ onSuccess }) => setTimeout(() => onSuccess("ok"), 0),
+    name: 'obra-corregida',
+    customRequest: ({ onSuccess }) => setTimeout(() => onSuccess('ok'), 0),
     fileList,
     onChange: handleChange,
   };
 
   useEffect(() => {
-    setFeedback("");
+    setFeedback('');
   }, [visible]);
 
-  const onChange = (e) => {
+  const onChange = e => {
     const feedback = e.target.value;
     setFeedback(feedback);
   };
@@ -66,7 +65,6 @@ const UI_Modal = ({ visible, loading, author, onCancel, onSendFeedback }) => {
         onChange={onChange}
         autoSize={{ minRows: 2, maxRows: 6 }}
       />
-      <Rating />
       <section style={{ marginTop: 20 }}>
         <Upload {...uploadProps} onChange={handleChange}>
           <Button type="">

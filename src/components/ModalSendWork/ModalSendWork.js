@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { Modal, Upload, Input } from "antd";
-import { UploadOutlined, ReadOutlined } from "@ant-design/icons";
-import isEmpty from "lodash/isEmpty";
-import Button from "../../components/Button";
-import Select from "../Select";
-const optionItemsReview = ["Objetiva", "Subjetiva", "Crítica impresionista"];
+import React, { useState, useEffect } from 'react';
+import { Modal, Upload, Input } from 'antd';
+import { UploadOutlined, ReadOutlined } from '@ant-design/icons';
+import isEmpty from 'lodash/isEmpty';
+import Button from '../../components/Button';
+import Select from '../Select';
+const optionItemsReview = ['Objetiva', 'Subjetiva'];
 const optionItemsGenre = [
-  "Romantico",
-  "Aventura",
-  "Accion",
-  "Terror",
-  "Suspenso",
-  "Drama",
+  'Romantico',
+  'Aventura',
+  'Accion',
+  'Terror',
+  'Suspenso',
+  'Drama',
 ];
 const initialState = {
-  nameWork: "",
+  nameWork: '',
   review: [],
   genre: [],
 };
@@ -41,14 +41,14 @@ const ModalSendWork = ({
     onSendWork(work);
   };
 
-  const handleChange = (info) => {
+  const handleChange = info => {
     setFile(info.file);
     setFileList(info.fileList.slice(-1));
   };
 
   const uploadProps = {
-    name: "obra",
-    customRequest: ({ onSuccess }) => setTimeout(() => onSuccess("ok"), 0),
+    name: 'obra',
+    customRequest: ({ onSuccess }) => setTimeout(() => onSuccess('ok'), 0),
     fileList,
     onChange: handleChange,
   };
@@ -57,19 +57,19 @@ const ModalSendWork = ({
     setForm(initialState);
   }, [visible]);
 
-  const onChangeNameWork = (e) => {
+  const onChangeNameWork = e => {
     const nameWork = e.target.value;
     setForm({ ...form, nameWork });
   };
 
-  const onChangeReview = (review) => {
+  const onChangeReview = review => {
     setForm({
       ...form,
       review,
     });
   };
 
-  const onChangeGenre = (genre) => {
+  const onChangeGenre = genre => {
     setForm({
       ...form,
       genre,
@@ -82,9 +82,9 @@ const ModalSendWork = ({
       onCancel={onCancel}
       title={`Enviar obra a ${professional}`}
       bodyStyle={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-around",
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
       }}
       footer={[
         <Button type="" onClick={onCancel}>
