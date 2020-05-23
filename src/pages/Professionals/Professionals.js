@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import MainLayout from '../../components/Layout';
 import ProfessionalCard from '../../components/ProfessionalCard';
 import { useSelector } from 'react-redux';
 
@@ -42,31 +41,17 @@ const Professionals = () => {
     setProfessionals(professionalsList);
   }, []);
 
-  return (
-    <MainLayout>
-      <section
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'space-around',
-          height: '100%',
-        }}
-      >
-        {professionals.map((professional, index) => {
-          const professionalCardProps = {
-            professional: `${professional.nombre} ${professional.apellido}`,
-            key: index,
-            avatar: professional.avatar,
-            userProfessional: professional.nombreUsuario,
-            description: `Experto en el genero: ${professional.genero.descripcion}`,
-          };
+  return professionals.map((professional, index) => {
+    const professionalCardProps = {
+      professional: `${professional.nombre} ${professional.apellido}`,
+      key: index,
+      avatar: professional.avatar,
+      userProfessional: professional.nombreUsuario,
+      description: `Experto en el genero: ${professional.genero.descripcion}`,
+    };
 
-          return <ProfessionalCard {...professionalCardProps} />;
-        })}
-      </section>
-    </MainLayout>
-  );
+    return <ProfessionalCard {...professionalCardProps} />;
+  });
 };
 
 export default Professionals;

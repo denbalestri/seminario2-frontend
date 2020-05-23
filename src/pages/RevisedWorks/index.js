@@ -1,5 +1,3 @@
-/** @format */
-
-import RevisedWork from "./RevisedWorks";
+import RevisedWork from './RevisedWorks';
 
 export default RevisedWork;

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { slide as Menu } from 'react-burger-menu';
 import { Avatar } from 'antd';
 import { useSelector } from 'react-redux';
@@ -41,9 +42,9 @@ const Sidebar = () => {
       </section>
       {sidebarItems.map((menuItem, index) => {
         return (
-          <a className="menu-item" key={index} href={menuItem.href}>
+          <Link className="menu-item" key={index} to={menuItem.href}>
             <FontAwesomeIcon icon={menuItem.icon} /> {menuItem.name}
-          </a>
+          </Link>
         );
       })}
     </Menu>
