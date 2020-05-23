@@ -62,7 +62,6 @@ const MainLayout = ({ children }) => {
         alignItems: 'center',
         justifyContent: 'stretch',
         flexDirection: 'column',
-        backgroundColor: '#d2d2d2',
       }}
     >
       <div className="sidebar">
