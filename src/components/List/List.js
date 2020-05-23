@@ -1,10 +1,8 @@
-/** @format */
-
-import React, { useState } from "react";
-import { List, Avatar, Space } from "antd";
-import Button from "../../components/Button";
-import Comment from "../../components/Comment";
-import { MessageOutlined, FileTwoTone, UserOutlined } from "@ant-design/icons";
+import React, { useState } from 'react';
+import { MessageOutlined, FileTwoTone, UserOutlined } from '@ant-design/icons';
+import { List, Avatar, Space } from 'antd';
+import Button from '../../components/Button';
+import Comment from '../../components/Comment';
 
 const IconText = ({ icon, text, onClick }) => (
   <Space>

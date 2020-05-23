@@ -89,7 +89,9 @@ const MainLayout = ({ children }) => {
           ''
         )}
       </nav>
-      <div class="mainContent">{children}</div>
+      <div class="mainContent" style={{ height: '100%' }}>
+        {children}
+      </div>
     </main>
   );
 };

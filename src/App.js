@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import Routes from './routes';
 import store from './redux/store';
 import history from './history';
+
 export default function App() {
   return (
     <Provider store={store}>
