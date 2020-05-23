@@ -1,11 +1,13 @@
 /** @format */
 
-import { SET_USER } from "../actions/actionTypes.json";
+import { SET_USER } from '../actions/actionTypes.json';
 
 const initialState = {
-  firstName: "Denis",
-  lastName: "Balestri",
-  username: "dbalestri",
+  firstName: 'Santiago',
+  lastName: 'Rico',
+  username: 'srico',
+  avatar: '../../../images/person5.jpg',
+  rol: 'Autor',
 };
 
 export default function user(state = initialState, action) {
