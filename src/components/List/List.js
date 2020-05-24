@@ -13,7 +13,7 @@ const IconText = ({ icon, text, onClick }) => (
   </Space>
 );
 
-const ListItem = ({ title, href, description, content }) => {
+const ListItem = ({ title, href, description, content, avatar }) => {
   const [openComments, setOpenComments] = useState(false);
 
   const onClickComment = () => {
@@ -42,7 +42,7 @@ const ListItem = ({ title, href, description, content }) => {
       ]}
     >
       <List.Item.Meta
-        avatar={<Avatar icon={<UserOutlined />} />}
+        avatar={<Avatar icon={<UserOutlined />} src={avatar} size={50} />}
         title={<a href={href}>{title}</a>}
         description={description}
       />

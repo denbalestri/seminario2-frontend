@@ -18,10 +18,10 @@ const RevisedWork = () => {
         return response.json();
       })
       .then(response => {
+        console.log(response);
         const parsedWorks = response.map(work => ({
           title: work.profesional,
-          avatar:
-            'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+          avatar: '../../../images/person3.jpg',
           description: `Novela llamada ${work.nombreObra} del genero ${work.genero}`,
           content: work.mensajeCorreccion,
         }));
@@ -29,7 +29,7 @@ const RevisedWork = () => {
       })
       .catch(error => console.log(error))
       .finally(() => setLoading(false));
-  });
+  }, []);
 
   return loading ? (
     <Spin tip="Cargando..." size="large" />
