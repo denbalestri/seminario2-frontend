@@ -39,8 +39,8 @@ const RevisedWork = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'space-around',
         height: '100%',
+        width: '100%',
       }}
     >
       <List listRevisedWorks={revisedWorks} />

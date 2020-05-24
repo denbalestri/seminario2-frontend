@@ -18,6 +18,7 @@ export default function App() {
               alignItems: 'center',
               justifyContent: 'space-around',
               height: '100%',
+              width: '100%',
             }}
           >
             <Routes />

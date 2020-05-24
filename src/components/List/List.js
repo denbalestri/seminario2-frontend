@@ -42,7 +42,7 @@ const ListItem = ({ title, href, description, content, avatar }) => {
       ]}
     >
       <List.Item.Meta
-        avatar={<Avatar icon={<UserOutlined />} src={avatar} size={50} />}
+        avatar={<Avatar icon={<UserOutlined />} src={avatar} size={100} />}
         title={<a href={href}>{title}</a>}
         description={description}
       />
