@@ -29,12 +29,22 @@ const RevisedWork = () => {
       })
       .catch(error => console.log(error))
       .finally(() => setLoading(false));
-  });
+  }, []);
 
   return loading ? (
     <Spin tip="Cargando..." size="large" />
   ) : (
-    <List listRevisedWorks={revisedWorks} />
+    <section
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        height: '100%',
+      }}
+    >
+      <List listRevisedWorks={revisedWorks} />
+    </section>
   );
 };
 
