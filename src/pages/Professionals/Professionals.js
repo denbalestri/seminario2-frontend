@@ -38,20 +38,41 @@ const Professionals = () => {
   }, [professionalsSearched]);
 
   useEffect(() => {
-    setProfessionals(professionalsList);
+    setProfessionals([]);
   }, []);
 
-  return professionals.map((professional, index) => {
-    const professionalCardProps = {
-      professional: `${professional.nombre} ${professional.apellido}`,
-      key: index,
-      avatar: professional.avatar,
-      userProfessional: professional.nombreUsuario,
-      description: `Experto en el genero: ${professional.genero.descripcion}`,
-    };
+  return professionals.length ? (
+    professionals.map((professional, index) => {
+      const professionalCardProps = {
+        professional: `${professional.nombre} ${professional.apellido}`,
+        key: index,
+        avatar: professional.avatar,
+        userProfessional: professional.nombreUsuario,
+        description: `Experto en el genero: ${professional.genero.descripcion}`,
+      };
 
-    return <ProfessionalCard {...professionalCardProps} />;
-  });
+      return <ProfessionalCard {...professionalCardProps} />;
+    })
+  ) : (
+    <>
+      <p
+        style={{
+          fontSize: 30,
+          marginTop: 50,
+          fontFamily: 'Pangolin, cursive',
+        }}
+      >
+        Oh no! No se encontraron profesionales disponibles!
+      </p>
+      <img
+        style={{
+          marginTop: -80,
+        }}
+        src="../../../images/professional.gif"
+        alt="noProfessionalsFound"
+      />
+    </>
+  );
 };
 
 export default Professionals;
