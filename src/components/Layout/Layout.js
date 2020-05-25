@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { setProfessionals } from '../../redux/actions/professionals';
 import { Input } from 'antd';
 import { debounce } from 'lodash';
@@ -13,18 +14,17 @@ const MainLayout = ({ children }) => {
   const [searchHide, setSearchHide] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
+  const location = history.location.pathname;
 
-  const checkPath = () => {
-    if (window.location.pathname === CLIENTE.PROFESIONALES_URL) {
+  useEffect(() => {
+    if (location === CLIENTE.PROFESIONALES_URL) {
+      setSearchHide(false);
       setPlaceholder('Busqueda por profesional');
     } else {
       setSearchHide(true);
     }
-  };
-
-  useEffect(() => {
-    checkPath();
-  }, []);
+  }, [location]);
 
   const onSearch = debounce(professional => {
     if (professional === '') return;
@@ -77,7 +77,7 @@ const MainLayout = ({ children }) => {
           justifyContent: 'center',
         }}
       >
-        {!searchHide ? (
+        {!searchHide && (
           <Search
             placeholder={placeholder}
             onSearch={professional => onSearch(professional)}
@@ -85,8 +85,6 @@ const MainLayout = ({ children }) => {
             loading={loading}
             onChange={onChange}
           />
-        ) : (
-          ''
         )}
       </nav>
       <div
