@@ -27,6 +27,7 @@ const ListItem = ({ title, href, description, content, avatar }) => {
   return (
     <List.Item
       key={title}
+      style={{ width: '80vw' }}
       actions={[
         <IconText
           icon={FileTwoTone}

@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import {
   UserOutlined,
   MenuUnfoldOutlined,
-  MenuFoldOutlined,
+  CloseOutlined,
 } from '@ant-design/icons';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,6 +19,11 @@ import './sidebar.css';
 const Sidebar = () => {
   const user = useSelector(state => state.user);
   const [sidebarItems, setSidebarItems] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onClick = () => {
+    setIsOpen(!isOpen);
+  };
 
   useEffect(() => {
     if (user.rol === 'Autor') setSidebarItems(sidebarItemsAuthor);
@@ -28,8 +33,8 @@ const Sidebar = () => {
   return (
     <Menu
       className={'sidebar'}
-      customBurgerIcon={<MenuUnfoldOutlined />}
-      customCrossIcon={<MenuFoldOutlined />}
+      customCrossIcon={<CloseOutlined />}
+      isOpen={isOpen}
     >
       <Avatar
         size={150}
@@ -42,7 +47,12 @@ const Sidebar = () => {
       </section>
       {sidebarItems.map((menuItem, index) => {
         return (
-          <Link className="menu-item" key={index} to={menuItem.href}>
+          <Link
+            className="menu-item"
+            key={index}
+            to={menuItem.href}
+            onClick={onClick}
+          >
             <FontAwesomeIcon icon={menuItem.icon} /> {menuItem.name}
           </Link>
         );

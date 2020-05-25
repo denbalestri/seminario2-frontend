@@ -90,7 +90,7 @@ const MainLayout = ({ children }) => {
         )}
       </nav>
       <div
-        class="mainContent"
+        className="mainContent"
         style={{ height: '100%', width: '100%', overflow: 'scroll' }}
       >
         {children}
