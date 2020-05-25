@@ -3,7 +3,7 @@ import { MessageOutlined, FileTwoTone, UserOutlined } from '@ant-design/icons';
 import { List, Avatar, Space } from 'antd';
 import Button from '../../components/Button';
 import Comment from '../../components/Comment';
-
+import Rating from '../../components/Rating';
 const IconText = ({ icon, text, onClick }) => (
   <Space>
     <Button onClick={onClick}>
@@ -31,12 +31,12 @@ const ListItem = ({ title, href, description, content, avatar }) => {
       actions={[
         <IconText
           icon={FileTwoTone}
-          text="Archivo"
+          text="Descargar Obra"
           key="list-vertical-star-o"
         />,
         <IconText
           icon={MessageOutlined}
-          text="Comentar"
+          text="Enviar Devolucion"
           key="list-vertical-message"
           onClick={onClickComment}
         />,
@@ -48,7 +48,12 @@ const ListItem = ({ title, href, description, content, avatar }) => {
         description={description}
       />
       {content}
-      {openComments && <Comment onCancel={onCancel} />}
+      {openComments && (
+        <section>
+          <Comment onCancel={onCancel} avatar={avatar} datetime={Date.now()} />
+          <Rating />
+        </section>
+      )}
     </List.Item>
   );
 };
