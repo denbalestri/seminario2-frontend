@@ -3,11 +3,7 @@ import { Link } from 'react-router-dom';
 import { slide as Menu } from 'react-burger-menu';
 import { Avatar } from 'antd';
 import { useSelector } from 'react-redux';
-import {
-  UserOutlined,
-  MenuUnfoldOutlined,
-  CloseOutlined,
-} from '@ant-design/icons';
+import { UserOutlined, CloseOutlined } from '@ant-design/icons';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -22,7 +18,11 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const onClick = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(false);
+  };
+
+  const handleStateChange = state => {
+    setIsOpen(state.isOpen);
   };
 
   useEffect(() => {
@@ -35,6 +35,7 @@ const Sidebar = () => {
       className={'sidebar'}
       customCrossIcon={<CloseOutlined />}
       isOpen={isOpen}
+      onStateChange={handleStateChange}
     >
       <Avatar
         size={150}
