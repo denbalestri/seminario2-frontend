@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import MainLayout from '../../components/Layout';
 import ProfessionalCard from '../../components/ProfessionalCard';
 import { useSelector } from 'react-redux';
 
@@ -42,30 +41,39 @@ const Professionals = () => {
     setProfessionals(professionalsList);
   }, []);
 
-  return (
-    <MainLayout>
-      <section
+  return professionals.length ? (
+    professionals.map((professional, index) => {
+      const professionalCardProps = {
+        professional: `${professional.nombre} ${professional.apellido}`,
+        key: index,
+        avatar: professional.avatar,
+        userProfessional: professional.nombreUsuario,
+        description: `Experto en el genero: ${professional.genero.descripcion}`,
+      };
+
+      return <ProfessionalCard {...professionalCardProps} />;
+    })
+  ) : (
+    <>
+      <p
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'space-around',
-          height: '100%',
+          fontSize: 30,
+          marginTop: 50,
+          fontFamily: 'Pangolin, cursive',
         }}
       >
-        {professionals.map((professional, index) => {
-          const professionalCardProps = {
-            professional: `${professional.nombre} ${professional.apellido}`,
-            key: index,
-            avatar: professional.avatar,
-            userProfessional: professional.nombreUsuario,
-            description: `Experto en el genero: ${professional.genero.descripcion}`,
-          };
-
-          return <ProfessionalCard {...professionalCardProps} />;
-        })}
-      </section>
-    </MainLayout>
+        Oh no! No se encontraron profesionales disponibles!
+      </p>
+      <img
+        style={{
+          marginTop: -80,
+          width: 400,
+          height: 600,
+        }}
+        src="../../../images/professional.gif"
+        alt="noProfessionalsFound"
+      />
+    </>
   );
 };
 

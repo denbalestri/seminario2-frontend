@@ -2,7 +2,6 @@ import { Spin } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import RecivedWorkCard from '../../components/RecivedWorkCard';
-import MainLayout from '../../components/Layout';
 import { SERVIDOR } from '../../constants/URIs';
 
 const RecievedWorkList = ({ works }) => {
@@ -63,36 +62,23 @@ const RecivedWork = () => {
       .finally(() => setLoading(false));
   };
 
-  return (
-    <MainLayout>
-      {recivedWork.length > 0 ? (
-        <RecievedWorkList works={recivedWork} />
-      ) : loading ? (
-        <section
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100%',
-          }}
-        >
-          <Spin tip="Cargando..." size="large" />
-        </section>
-      ) : (
-        <section>
-          <p
-            style={{
-              fontSize: 30,
-              marginTop: 20,
-              fontFamily: 'Pangolin, cursive',
-            }}
-          >
-            Nuestro autor esta escribiendo obras estupendas, intente nuevamente!
-          </p>
-          <img src="../../../images/author.gif" alt="Sin resultados"></img>
-        </section>
-      )}
-    </MainLayout>
+  return recivedWork.length > 0 ? (
+    <RecievedWorkList works={recivedWork} />
+  ) : loading ? (
+    <Spin tip="Cargando..." size="large" />
+  ) : (
+    <section>
+      <p
+        style={{
+          fontSize: 30,
+          marginTop: 20,
+          fontFamily: 'Pangolin, cursive',
+        }}
+      >
+        Nuestro autor esta escribiendo obras estupendas, intente nuevamente!
+      </p>
+      <img src="../../../images/author.gif" alt="Sin resultados"></img>
+    </section>
   );
 };
 
