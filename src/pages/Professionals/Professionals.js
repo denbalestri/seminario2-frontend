@@ -38,7 +38,7 @@ const Professionals = () => {
   }, [professionalsSearched]);
 
   useEffect(() => {
-    setProfessionals([]);
+    setProfessionals(professionalsList);
   }, []);
 
   return professionals.length ? (
@@ -67,6 +67,8 @@ const Professionals = () => {
       <img
         style={{
           marginTop: -80,
+          width: 400,
+          height: 600,
         }}
         src="../../../images/professional.gif"
         alt="noProfessionalsFound"
