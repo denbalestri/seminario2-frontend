@@ -20,7 +20,7 @@ const MainLayout = ({ children }) => {
   useEffect(() => {
     if (location === CLIENTE.PROFESIONALES_URL) {
       setSearchHide(false);
-      setPlaceholder('Busqueda por profesional');
+      setPlaceholder('B\u00FAsqueda por profesional');
     } else {
       setSearchHide(true);
     }

@@ -6,9 +6,9 @@ import Button from '../../components/Button';
 import Select from '../Select';
 const optionItemsReview = ['Objetiva', 'Subjetiva'];
 const optionItemsGenre = [
-  'Romantico',
+  'Rom\u00E1ntico',
   'Aventura',
-  'Accion',
+  'Acci\u00F3n',
   'Terror',
   'Suspenso',
   'Drama',
@@ -28,6 +28,8 @@ const ModalSendWork = ({
   const [fileList, setFileList] = useState([]);
   const [file, setFile] = useState({});
   const [form, setForm] = useState(initialState);
+  const placeholderReview = 'Seleccione un nivel de cr\u00EDtica';
+  const placeholderGenre = 'Seleccione el g\u00E9nero';
   useEffect(() => {
     setFile({});
     setFileList([]);
@@ -101,13 +103,13 @@ const ModalSendWork = ({
       ]}
     >
       <Select
-        placeholder="Seleccione un nivel de critica"
+        placeholder={placeholderReview}
         optionItems={optionItemsReview}
         valueSelected={form.review}
         onChange={onChangeReview}
       />
       <Select
-        placeholder="Seleccione el genero"
+        placeholder={placeholderGenre}
         optionItems={optionItemsGenre}
         valueSelected={form.genre}
         onChange={onChangeGenre}

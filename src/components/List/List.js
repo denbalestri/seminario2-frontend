@@ -15,7 +15,7 @@ const IconText = ({ icon, text, onClick }) => (
 
 const ListItem = ({ title, href, description, content, avatar }) => {
   const [openComments, setOpenComments] = useState(false);
-
+  const textFeedback = 'Enviar devoluci\u00F3n';
   const onClickComment = () => {
     setOpenComments(!openComments);
   };
@@ -31,12 +31,12 @@ const ListItem = ({ title, href, description, content, avatar }) => {
       actions={[
         <IconText
           icon={FileTwoTone}
-          text="Descargar Obra"
+          text="Descargar obra"
           key="list-vertical-star-o"
         />,
         <IconText
           icon={MessageOutlined}
-          text="Enviar Devolucion"
+          text={textFeedback}
           key="list-vertical-message"
           onClick={onClickComment}
         />,
