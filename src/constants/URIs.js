@@ -8,6 +8,7 @@ const NOTFOUND_URL = '*';
 const PROFESIONALES_URL = '/profesionales';
 const TRABAJOS_URL = '/trabajos';
 const DEVOLUCIONES_URL = '/devoluciones';
+const INFORMACIONPROFESIONAL_URL = '/informacion-profesional';
 
 export const CLIENTE = {
   INICIO_URL,
@@ -17,6 +18,7 @@ export const CLIENTE = {
   PROFESIONALES_URL,
   TRABAJOS_URL,
   DEVOLUCIONES_URL,
+  INFORMACIONPROFESIONAL_URL,
   NOTFOUND_URL,
 };
 

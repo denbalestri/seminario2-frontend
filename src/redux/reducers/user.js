@@ -8,6 +8,7 @@ const initialState = {
   username: 'srico',
   avatar: '../../../images/person5.jpg',
   rol: 'Autor',
+  notifications: 4,
 };
 
 export default function user(state = initialState, action) {

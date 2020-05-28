@@ -24,7 +24,7 @@ const RecievedWorkList = ({ works }) => {
           avatar: '../../../images/person5.jpg',
           author: `${work.nombreAutor} ${work.apellidoAutor}`,
           username: work.userAutor,
-          description: `El genero de esta obra es ${work.genero} y su nivel de critica pedida es: ${work.nivelCritica} `,
+          description: `El g\u00E9nero de esta obra es ${work.genero} y su nivel de cr\u00EDtica pedida es: ${work.nivelCritica} `,
         };
         return <RecivedWorkCard {...recivedWorkProps} />;
       })}

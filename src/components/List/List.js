@@ -51,7 +51,6 @@ const ListItem = ({ title, href, description, content, avatar }) => {
       {openComments && (
         <section>
           <Comment onCancel={onCancel} avatar={avatar} datetime={Date.now()} />
-          <Rating />
         </section>
       )}
     </List.Item>

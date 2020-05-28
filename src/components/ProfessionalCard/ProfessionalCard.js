@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Avatar, Card } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { SERVIDOR } from '../../constants/URIs';
+import Rating from '@material-ui/lab/Rating';
 import { getBase64 } from '../../constants/base64';
 import ModalSendWork from '../ModalSendWork';
 import 'antd/dist/antd.css';
@@ -21,6 +22,8 @@ const ProfessionalCard = ({
   avatar,
   description,
   userProfessional,
+  quantityReviews,
+  descriptionProfessional,
 }) => {
   const [loading, setLoading] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false);
@@ -79,6 +82,17 @@ const ProfessionalCard = ({
           <aside style={{ marginLeft: 10, marginTop: 10 }}>
             <p>{professional}</p>
             <p>{description}</p>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <Rating
+                name="half-rating-read"
+                defaultValue={2.5}
+                precision={0.5}
+                readOnly
+              />
+              <p>({quantityReviews} opiniones)</p>
+
+              <p>{descriptionProfessional}</p>
+            </div>
           </aside>
         </section>
       </Card>

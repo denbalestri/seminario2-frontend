@@ -6,9 +6,9 @@ import Button from '../../components/Button';
 import Select from '../Select';
 const optionItemsReview = ['Objetiva', 'Subjetiva'];
 const optionItemsGenre = [
-  'Rom\u00E1ntico',
+  'Romantico',
   'Aventura',
-  'Acci\u00F3n',
+  'Accion',
   'Terror',
   'Suspenso',
   'Drama',
