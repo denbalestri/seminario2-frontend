@@ -1,6 +1,10 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import ProfesionalCard from '../../components/ProfessionalCard';
 import { useSelector } from 'react-redux';
+import { debounce } from 'lodash';
+import { SERVIDOR } from '../../constants/URIs';
+import Search from '../../components/Search';
+import useStyles from './styles';
 
 const professionalsList = [
   {
@@ -37,10 +41,11 @@ const professionalsList = [
       'Mi nombre es Nicolas y mi especializacion es la Poesia. Escribo desde los 10 a\u00F1os. Soy profesor en la UBA en la catedra de literatura contempora\u00F1ea.',
   },
 ];
-
 const Professionals = () => {
   const [professionals, setProfessionals] = useState([]);
+  const [loading, setLoading] = useState(false);
   const professionalsSearched = useSelector(state => state.professionals);
+  const classes = useStyles();
 
   useEffect(() => {
     setProfessionals(professionalsSearched);
@@ -49,6 +54,26 @@ const Professionals = () => {
   useEffect(() => {
     setProfessionals(professionalsList);
   }, []);
+
+  const onSearch = debounce(professional => {
+    if (professional === '') return;
+    setLoading(true);
+    fetch(SERVIDOR.SEARCHPROFESSIONAL_URL(professional), {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+      .then(response => {
+        const professionals = response;
+        setProfessionals(professionals);
+      })
+      .catch(error => console.log(error))
+      .finally(() => setLoading(false));
+  }, 500);
+
+  const onClickSearch = () => {};
 
   return (
     <Fragment>
@@ -59,9 +84,16 @@ const Professionals = () => {
           fontFamily: 'Pangolin, cursive',
         }}
       >
-        Encontra tu profesional ideal
+        Encontra tu correctora o corrector ideal
       </p>
-      <section style={{ display: 'flex', flexWrap: 'wrap' }}>
+
+      <section
+        style={{
+          display: 'flex',
+          flexFlow: 'wrap',
+        }}
+      >
+        <Search onClickSearch={onClickSearch} />
         {professionals.length ? (
           professionals.map((professional, index) => {
             const professionalCardProps = {
@@ -70,7 +102,7 @@ const Professionals = () => {
               quantityReviews: professional.quantityReviews,
               avatar: professional.avatar,
               userProfessional: professional.nombreUsuario,
-              description: `Experto en el genero: ${professional.genero.descripcion}`,
+              description: `Lectura profesional: ${professional.genero.descripcion}`,
               descriptionProfessional: professional.description,
               initials: `${professional.nombre.charAt(
                 0
@@ -88,17 +120,8 @@ const Professionals = () => {
                 fontFamily: 'Pangolin, cursive',
               }}
             >
-              Oh no! No se encontraron profesionales disponibles!
+              Oh no! No se encontraron correctores disponibles!
             </p>
-            <img
-              style={{
-                marginTop: -80,
-                width: 400,
-                height: 600,
-              }}
-              src="../../../images/professional.gif"
-              alt="noProfessionalsFound"
-            />
           </>
         )}
       </section>

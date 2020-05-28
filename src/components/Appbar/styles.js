@@ -4,6 +4,15 @@ export default makeStyles(theme => ({
   grow: {
     flexGrow: 1,
   },
+  appbar: {
+    /*bbackground: '#6190E8;',
+    background: '-webkit-linear-gradient(to right, #A7BFE8, #6190E8)',
+    background: 'linear-gradient(to right, #A7BFE8, #6190E8)',*/
+    background: '#667db6' /* fallback for old browsers */,
+    background:
+      '-webkit-linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6)',
+    background: 'linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6)',
+  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -67,14 +76,6 @@ export default makeStyles(theme => ({
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
-  },
-  typography: {
-    fontSize: 20,
-    padding: theme.spacing(2),
-  },
-  large: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
   },
   logo: {
     width: 200,
