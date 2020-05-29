@@ -3,8 +3,15 @@ export default makeStyles(theme => ({
   root: {
     height: '100vh',
   },
+  subTitle: {
+    fontFamily: 'Ubuntu',
+  },
+  title: {
+    marginBottom: 10,
+    fontFamily: 'Ubuntu',
+  },
   image: {
-    backgroundImage: 'url(https://source.unsplash.com/random)',
+    backgroundImage: 'url(../../../images/autorEscribiendo.gif)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light'

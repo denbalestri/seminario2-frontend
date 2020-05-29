@@ -10,7 +10,7 @@ const TRABAJOS_URL = '/trabajos';
 const DEVOLUCIONES_URL = '/devoluciones';
 const INFORMACIONPROFESIONAL_URL = '/informacion-profesional';
 const LOGIN_URL = '/iniciar-sesion';
-
+const REGISTER_URL = '/registracion';
 export const CLIENTE = {
   INICIO_URL,
   PERFIL_URL,
@@ -22,6 +22,7 @@ export const CLIENTE = {
   INFORMACIONPROFESIONAL_URL,
   NOTFOUND_URL,
   LOGIN_URL,
+  REGISTER_URL,
 };
 
 export const SERVIDOR = {
