@@ -68,7 +68,6 @@ const Login = () => {
               onChange={onChange}
             />
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               color="primary"

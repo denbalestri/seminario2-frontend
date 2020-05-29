@@ -25,8 +25,9 @@ const Register = () => {
   const [file, setFile] = useState({});
   const [form, setForm] = useState(initialState);
 
-  const onChange = (name, e) => {
+  const onChange = e => {
     const value = e.target.value;
+    const name = e.target.name;
     setForm({
       ...form,
       [name]: value,
@@ -127,7 +128,6 @@ const Register = () => {
               </Grid>
             </Grid>
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               color="primary"
