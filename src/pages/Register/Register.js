@@ -60,8 +60,11 @@ const Register = () => {
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" className={classes.title}>
             {signUpText}
+          </Typography>
+          <Typography component="h1" variant="h5" className={classes.subTitle}>
+            Datos Personales
           </Typography>
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
