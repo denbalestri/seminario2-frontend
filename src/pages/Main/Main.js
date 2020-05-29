@@ -1,12 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import ProfesionalCard from '../../components/ProfessionalCard';
-import { useSelector } from 'react-redux';
-import { debounce } from 'lodash';
-import { SERVIDOR } from '../../constants/URIs';
-import Search from '../../components/Search';
+import React from 'react';
+import MainProfessional from '../../components/MainProfessional';
 import MainLayout from '../../components/Layout';
 import useStyles from './styles';
-
 const professionalsList = [
   {
     nombre: 'Maria',
@@ -75,79 +70,23 @@ const professionalsList = [
       'Mi nombre es Mariana Perez y mi especializacion es las novelas de Aventuras. Escribo desde los 10 a\u00F1os. Soy profesor en la UBA en la catedra de literatura contempora\u00F1ea.',
   },
 ];
-const Professionals = () => {
-  const [professionals, setProfessionals] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const professionalsSearched = useSelector(state => state.professionals);
+const Main = () => {
   const classes = useStyles();
-
-  useEffect(() => {
-    setProfessionals(professionalsSearched);
-  }, [professionalsSearched]);
-
-  useEffect(() => {
-    setProfessionals(professionalsList);
-  }, []);
-
-  const onSearch = debounce(professional => {
-    if (professional === '') return;
-    setLoading(true);
-    fetch(SERVIDOR.SEARCHPROFESSIONAL_URL(professional), {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    })
-      .then(response => {
-        const professionals = response;
-        setProfessionals(professionals);
-      })
-      .catch(error => console.log(error))
-      .finally(() => setLoading(false));
-  }, 500);
-
-  const onClickSearch = formSearch => {
-    //onSearch(formSearch)
-  };
-
   return (
     <MainLayout>
-      <Search onClickSearch={onClickSearch} />
-      <section className={classes.section}>
-        {professionals.length ? (
-          professionals.map((professional, index) => {
-            const professionalCardProps = {
-              professional: `${professional.nombre} ${professional.apellido}`,
-              key: index,
-              quantityReviews: professional.quantityReviews,
-              avatar: professional.avatar,
-              userProfessional: professional.nombreUsuario,
-              description: `Lectura profesional: ${professional.genero.descripcion}`,
-              descriptionProfessional: professional.description,
-              initials: `${professional.nombre.charAt(
-                0
-              )}${professional.apellido.charAt(0)}`,
-            };
-
-            return <ProfesionalCard {...professionalCardProps} />;
-          })
-        ) : (
-          <>
-            <p
-              style={{
-                fontSize: 30,
-                marginTop: 50,
-                fontFamily: 'Pangolin, cursive',
-              }}
-            >
-              Oh no! No se encontraron correctores disponibles!
-            </p>
-          </>
-        )}
+      <p className={classes.title}>Encontrá tu profesional ideal</p>
+      <section style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+        {professionalsList.map((professional, index) => {
+          return (
+            <MainProfessional
+              professional={`${professional.nombre} ${professional.apellido}`}
+              avatar={professional.avatar}
+            />
+          );
+        })}
       </section>
     </MainLayout>
   );
 };
 
-export default Professionals;
+export default Main;

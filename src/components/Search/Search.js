@@ -23,12 +23,13 @@ const genreMap = {
 
 const initialState = {
   genre: [],
-  reviews: '',
+  rating: '',
 };
 const Search = ({ onClickSearch }) => {
   const classes = useStyles();
   const [form, setForm] = useState(initialState);
   const [openGenre, setOpenGenre] = useState(false);
+
   const onChangeGenre = e => {
     const genre = e.target.value;
     setForm({
@@ -38,8 +39,7 @@ const Search = ({ onClickSearch }) => {
   };
 
   const onLocalClickSearch = () => {
-    //send data
-    //onClickSearch();
+    onClickSearch(form);
   };
   const handleGenreClose = () => {
     setOpenGenre(false);
@@ -48,25 +48,17 @@ const Search = ({ onClickSearch }) => {
   const handleGenreOpen = () => {
     setOpenGenre(true);
   };
+
+  const onChangeRating = (event, rating) => {
+    setForm({
+      ...form,
+      rating,
+    });
+  };
   return (
-    <section
-      style={{
-        display: 'flex',
-        width: '600px',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        border: '4px solid #0038e17a',
-        padding: '5px 0',
-        borderRadius: '10px',
-      }}
-    >
+    <section className={classes.root}>
       <FormControl className={classes.formControl}>
-        <InputLabel
-          htmlFor="genre"
-          style={{
-            fontSize: 20,
-          }}
-        >
+        <InputLabel htmlFor="genre" className={classes.inputGenre}>
           Género
         </InputLabel>
         <Select
@@ -79,7 +71,7 @@ const Search = ({ onClickSearch }) => {
             name: 'genre',
             id: 'genre',
           }}
-          style={{ width: 180, marginRight: 20 }}
+          className={classes.select}
         >
           {Object.keys(genreMap).map((genre, index) => {
             return (
@@ -90,34 +82,16 @@ const Search = ({ onClickSearch }) => {
           })}
         </Select>
       </FormControl>
-      <section
-        style={{
-          marginRight: 20,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          textAlign: 'center',
-        }}
-      >
-        <p
-          style={{
-            fontSize: 20,
-            marginBottom: 0,
-          }}
-        >
-          Rating mínimo
-        </p>
-        <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} />
+      <section className={classes.section}>
+        <p className={classes.rating}>Rating mínimo</p>
+        <Rating
+          name="half-rating-read"
+          defaultValue={0}
+          precision={0.5}
+          onChange={onChangeRating}
+        />
       </section>
-      <IconButton
-        onClick={onLocalClickSearch}
-        style={{
-          justifySelf: 'flex-end',
-          color: 'rgba(0, 56, 225, 0.74)',
-          transform: 'scale(1.7)',
-        }}
-      >
+      <IconButton onClick={onLocalClickSearch} className={classes.searchButton}>
         <SearchIcon />
       </IconButton>
     </section>

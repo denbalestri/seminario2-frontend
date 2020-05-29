@@ -11,6 +11,7 @@ const DEVOLUCIONES_URL = '/devoluciones';
 const INFORMACIONPROFESIONAL_URL = '/informacion-profesional';
 const LOGIN_URL = '/iniciar-sesion';
 const REGISTER_URL = '/registracion';
+const MENUPRINCIPAL_URL = '/menu';
 export const CLIENTE = {
   INICIO_URL,
   PERFIL_URL,
@@ -23,6 +24,7 @@ export const CLIENTE = {
   NOTFOUND_URL,
   LOGIN_URL,
   REGISTER_URL,
+  MENUPRINCIPAL_URL,
 };
 
 export const SERVIDOR = {

@@ -4,25 +4,20 @@ export default makeStyles(theme => ({
   grow: {
     flexGrow: 1,
   },
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    width: '100%',
+  logo: {
+    fontSize: 22,
+    fontFamily: 'Ubuntu',
+    marginTop: 10,
+    color: 'white',
   },
-  content: {
-    height: '100%',
-    width: '100%',
-    overflow: 'scroll',
-  },
-  section: {
-    width: '100vw',
-    height: '100vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'stretch',
-    flexDirection: 'column',
+  appbar: {
+    /*bbackground: '#6190E8;',
+    background: '-webkit-linear-gradient(to right, #A7BFE8, #6190E8)',
+    background: 'linear-gradient(to right, #A7BFE8, #6190E8)',*/
+    background: '#667db6' /* fallback for old browsers */,
+    background:
+      '-webkit-linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6)',
+    background: 'linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6)',
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -87,16 +82,5 @@ export default makeStyles(theme => ({
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
-  },
-  typography: {
-    fontSize: 20,
-    padding: theme.spacing(2),
-  },
-  large: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
-  },
-  logo: {
-    width: 200,
   },
 }));

@@ -4,6 +4,12 @@ export default makeStyles(theme => ({
   grow: {
     flexGrow: 1,
   },
+  logo: {
+    fontSize: 22,
+    fontFamily: 'Ubuntu',
+    marginTop: 10,
+    color: 'white',
+  },
   appbar: {
     /*bbackground: '#6190E8;',
     background: '-webkit-linear-gradient(to right, #A7BFE8, #6190E8)',
@@ -76,8 +82,5 @@ export default makeStyles(theme => ({
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
-  },
-  logo: {
-    width: 200,
   },
 }));

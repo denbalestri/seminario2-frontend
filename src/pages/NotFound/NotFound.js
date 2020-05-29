@@ -1,19 +1,29 @@
 import React from 'react';
-
+import MainLayout from '../../components/Layout';
 const NotFound = () => {
   return (
-    <>
-      <p
+    <MainLayout>
+      <section
         style={{
-          fontSize: 30,
-          marginTop: 20,
-          fontFamily: 'Pangolin, cursive',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100%',
+          flexDirection: 'column',
         }}
       >
-        Oh no! La pagina buscada no existe!
-      </p>
-      <img src="../../../images/notFoundPage404.gif" alt="notFoundPage" />
-    </>
+        <p
+          style={{
+            fontSize: 30,
+            marginTop: 20,
+            fontFamily: 'Pangolin, cursive',
+          }}
+        >
+          Oh no! La pagina buscada no existe!
+        </p>
+        <img src="../../../images/notFoundPage404.gif" alt="notFoundPage" />
+      </section>
+    </MainLayout>
   );
 };
 

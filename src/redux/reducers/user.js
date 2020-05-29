@@ -1,6 +1,6 @@
 /** @format */
 
-import { SET_USER } from '../actions/actionTypes.json';
+import { SET_USER, LOGOUT_USER } from '../actions/actionTypes.json';
 
 const initialState = {
   firstName: 'Santiago',
@@ -14,8 +14,9 @@ const initialState = {
 export default function user(state = initialState, action) {
   switch (action.type) {
     case SET_USER:
-      return action.user;
-
+      return { ...state, professionals: action.user };
+    case LOGOUT_USER:
+      return { initialState };
     default:
       return state;
   }

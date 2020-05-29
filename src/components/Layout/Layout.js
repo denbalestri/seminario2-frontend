@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutUser } from '../../redux/actions/user';
 import { useHistory } from 'react-router-dom';
 import useInterval from '../../Hooks/useInterval';
 import { CLIENTE } from '../../constants/URIs';
 import MenuNotification from '../MenuNotification';
-import Appbar from '../Appbar';
+import AppbarAuthor from '../AppbarAuthor';
+import AppbarProfessional from '../AppbarProfessional';
 import useStyles from './styles';
 
 const MainLayout = ({ children }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [placeholder, setPlaceholder] = useState('');
   const [searchHide, setSearchHide] = useState(false);
-
   const history = useHistory();
   const location = history.location.pathname;
   const [openNotificacion, setOpenNotificacion] = useState(false);
@@ -45,7 +47,6 @@ const MainLayout = ({ children }) => {
   }, [location]);
 
   const onClickReview = () => {
-    // go to review page with all the reviews
     history.push('/revisiones');
   };
 
@@ -54,43 +55,46 @@ const MainLayout = ({ children }) => {
   };
 
   const handleClickLogout = () => {
-    // call a dispatcher and remove the data from de user
+    dispatch(logoutUser());
+    history.push('/iniciar-sesion');
   };
 
   const onClickProfessional = () => {
     history.push('/profesionales');
   };
 
+  const onClickWork = () => {
+    history.push('/trabajos');
+  };
+
   return (
-    <main
-      style={{
-        width: '100vw',
-        height: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'stretch',
-        flexDirection: 'column',
-      }}
-    >
-      <Appbar
-        onClickGroup={onClickGroup}
-        onClickReview={onClickReview}
-        handleClickLogout={handleClickLogout}
-        notificationsBadge={notificationsBadge}
-        onClickNotifications={onClickNotifications}
-        onClickProfessional={onClickProfessional}
-      />
-      <MenuNotification
-        anchorEl={anchorEl}
-        handleMenuClose={handleMenuClose}
-        open={openNotificacion}
-      />
-      <div
-        className="mainContent"
-        style={{ height: '100%', width: '100%', overflow: 'scroll' }}
-      >
-        {children}
-      </div>
+    <main className={classes.root}>
+      <section className={classes.section}>
+        {user.rol === 'Autor' ? (
+          <AppbarAuthor
+            onClickGroup={onClickGroup}
+            onClickReview={onClickReview}
+            handleClickLogout={handleClickLogout}
+            notificationsBadge={notificationsBadge}
+            onClickNotifications={onClickNotifications}
+            onClickProfessional={onClickProfessional}
+          />
+        ) : (
+          <AppbarProfessional
+            onClickGroup={onClickGroup}
+            handleClickLogout={handleClickLogout}
+            notificationsBadge={notificationsBadge}
+            onClickNotifications={onClickNotifications}
+            onClickWork={onClickWork}
+          />
+        )}
+        <MenuNotification
+          anchorEl={anchorEl}
+          handleMenuClose={handleMenuClose}
+          open={openNotificacion}
+        />
+        <div className={classes.content}>{children}</div>
+      </section>
     </main>
   );
 };

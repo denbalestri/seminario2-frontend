@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import { Upload } from 'antd';
@@ -136,6 +137,13 @@ const Register = () => {
             >
               Registrarse
             </Button>
+            <Grid container>
+              <Grid item>
+                <Link to="/iniciar-sesion">
+                  {'Tienes cuenta? Inicia sesion'}
+                </Link>
+              </Grid>
+            </Grid>
           </form>
         </div>
       </Container>

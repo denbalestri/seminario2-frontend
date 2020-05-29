@@ -1,12 +1,9 @@
-  
-import { SET_USER } from "./actionTypes.json";
-
-import { createUser as createUserService } from "../../services/user";
+import { SET_USER, LOGOUT_USER } from './actionTypes.json';
 
 export function setUser(user) {
   return { type: SET_USER, user };
 }
 
-export const createUser = user => {
-  return () => createUserService(user);
-};
+export function logoutUser() {
+  return { type: LOGOUT_USER };
+}

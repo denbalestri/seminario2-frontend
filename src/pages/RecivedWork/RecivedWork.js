@@ -2,6 +2,7 @@ import { Spin } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import RecivedWorkCard from '../../components/RecivedWorkCard';
+import MainLayout from '../../components/Layout';
 import { SERVIDOR } from '../../constants/URIs';
 
 const RecievedWorkList = ({ works }) => {
@@ -15,6 +16,17 @@ const RecievedWorkList = ({ works }) => {
         overflow: 'scroll',
       }}
     >
+      <p
+        style={{
+          fontSize: 40,
+          marginTop: 30,
+          fontFamily: 'Pangolin, cursive',
+          justifyContent: 'center',
+          display: 'flex',
+        }}
+      >
+        Obras a corregir
+      </p>
       {works.map((work, index) => {
         const recivedWorkProps = {
           key: index,
@@ -24,7 +36,12 @@ const RecievedWorkList = ({ works }) => {
           avatar: '../../../images/person5.jpg',
           author: `${work.nombreAutor} ${work.apellidoAutor}`,
           username: work.userAutor,
-          description: `El g\u00E9nero de esta obra es ${work.genero} y su nivel de cr\u00EDtica pedida es: ${work.nivelCritica} `,
+          description: `El g\u00E9nero de esta obra es ${work.genero} y su nivel de cr\u00EDtica pedida es: ${work.nivelCritica}. 
+          Las montanas de la locura es un clasico de lovecraft donde el 
+          personaje viaja a un lugar recondito con nieve. Este lugar descubre
+           en un lugar con criaturas que no son del mundo. 
+           Donde encuentra un lugar que aparentemente es su escondite.
+          `,
         };
         return <RecivedWorkCard {...recivedWorkProps} />;
       })}
@@ -62,23 +79,37 @@ const RecivedWork = () => {
       .finally(() => setLoading(false));
   };
 
-  return recivedWork.length > 0 ? (
-    <RecievedWorkList works={recivedWork} />
-  ) : loading ? (
-    <Spin tip="Cargando..." size="large" />
-  ) : (
-    <section>
-      <p
+  return (
+    <MainLayout>
+      <section
         style={{
-          fontSize: 30,
-          marginTop: 20,
-          fontFamily: 'Pangolin, cursive',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100%',
         }}
       >
-        Nuestro autor esta escribiendo obras estupendas, intente nuevamente!
-      </p>
-      <img src="../../../images/author.gif" alt="Sin resultados"></img>
-    </section>
+        {recivedWork.length > 0 ? (
+          <RecievedWorkList works={recivedWork} />
+        ) : loading ? (
+          <Spin tip="Cargando..." size="large" />
+        ) : (
+          <section>
+            <p
+              style={{
+                fontSize: 30,
+                marginTop: 20,
+                fontFamily: 'Pangolin, cursive',
+              }}
+            >
+              Nuestro autor esta escribiendo obras estupendas, intente
+              nuevamente!
+            </p>
+            <img src="../../../images/author.gif" alt="Sin resultados"></img>
+          </section>
+        )}
+      </section>
+    </MainLayout>
   );
 };
 
