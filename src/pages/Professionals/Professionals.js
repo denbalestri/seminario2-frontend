@@ -76,7 +76,7 @@ const Professionals = () => {
   const onClickSearch = () => {};
 
   return (
-    <Fragment>
+    <>
       <p
         style={{
           fontSize: 40,
@@ -84,16 +84,15 @@ const Professionals = () => {
           fontFamily: 'Pangolin, cursive',
         }}
       >
-        Encontra tu correctora o corrector ideal
+        Encontrá tu profesional ideal
       </p>
-
+      <Search onClickSearch={onClickSearch} />
       <section
         style={{
           display: 'flex',
           flexFlow: 'wrap',
         }}
       >
-        <Search onClickSearch={onClickSearch} />
         {professionals.length ? (
           professionals.map((professional, index) => {
             const professionalCardProps = {
@@ -125,7 +124,7 @@ const Professionals = () => {
           </>
         )}
       </section>
-    </Fragment>
+    </>
   );
 };
 
