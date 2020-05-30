@@ -121,6 +121,17 @@ const Register = () => {
                 />
               </Grid>
               <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="username"
+                  label="Nombre usuario"
+                  id="username"
+                  onChange={onChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
                 <Upload {...uploadProps} onChange={handleChange}>
                   <Button color="primary" variant="outlined">
                     <UploadOutlined /> Elegir foto

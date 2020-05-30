@@ -10,8 +10,8 @@ import Typography from '@material-ui/core/Typography';
 
 import useStyles from './styles';
 const initialState = {
-  password: '',
   email: '',
+  clave: '',
 };
 const Login = () => {
   const classes = useStyles();
@@ -20,8 +20,9 @@ const Login = () => {
   const emailText = 'Correo electr\u00F3nico';
   const [form, setForm] = useState(initialState);
 
-  const onChange = (name, e) => {
+  const onChange = e => {
     const value = e.target.value;
+    const name = e.target.name;
     setForm({
       ...form,
       [name]: value,
@@ -29,7 +30,7 @@ const Login = () => {
   };
 
   const onClickSubmit = () => {
-    //send data to backend and verify
+    //send data to backend and verify (form)
   };
   return (
     <Grid container component="main" className={classes.root}>
@@ -51,6 +52,7 @@ const Login = () => {
               required
               fullWidth
               id="email"
+              name="email"
               label={emailText}
               autoFocus
               onChange={onChange}

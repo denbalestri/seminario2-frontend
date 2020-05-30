@@ -12,6 +12,7 @@ const INFORMACIONPROFESIONAL_URL = '/informacion-profesional';
 const LOGIN_URL = '/iniciar-sesion';
 const REGISTER_URL = '/registracion';
 const MENUPRINCIPAL_URL = '/menu';
+
 export const CLIENTE = {
   INICIO_URL,
   PERFIL_URL,
