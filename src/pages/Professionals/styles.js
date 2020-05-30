@@ -15,4 +15,9 @@ export default makeStyles(theme => ({
     display: 'flex',
     flexFlow: 'wrap',
   },
+  search: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: 30,
+  },
 }));

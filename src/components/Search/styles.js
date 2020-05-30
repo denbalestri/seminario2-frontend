@@ -12,7 +12,6 @@ export default makeStyles(theme => ({
     border: '4px solid #0038e17a',
     padding: '5px 0',
     borderRadius: '10px',
-    marginTop: 60,
   },
   section: {
     marginRight: 20,

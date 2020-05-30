@@ -83,7 +83,7 @@ const Search = ({ onClickSearch }) => {
         </Select>
       </FormControl>
       <section className={classes.section}>
-        <p className={classes.rating}>Rating mínimo</p>
+        <p className={classes.rating}>Opiniones mínimo</p>
         <Rating
           name="half-rating-read"
           defaultValue={0}

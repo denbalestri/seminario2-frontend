@@ -1,12 +1,11 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
+import Rating from '@material-ui/lab/Rating';
 import useStyles from './styles';
 
-const MainProfessional = ({ avatar, professional }) => {
+const MainProfessional = ({ avatar, professional, rating }) => {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
@@ -17,8 +16,17 @@ const MainProfessional = ({ avatar, professional }) => {
           alt="Persona"
           height="140"
           image={avatar}
-          title="profesional"
         />
+        <section className={classes.section}>
+          <p className={classes.title}>{professional}</p>
+          <p className={classes.subTitle}>Opiniones</p>
+          <Rating
+            name="half-rating-read"
+            precision={0.5}
+            value={rating}
+            readOnly
+          />
+        </section>
       </CardActionArea>
     </Card>
   );

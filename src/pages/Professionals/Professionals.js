@@ -113,7 +113,9 @@ const Professionals = () => {
 
   return (
     <MainLayout>
-      <Search onClickSearch={onClickSearch} />
+      <section className={classes.search}>
+        <Search onClickSearch={onClickSearch} />
+      </section>
       <section className={classes.section}>
         {professionals.length ? (
           professionals.map((professional, index) => {
