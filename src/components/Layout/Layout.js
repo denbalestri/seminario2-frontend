@@ -1,98 +1,100 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { setProfessionals } from '../../redux/actions/professionals';
-import { Input } from 'antd';
-import { debounce } from 'lodash';
-import { SERVIDOR, CLIENTE } from '../../constants/URIs';
-import SideBar from '../Sidebar';
 
-const { Search } = Input;
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutUser } from '../../redux/actions/user';
+import { useHistory } from 'react-router-dom';
+import useInterval from '../../Hooks/useInterval';
+import { CLIENTE } from '../../constants/URIs';
+import MenuNotification from '../MenuNotification';
+import AppbarAuthor from '../AppbarAuthor';
+import AppbarProfessional from '../AppbarProfessional';
+import useStyles from './styles';
 
 const MainLayout = ({ children }) => {
+  const classes = useStyles();
+  const dispatch = useDispatch();
   const [placeholder, setPlaceholder] = useState('');
   const [searchHide, setSearchHide] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
   const history = useHistory();
   const location = history.location.pathname;
+  const [openNotificacion, setOpenNotificacion] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [notificationsBadge, setNotificationsBadge] = useState(1);
+  const user = useSelector(state => state.user);
+
+  const onClickNotifications = event => {
+    setAnchorEl(event.currentTarget);
+    setOpenNotificacion(true);
+  };
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setOpenNotificacion(false);
+  };
+
+  useInterval(() => {
+    //call server to get all new reviews, the interval 'll call every five seconds
+    //dispatch a action to updated the store and when the user open the notifications,
+    // set notificationsRead (notifications recived - notifications read)
+  }, 5000);
 
   useEffect(() => {
     if (location === CLIENTE.PROFESIONALES_URL) {
       setSearchHide(false);
-      setPlaceholder('B\u00FAsqueda por profesional');
+      setPlaceholder('B\u00FAsqueda por profesional o g\u00E9nero');
     } else {
       setSearchHide(true);
     }
   }, [location]);
 
-  const onSearch = debounce(professional => {
-    if (professional === '') return;
+  const onClickReview = () => {
+    history.push('/revisiones');
+  };
 
-    setLoading(true);
-    fetch(SERVIDOR.SEARCHPROFESSIONAL_URL(professional), {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(response => {
-        const professionals = response;
-        dispatch(setProfessionals(professionals));
-      })
-      .catch(error => console.log(error))
-      .finally(() => setLoading(false));
-  }, 500);
+  const onClickGroup = () => {
+    history.push('/grupos');
+  };
 
-  const onChange = e => {
-    const professional = e.target.value;
-    onSearch(professional);
+  const handleClickLogout = () => {
+    dispatch(logoutUser());
+    history.push('/iniciar-sesion');
+  };
+
+  const onClickProfessional = () => {
+    history.push('/profesionales');
+  };
+
+  const onClickWork = () => {
+    history.push('/trabajos');
   };
 
   return (
-    <main
-      style={{
-        width: '100vw',
-        height: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'stretch',
-        flexDirection: 'column',
-      }}
-    >
-      <div className="sidebar">
-        <SideBar />
-      </div>
-      <nav
-        style={{
-          height: 50,
-          padding: 10,
-          width: '100%',
-          backgroundColor: '#40a9ff',
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-      >
-        {!searchHide && (
-          <Search
-            placeholder={placeholder}
-            onSearch={professional => onSearch(professional)}
-            style={{ width: 400 }}
-            loading={loading}
-            onChange={onChange}
+    <main className={classes.root}>
+      <section className={classes.section}>
+        {user.rol === 'Autor' ? (
+          <AppbarAuthor
+            onClickGroup={onClickGroup}
+            onClickReview={onClickReview}
+            handleClickLogout={handleClickLogout}
+            notificationsBadge={notificationsBadge}
+            onClickNotifications={onClickNotifications}
+            onClickProfessional={onClickProfessional}
+          />
+        ) : (
+          <AppbarProfessional
+            onClickGroup={onClickGroup}
+            handleClickLogout={handleClickLogout}
+            notificationsBadge={notificationsBadge}
+            onClickNotifications={onClickNotifications}
+            onClickWork={onClickWork}
           />
         )}
-      </nav>
-      <div
-        className="mainContent"
-        style={{ height: '100%', width: '100%', overflow: 'scroll' }}
-      >
-        {children}
-      </div>
+        <MenuNotification
+          anchorEl={anchorEl}
+          handleMenuClose={handleMenuClose}
+          open={openNotificacion}
+        />
+        <div className={classes.content}>{children}</div>
+      </section>
     </main>
   );
 };

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Spin } from 'antd';
 import { useSelector } from 'react-redux';
 import List from '../../components/List';
+import MainLayout from '../../components/Layout';
 import { SERVIDOR } from '../../constants/URIs';
 
 const RevisedWork = () => {
@@ -30,20 +31,42 @@ const RevisedWork = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  return loading ? (
-    <Spin tip="Cargando..." size="large" />
-  ) : (
-    <section
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        height: '100%',
-        width: '100%',
-      }}
-    >
-      <List listRevisedWorks={revisedWorks} />
-    </section>
+  return (
+    <MainLayout>
+      <section
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100%',
+        }}
+      >
+        {loading ? (
+          <Spin tip="Cargando..." size="large" />
+        ) : (
+          <section
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              height: '100%',
+              width: '100%',
+            }}
+          >
+            <p
+              style={{
+                fontSize: 35,
+                marginTop: 50,
+                fontFamily: 'Pangolin, cursive',
+              }}
+            >
+              Tus Correcciones
+            </p>
+            <List listRevisedWorks={revisedWorks} />
+          </section>
+        )}
+      </section>
+    </MainLayout>
   );
 };
 

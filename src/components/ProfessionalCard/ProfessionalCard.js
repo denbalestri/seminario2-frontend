@@ -3,10 +3,12 @@ import { useSelector } from 'react-redux';
 import { Avatar, Card } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { SERVIDOR } from '../../constants/URIs';
+import Rating from '@material-ui/lab/Rating';
 import { getBase64 } from '../../constants/base64';
 import ModalSendWork from '../ModalSendWork';
 import 'antd/dist/antd.css';
 import { notification } from 'antd';
+
 import statuses from '../../constants/Notification';
 
 const openNotification = type => {
@@ -21,6 +23,8 @@ const ProfessionalCard = ({
   avatar,
   description,
   userProfessional,
+  quantityReviews,
+  descriptionProfessional,
 }) => {
   const [loading, setLoading] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false);
@@ -73,12 +77,39 @@ const ProfessionalCard = ({
 
   return (
     <>
-      <Card style={{ width: '80vw' }} hoverable onClick={onClickCard}>
+      <Card
+        style={{
+          width: '45vw',
+          marginTop: 20,
+          marginRight: 20,
+          marginLeft: 40,
+        }}
+        hoverable
+        onClick={onClickCard}
+      >
         <section style={{ display: 'flex' }}>
-          <Avatar size={100} src={avatar} icon={<UserOutlined />} />
-          <aside style={{ marginLeft: 10, marginTop: 10 }}>
-            <p>{professional}</p>
-            <p>{description}</p>
+          <Avatar
+            size={100}
+            src={avatar}
+            icon={<UserOutlined />}
+            style={{ width: 400, height: 200 }}
+          />
+          <aside
+            style={{ marginLeft: 10, marginTop: 15, fontFamily: 'Ubuntu' }}
+          >
+            <p style={{ fontWeight: 700, fontSize: 22 }}>{professional}</p>
+            <p style={{ fontSize: 17 }}>{description}</p>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <Rating
+                name="half-rating-read"
+                defaultValue={2.5}
+                precision={0.5}
+                readOnly
+              />
+              <p>({quantityReviews} opiniones)</p>
+
+              <p>{descriptionProfessional}</p>
+            </div>
           </aside>
         </section>
       </Card>

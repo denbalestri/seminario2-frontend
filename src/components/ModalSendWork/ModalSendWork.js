@@ -4,11 +4,13 @@ import { UploadOutlined, ReadOutlined } from '@ant-design/icons';
 import isEmpty from 'lodash/isEmpty';
 import Button from '../../components/Button';
 import Select from '../Select';
+
+const { TextArea } = Input;
 const optionItemsReview = ['Objetiva', 'Subjetiva'];
 const optionItemsGenre = [
-  'Rom\u00E1ntico',
+  'Romantico',
   'Aventura',
-  'Acci\u00F3n',
+  'Accion',
   'Terror',
   'Suspenso',
   'Drama',
@@ -82,11 +84,13 @@ const ModalSendWork = ({
     <Modal
       visible={visible}
       onCancel={onCancel}
+      style={{ fontFamily: 'Ubuntu' }}
       title={`Enviar obra a ${professional}`}
       bodyStyle={{
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-around',
+        fontFamily: 'Ubuntu',
       }}
       footer={[
         <Button type="" onClick={onCancel}>
@@ -121,6 +125,10 @@ const ModalSendWork = ({
         style={{ marginTop: 10, width: 300 }}
         onChange={onChangeNameWork}
       />
+      <p style={{ fontSize: 15, marginTop: 10 }}>
+        Escriba una descripcion de la obra
+      </p>
+      <TextArea rows={4} />
       <section style={{ marginTop: 20 }}>
         <Upload {...uploadProps} onChange={handleChange}>
           <Button type="">

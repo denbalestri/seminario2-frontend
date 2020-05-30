@@ -3,7 +3,7 @@ import { MessageOutlined, FileTwoTone, UserOutlined } from '@ant-design/icons';
 import { List, Avatar, Space } from 'antd';
 import Button from '../../components/Button';
 import Comment from '../../components/Comment';
-import Rating from '../../components/Rating';
+import Rating from '@material-ui/lab/Rating';
 const IconText = ({ icon, text, onClick }) => (
   <Space>
     <Button onClick={onClick}>
@@ -51,7 +51,7 @@ const ListItem = ({ title, href, description, content, avatar }) => {
       {openComments && (
         <section>
           <Comment onCancel={onCancel} avatar={avatar} datetime={Date.now()} />
-          <Rating />
+          <Rating name="half-rating-read" defaultValue={0} precision={0.5} />
         </section>
       )}
     </List.Item>
