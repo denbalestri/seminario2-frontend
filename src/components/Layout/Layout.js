@@ -25,6 +25,7 @@ const MainLayout = ({ children }) => {
   const onClickNotifications = event => {
     setAnchorEl(event.currentTarget);
     setOpenNotificacion(true);
+    setNotificationsBadge(0);
   };
   const handleMenuClose = () => {
     setAnchorEl(null);

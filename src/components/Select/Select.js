@@ -1,14 +1,11 @@
-import React from "react";
-import { Select } from "antd";
+import React from 'react';
+import { Select } from 'antd';
 const { Option } = Select;
 const UI_Select = ({ placeholder, optionItems, valueSelected, onChange }) => {
-  const onLocalChange = (value) => {
-    onChange(value);
-  };
   return (
     <Select
       placeholder={placeholder}
-      onChange={onLocalChange}
+      onChange={onChange}
       allowClear
       value={valueSelected}
     >

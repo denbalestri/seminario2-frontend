@@ -11,11 +11,15 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import useStyles from './styles';
+import Select from '../../components/Select';
+import './Register.css';
+
 const initialState = {
   firstName: '',
   lastName: '',
   password: '',
   email: '',
+  username: '',
 };
 const Register = () => {
   const classes = useStyles();
@@ -24,6 +28,8 @@ const Register = () => {
   const passwordText = 'Contrase\u00F1a';
   const [fileList, setFileList] = useState([]);
   const [file, setFile] = useState({});
+  const [cvFileList, setCVFileList] = useState([]);
+  const [cv, setCVFile] = useState({});
   const [form, setForm] = useState(initialState);
 
   const onChange = e => {
@@ -34,9 +40,20 @@ const Register = () => {
       [name]: value,
     });
   };
+  const onChangeRole = value => {
+    setForm({
+      ...form,
+      rol: value,
+    });
+  };
   const handleChange = info => {
     setFile(info.file);
     setFileList(info.fileList.slice(-1));
+  };
+
+  const handleUploadCV = info => {
+    setCVFile(info.file);
+    setCVFileList(info.fileList.slice(-1));
   };
 
   const uploadProps = {
@@ -45,6 +62,14 @@ const Register = () => {
     customRequest: ({ onSuccess }) => setTimeout(() => onSuccess('ok'), 0),
     fileList,
     onChange: handleChange,
+  };
+
+  const uploadPropsCV = {
+    name: 'cv',
+    listType: 'picture',
+    customRequest: ({ onSuccess }) => setTimeout(() => onSuccess('ok'), 0),
+    cvFileList,
+    onChange: handleUploadCV,
   };
   const onClickSubmit = () => {
     //send data to backend
@@ -131,10 +156,49 @@ const Register = () => {
                   onChange={onChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={6}>
+                <Select
+                  placeholder={'Seleccione su Rol'}
+                  optionItems={['Autor', 'Corrector']}
+                  valueSelected={form.genre}
+                  onChange={onChangeRole}
+                />
+              </Grid>
+              {form.rol === 'Corrector' && (
+                <>
+                  <Grid item xs={6}>
+                    <Upload {...uploadPropsCV} onChange={handleUploadCV}>
+                      <Button
+                        color="primary"
+                        variant="outlined"
+                        style={{ width: '100%' }}
+                      >
+                        <UploadOutlined style={{ marginRight: '10px' }} />
+                        Cargar CV
+                      </Button>
+                    </Upload>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      multiline
+                      rows={4}
+                      required
+                      fullWidth
+                      id="descripcion"
+                      label="Descripción personal"
+                      name="descripcion"
+                      autoComplete="descripcion"
+                      onChange={onChange}
+                    />
+                  </Grid>
+                </>
+              )}
+              <Grid item xs={12} align>
                 <Upload {...uploadProps} onChange={handleChange}>
                   <Button color="primary" variant="outlined">
-                    <UploadOutlined /> Elegir foto
+                    <UploadOutlined style={{ marginRight: '10px' }} />
+                    Elegir foto
                   </Button>
                 </Upload>
               </Grid>

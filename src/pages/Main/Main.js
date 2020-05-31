@@ -120,13 +120,13 @@ const Main = () => {
     <MainLayout>
       <p className={classes.title}>Encontrá tu profesional ideal</p>
       <section className={classes.search}>
-        {' '}
         <Search onClickSearch={onClickSearch} />
       </section>
       <section className={classes.containerMain}>
         {professionalsList.map((professional, index) => {
           return (
             <MainProfessional
+              key={index}
               professional={`${professional.nombre} ${professional.apellido}`}
               avatar={professional.avatar}
               rating={professional.rating}
