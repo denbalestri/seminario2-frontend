@@ -37,4 +37,7 @@ export const SERVIDOR = {
     `${SERVER_URL}/ContenidoObras?nombreObra=${nameWork}&userAutor=${author}`,
   SEARCHPROFESSIONAL_URL: professional =>
     `${SERVER_URL}/usuarios?nombreUsuario=${professional}`,
+  LOGIN_URL: `${SERVER_URL}/login`,
+  NOTIFICACIONES_URL: `${SERVER_URL}/Notificaciones`,
+  ACTUALIZAR_NOTIFICACIONES_URL: `${SERVER_URL}/ActualizarNotificaciones`,
 };

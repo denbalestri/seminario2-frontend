@@ -2,19 +2,34 @@ import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-
 import Typography from '@material-ui/core/Typography';
+import { notification } from 'antd';
+import { useDispatch } from 'react-redux';
+
+import { SERVIDOR, CLIENTE } from '../../constants/URIs';
+import { setUser } from '../../redux/actions/user';
 
 import useStyles from './styles';
+
 const initialState = {
   email: '',
   clave: '',
 };
+
+const showError = () => {
+  notification.error({
+    message: 'Error',
+    description: 'La combinación ingresada es invalida, intentelo nuevamente',
+  });
+};
+
 const Login = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const dispatch = useDispatch();
   const loginText = 'Iniciar sesi\u00F3n';
   const passwordText = 'Contrase\u00F1a';
   const emailText = 'Correo electr\u00F3nico';
@@ -30,7 +45,33 @@ const Login = () => {
   };
 
   const onClickSubmit = () => {
-    //send data to backend and verify (form)
+    fetch(`${SERVIDOR.LOGIN_URL}?email=${form.email}&clave=${form.clave}`, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+      .then(response => {
+        if (response.status === 200) {
+          const usuarioBE = response.json();
+
+          const usuarioFE = {
+            firstName: usuarioBE.nombreAutor,
+            lastName: usuarioBE.apellidoAutor,
+            username: usuarioBE.userAutor,
+            avatar: '../../../images/person5.jpg',
+            rol: usuarioBE.tipoUsuario,
+          };
+
+          dispatch(setUser(usuarioFE));
+
+          history.push(CLIENTE.MENUPRINCIPAL_URL);
+        } else {
+          showError();
+        }
+      })
+      .catch(error => console.log(error));
   };
   return (
     <Grid container component="main" className={classes.root}>
