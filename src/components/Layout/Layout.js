@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-
 import { useSelector, useDispatch } from 'react-redux';
-import { logoutUser } from '../../redux/actions/user';
 import { useHistory } from 'react-router-dom';
+
+import { logoutUser } from '../../redux/actions/user';
+import { addNotifications } from '../../redux/actions/notifications';
 import useInterval from '../../Hooks/useInterval';
-import { CLIENTE } from '../../constants/URIs';
+import { CLIENTE, SERVIDOR } from '../../constants/URIs';
 import MenuNotification from '../MenuNotification';
 import AppbarAuthor from '../AppbarAuthor';
 import AppbarProfessional from '../AppbarProfessional';
@@ -33,9 +34,20 @@ const MainLayout = ({ children }) => {
   };
 
   useInterval(() => {
-    //call server to get all new reviews, the interval 'll call every five seconds
-    //dispatch a action to updated the store and when the user open the notifications,
-    // set notificationsRead (notifications recived - notifications read)
+    fetch(`${SERVIDOR.NOTIFICACIONES_URL}/?username=${user.username}`, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        dispatch(addNotifications(response));
+      })
+      .catch(error => console.log(error));
   }, 5000);
 
   useEffect(() => {

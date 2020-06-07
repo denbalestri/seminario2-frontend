@@ -1,43 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import Avatar from '@material-ui/core/Avatar';
 import Popover from '@material-ui/core/Popover';
 import useStyles from './styles';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { SERVIDOR } from '../../constants/URIs';
+import { readNotifications } from '../../redux/actions/notifications';
 
-const NOTIFICATIONS = [
-  {
-    type: 'DEVOLUCION',
-    author: 'Santiago Rico',
-    title: 'La chica en la oscuridad',
-  },
-];
-
-const getNotificationMessage = notification => {
-  switch (notification.type) {
-    case 'DEVOLUCION':
-      return (
-        <span>
-          Recibiste la devolución de{' '}
-          <span
-            style={{
-              fontStyle: 'italic',
-              fontWeight: 'bold',
-              color: '#2a88db',
-            }}
-          >
-            {notification.author}
-          </span>{' '}
-          de tu obra{' '}
-          <span style={{ fontWeight: 'bold', color: '#e80053' }}>
-            {notification.title}
-          </span>
-        </span>
-      );
-    default:
-      return 'Notificacion de tipo no reconocido';
-  }
-};
+const getNotificationMessage = notification => (
+  <span>
+    Recibiste la devolución de{' '}
+    <span
+      style={{
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        color: '#2a88db',
+      }}
+    >
+      {`${notification.nombreProfesional} ${notification.apellidoProfesional}`}
+    </span>{' '}
+    de tu obra{' '}
+    <span style={{ fontWeight: 'bold', color: '#e80053' }}>
+      {notification.nombreObra}
+    </span>
+  </span>
+);
 
 const getNotificationDestination = ({ type }) => {
   switch (type) {
@@ -54,28 +42,57 @@ const Notifications = ({ notifications }) => {
 
   return (
     <>
-      {notifications.map((notification, index) => (
-        <MenuItem
-          key={index}
-          style={{ padding: '10px 15px' }}
-          onClick={() => history.push(getNotificationDestination(notification))}
-        >
-          <Avatar
-            alt="Profesional"
-            src="../../../images/person3.jpg"
-            className={classes.large}
-            style={{
-              marginRight: 16,
-            }}
-          />
-          {getNotificationMessage(notification)}
-        </MenuItem>
-      ))}
+      {notifications.map((notification, index) => {
+        let notificationStyle = { padding: '10px 15px' };
+
+        if (notification.read)
+          notificationStyle = { ...notificationStyle, backgroundColor: 'grey' };
+
+        return (
+          <MenuItem
+            key={index}
+            style={notificationStyle}
+            onClick={() =>
+              history.push(getNotificationDestination(notification))
+            }
+          >
+            <Avatar
+              alt="Profesional"
+              src="../../../images/person3.jpg"
+              className={classes.large}
+              style={{
+                marginRight: 16,
+              }}
+            />
+            {getNotificationMessage(notification)}
+          </MenuItem>
+        );
+      })}
     </>
   );
 };
 
 const MenuNotification = ({ open, anchorEl, handleMenuClose }) => {
+  const dispatch = useDispatch();
+  const username = useSelector(state => state.user.username);
+  const notifications = useSelector(state => state.notifications);
+
+  useEffect(() => {
+    dispatch(readNotifications());
+    const body = JSON.stringify({
+      username,
+    });
+
+    fetch(SERVIDOR.ACTUALIZAR_NOTIFICACIONES_URL, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body,
+    }).catch(error => console.log(error));
+  }, []);
+
   return (
     <Popover
       open={open}
@@ -90,7 +107,7 @@ const MenuNotification = ({ open, anchorEl, handleMenuClose }) => {
         horizontal: 'center',
       }}
     >
-      <Notifications notifications={NOTIFICATIONS} />
+      <Notifications notifications={notifications} />
     </Popover>
   );
 };

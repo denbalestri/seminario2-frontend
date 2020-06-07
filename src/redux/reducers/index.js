@@ -1,10 +1,11 @@
-/** @format */
+import { combineReducers } from 'redux';
 
-import { combineReducers } from "redux";
+import user from './user';
+import notifications from './notifications';
+import professionals from './professionals';
 
-import user from "../reducers/user";
-import professionals from "../reducers/professionals";
 export const reducers = combineReducers({
   user,
   professionals,
+  notifications,
 });
