@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import { Upload } from 'antd';
+import Button from '../../components/Button';
+import { Upload, notification } from 'antd';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import { UploadOutlined } from '@ant-design/icons';
@@ -24,9 +24,18 @@ const initialState = {
   username: '',
   rol: '',
 };
+
+const showSuccess = () => {
+  notification.success({
+    message: 'Éxito',
+    description: 'El registro fue exitoso!',
+  });
+};
+
 const Register = () => {
   const classes = useStyles();
   const history = useHistory();
+  const [loading, setLoading] = useState(false);
   const signUpText = 'Registraci\u00F3n';
   const emailText = 'Correo electr\u00F3nico';
   const passwordText = 'Contrase\u00F1a';
@@ -76,6 +85,7 @@ const Register = () => {
     onChange: handleUploadCV,
   };
   const onClickSubmit = () => {
+    setLoading(true);
     if (file) {
       getBase64(file.originFileObj).then(encodedAvatar => {
         if (cv) {
@@ -100,10 +110,17 @@ const Register = () => {
               },
               body,
             })
-              .then(() => {
-                history.push(CLIENTE.LOGIN_URL);
+              .then(response => {
+                if (response.ok) {
+                  showSuccess();
+                  setLoading(false);
+                  history.push(CLIENTE.LOGIN_URL);
+                }
               })
-              .catch(error => console.log(error));
+              .catch(error => {
+                setLoading(false);
+                console.log(error);
+              });
           });
         } else {
           const body = JSON.stringify({
@@ -126,10 +143,17 @@ const Register = () => {
             },
             body,
           })
-            .then(() => {
-              history.push(CLIENTE.LOGIN_URL);
+            .then(response => {
+              if (response.ok) {
+                showSuccess();
+                setLoading(false);
+                history.push(CLIENTE.LOGIN_URL);
+              }
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+              setLoading(false);
+              console.log(error);
+            });
         }
       });
     }
@@ -264,11 +288,10 @@ const Register = () => {
               </Grid>
             </Grid>
             <Button
-              fullWidth
-              variant="contained"
-              color="primary"
+              type="primary"
               className={classes.submit}
               onClick={onClickSubmit}
+              loading={loading}
             >
               Registrarse
             </Button>

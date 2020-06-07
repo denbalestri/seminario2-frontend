@@ -56,6 +56,7 @@ const RecivedWork = () => {
 
   useEffect(() => {
     getWorks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getWorks = () => {

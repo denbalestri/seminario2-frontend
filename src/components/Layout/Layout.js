@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { logoutUser } from '../../redux/actions/user';
 import { addNotifications } from '../../redux/actions/notifications';
 import useInterval from '../../Hooks/useInterval';
-import { CLIENTE, SERVIDOR } from '../../constants/URIs';
+import { SERVIDOR } from '../../constants/URIs';
 import MenuNotification from '../MenuNotification';
 import AppbarAuthor from '../AppbarAuthor';
 import AppbarProfessional from '../AppbarProfessional';
@@ -14,10 +14,7 @@ import useStyles from './styles';
 const MainLayout = ({ children }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [placeholder, setPlaceholder] = useState('');
-  const [searchHide, setSearchHide] = useState(false);
   const history = useHistory();
-  const location = history.location.pathname;
   const [openNotificacion, setOpenNotificacion] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const amountOfNotifications = useSelector(
@@ -56,15 +53,6 @@ const MainLayout = ({ children }) => {
       })
       .catch(error => console.log(error));
   }, 5000);
-
-  useEffect(() => {
-    if (location === CLIENTE.PROFESIONALES_URL) {
-      setSearchHide(false);
-      setPlaceholder('B\u00FAsqueda por profesional o g\u00E9nero');
-    } else {
-      setSearchHide(true);
-    }
-  }, [location]);
 
   const onClickReview = () => {
     history.push('/revisiones');

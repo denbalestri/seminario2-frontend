@@ -16,6 +16,7 @@ export default makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    width: '100%',
   },
   title: {
     fontFamily: 'Ubuntu',
