@@ -44,6 +44,7 @@ const ProfessionalCard = ({
         nombreUsuarioProfesional: userProfessional,
         formatoArchivodeObra: file.type,
         nivelDeCritica: form.review,
+        descripcionObra: form.description,
       });
 
       setLoading(true);

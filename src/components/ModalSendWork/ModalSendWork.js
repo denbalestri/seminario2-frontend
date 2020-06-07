@@ -75,7 +75,8 @@ const ModalSendWork = ({
     });
   };
 
-  const onChangeDescription = description => {
+  const onChangeDescription = event => {
+    const description = event.target.value;
     setForm({
       ...form,
       description,

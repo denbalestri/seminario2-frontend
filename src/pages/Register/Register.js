@@ -81,7 +81,7 @@ const Register = () => {
         if (cv) {
           getBase64(cv.originFileObj).then(encodedCV => {
             const body = JSON.stringify({
-              tipoUsuario: form.rol,
+              tipoUsuario: 2,
               nombre: form.firstName,
               apellido: form.lastName,
               mail: form.email,
@@ -107,7 +107,7 @@ const Register = () => {
           });
         } else {
           const body = JSON.stringify({
-            tipoUsuario: form.rol,
+            tipoUsuario: 1,
             nombre: form.firstName,
             apellido: form.lastName,
             mail: form.email,
