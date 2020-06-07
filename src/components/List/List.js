@@ -16,6 +16,7 @@ const IconText = ({ icon, text, onClick }) => (
 const ListItem = ({ title, href, description, content, avatar }) => {
   const [openComments, setOpenComments] = useState(false);
   const textFeedback = 'Enviar devoluci\u00F3n';
+
   const onClickComment = () => {
     setOpenComments(!openComments);
   };

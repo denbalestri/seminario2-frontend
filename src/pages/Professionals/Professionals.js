@@ -11,7 +11,7 @@ const professionalsList = [
   {
     nombre: 'Maria',
     apellido: 'Lopez',
-    nombreUsuario: 'srico',
+    nombreUsuario: 'gnegri',
     avatar: '../../../images/person2.jpg',
     genero: { descripcion: 'Romantico' },
     id: 1,
@@ -22,7 +22,7 @@ const professionalsList = [
   {
     nombre: 'Silvia',
     apellido: 'Carrozo',
-    nombreUsuario: 'srico',
+    nombreUsuario: 'gnegri',
     avatar: '../../../images/person.jpg',
     genero: { descripcion: 'Poesia' },
     id: 2,
@@ -33,7 +33,7 @@ const professionalsList = [
   {
     nombre: 'Nicolas',
     apellido: 'Fuentes',
-    nombreUsuario: 'srico',
+    nombreUsuario: 'gnegri',
     avatar: '../../../images/person3.jpg',
     genero: { descripcion: 'Poesia' },
     id: 3,
@@ -44,7 +44,7 @@ const professionalsList = [
   {
     nombre: 'Angela',
     apellido: 'Luz',
-    nombreUsuario: 'srico',
+    nombreUsuario: 'gnegri',
     avatar: '../../../images/person6.jpg',
     genero: { descripcion: 'Terror, Aventuras' },
     id: 4,
@@ -55,7 +55,7 @@ const professionalsList = [
   {
     nombre: 'Eduardo',
     apellido: 'Lopez',
-    nombreUsuario: 'srico',
+    nombreUsuario: 'gnegri',
     avatar: '../../../images/person9.jpg',
     genero: { descripcion: 'Aventuras' },
     id: 4,
@@ -66,7 +66,7 @@ const professionalsList = [
   {
     nombre: 'Mariana',
     apellido: 'Perez',
-    nombreUsuario: 'srico',
+    nombreUsuario: 'gnegri',
     avatar: '../../../images/person8.jpg',
     genero: { descripcion: 'Aventuras' },
     id: 4,
