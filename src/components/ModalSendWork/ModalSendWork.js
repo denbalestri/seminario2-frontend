@@ -75,6 +75,13 @@ const ModalSendWork = ({
     });
   };
 
+  const onChangeDescription = description => {
+    setForm({
+      ...form,
+      description,
+    });
+  };
+
   const onChangeGenre = genre => {
     setForm({
       ...form,
@@ -130,7 +137,11 @@ const ModalSendWork = ({
       <p style={{ fontSize: 15, marginTop: 10 }}>
         Escriba una descripcion de la obra
       </p>
-      <TextArea rows={4} value={form.description} />
+      <TextArea
+        rows={4}
+        value={form.description}
+        onChange={onChangeDescription}
+      />
       <section style={{ marginTop: 20 }}>
         <Upload {...uploadProps} onChange={handleChange}>
           <Button type="">
