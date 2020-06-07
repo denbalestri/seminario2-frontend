@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import { Upload } from 'antd';
@@ -11,7 +11,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import useStyles from './styles';
+import { SERVIDOR, CLIENTE } from '../../constants/URIs';
 import Select from '../../components/Select';
+import getBase64 from '../../constants/base64';
 import './Register.css';
 
 const initialState = {
@@ -20,9 +22,11 @@ const initialState = {
   password: '',
   email: '',
   username: '',
+  rol: '',
 };
 const Register = () => {
   const classes = useStyles();
+  const history = useHistory();
   const signUpText = 'Registraci\u00F3n';
   const emailText = 'Correo electr\u00F3nico';
   const passwordText = 'Contrase\u00F1a';
@@ -72,7 +76,34 @@ const Register = () => {
     onChange: handleUploadCV,
   };
   const onClickSubmit = () => {
-    //send data to backend
+    getBase64(file).then(encodedAvatar => {
+      getBase64(cv).then(encodedCV => {
+        const body = JSON.stringify({
+          tipoUsuario: form.rol,
+          nombre: form.firstName,
+          apellido: form.lastName,
+          mail: form.email,
+          clave: form.password,
+          usr: form.username,
+          avatar: encodedAvatar,
+          cv: encodedCV,
+          descripcion: form.description,
+        });
+
+        fetch(SERVIDOR.REGISTRO_URL, {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body,
+        })
+          .then(() => {
+            history.push(CLIENTE.LOGIN_URL);
+          })
+          .catch(error => console.log(error));
+      });
+    });
   };
   return (
     <section
@@ -160,7 +191,7 @@ const Register = () => {
                 <Select
                   placeholder={'Seleccione su Rol'}
                   optionItems={['Autor', 'Corrector']}
-                  valueSelected={form.genre}
+                  valueSelected={form.rol}
                   onChange={onChangeRole}
                 />
               </Grid>

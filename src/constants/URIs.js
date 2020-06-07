@@ -38,6 +38,7 @@ export const SERVIDOR = {
   SEARCHPROFESSIONAL_URL: professional =>
     `${SERVER_URL}/usuarios?nombreUsuario=${professional}`,
   LOGIN_URL: `${SERVER_URL}/login`,
+  REGISTRO_URL: `${SERVER_URL}/registro`,
   NOTIFICACIONES_URL: `${SERVER_URL}/Notificaciones`,
   ACTUALIZAR_NOTIFICACIONES_URL: `${SERVER_URL}/ActualizarNotificaciones`,
 };
