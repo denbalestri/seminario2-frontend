@@ -1,7 +1,7 @@
-import { SET_READ_NOTIFICATION, ADD_NOTIFICATIONS } from './actionTypes.json';
+import { SET_READ_NOTIFICATIONS, ADD_NOTIFICATIONS } from './actionTypes.json';
 
 export function readNotifications() {
-  return { type: SET_READ_NOTIFICATION };
+  return { type: SET_READ_NOTIFICATIONS };
 }
 
 export function addNotifications(notifications) {

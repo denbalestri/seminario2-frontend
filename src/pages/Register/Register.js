@@ -13,7 +13,7 @@ import Container from '@material-ui/core/Container';
 import useStyles from './styles';
 import { SERVIDOR, CLIENTE } from '../../constants/URIs';
 import Select from '../../components/Select';
-import getBase64 from '../../constants/base64';
+import { getBase64 } from '../../constants/base64';
 import './Register.css';
 
 const initialState = {
@@ -31,9 +31,9 @@ const Register = () => {
   const emailText = 'Correo electr\u00F3nico';
   const passwordText = 'Contrase\u00F1a';
   const [fileList, setFileList] = useState([]);
-  const [file, setFile] = useState({});
+  const [file, setFile] = useState(null);
   const [cvFileList, setCVFileList] = useState([]);
-  const [cv, setCVFile] = useState({});
+  const [cv, setCVFile] = useState(null);
   const [form, setForm] = useState(initialState);
 
   const onChange = e => {
@@ -76,34 +76,63 @@ const Register = () => {
     onChange: handleUploadCV,
   };
   const onClickSubmit = () => {
-    getBase64(file).then(encodedAvatar => {
-      getBase64(cv).then(encodedCV => {
-        const body = JSON.stringify({
-          tipoUsuario: form.rol,
-          nombre: form.firstName,
-          apellido: form.lastName,
-          mail: form.email,
-          clave: form.password,
-          usr: form.username,
-          avatar: encodedAvatar,
-          cv: encodedCV,
-          descripcion: form.description,
-        });
+    if (file) {
+      getBase64(file.originFileObj).then(encodedAvatar => {
+        if (cv) {
+          getBase64(cv.originFileObj).then(encodedCV => {
+            const body = JSON.stringify({
+              tipoUsuario: form.rol,
+              nombre: form.firstName,
+              apellido: form.lastName,
+              mail: form.email,
+              clave: form.password,
+              usr: form.username,
+              avatar: encodedAvatar,
+              cv: encodedCV,
+              descripcion: form.description,
+            });
 
-        fetch(SERVIDOR.REGISTRO_URL, {
-          method: 'POST',
-          mode: 'cors',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body,
-        })
-          .then(() => {
-            history.push(CLIENTE.LOGIN_URL);
+            fetch(SERVIDOR.REGISTRO_URL, {
+              method: 'POST',
+              mode: 'cors',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+              },
+              body,
+            })
+              .then(() => {
+                history.push(CLIENTE.LOGIN_URL);
+              })
+              .catch(error => console.log(error));
+          });
+        } else {
+          const body = JSON.stringify({
+            tipoUsuario: form.rol,
+            nombre: form.firstName,
+            apellido: form.lastName,
+            mail: form.email,
+            clave: form.password,
+            usr: form.username,
+            avatar: encodedAvatar,
+            cv: null,
+            descripcion: null,
+          });
+
+          fetch(SERVIDOR.REGISTRO_URL, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body,
           })
-          .catch(error => console.log(error));
+            .then(() => {
+              history.push(CLIENTE.LOGIN_URL);
+            })
+            .catch(error => console.log(error));
+        }
       });
-    });
+    }
   };
   return (
     <section

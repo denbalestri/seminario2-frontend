@@ -76,6 +76,7 @@ const MenuNotification = ({ open, anchorEl, handleMenuClose }) => {
   const dispatch = useDispatch();
   const username = useSelector(state => state.user.username);
   const notifications = useSelector(state => state.notifications);
+  console.log(notifications);
 
   useEffect(() => {
     dispatch(readNotifications());

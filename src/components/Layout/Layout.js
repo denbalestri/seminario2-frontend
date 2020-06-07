@@ -20,10 +20,17 @@ const MainLayout = ({ children }) => {
   const location = history.location.pathname;
   const [openNotificacion, setOpenNotificacion] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [notificationsBadge, setNotificationsBadge] = useState(1);
+  const amountOfNotifications = useSelector(
+    state => state.notifications.length
+  );
+  const [notificationsBadge, setNotificationsBadge] = useState(
+    amountOfNotifications
+  );
   const user = useSelector(state => state.user);
 
   const onClickNotifications = event => {
+    if (!amountOfNotifications) return;
+
     setAnchorEl(event.currentTarget);
     setOpenNotificacion(true);
     setNotificationsBadge(0);
