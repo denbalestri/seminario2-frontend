@@ -25,13 +25,6 @@ const initialState = {
   rol: '',
 };
 
-const showSuccess = () => {
-  notification.success({
-    message: 'Éxito',
-    description: 'El registro fue exitoso!',
-  });
-};
-
 const Register = () => {
   const classes = useStyles();
   const history = useHistory();
@@ -84,6 +77,18 @@ const Register = () => {
     cvFileList,
     onChange: handleUploadCV,
   };
+
+  const showSuccess = () => {
+    notification.success({
+      message: 'Éxito',
+      description: 'El registro fue exitoso!',
+      onClose: onRedirect,
+    });
+  };
+
+  const onRedirect = () => {
+    history.push(CLIENTE.LOGIN_URL);
+  };
   const onClickSubmit = () => {
     setLoading(true);
     if (file) {
@@ -114,7 +119,6 @@ const Register = () => {
                 if (response.ok) {
                   showSuccess();
                   setLoading(false);
-                  history.push(CLIENTE.LOGIN_URL);
                 }
               })
               .catch(error => {
@@ -147,7 +151,6 @@ const Register = () => {
               if (response.ok) {
                 showSuccess();
                 setLoading(false);
-                history.push(CLIENTE.LOGIN_URL);
               }
             })
             .catch(error => {
