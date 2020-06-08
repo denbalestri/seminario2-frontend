@@ -45,21 +45,29 @@ const Login = () => {
   };
 
   const onClickSubmit = () => {
-    fetch(`${SERVIDOR.LOGIN_URL}?email=${form.email}&clave=${form.clave}`, {
-      method: 'GET',
+    const body = JSON.stringify({
+      email: form.email,
+      clave: form.clave,
+    });
+    fetch(SERVIDOR.LOGIN_URL, {
+      method: 'POST',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
+      body,
     })
       .then(response => {
-        if (response.status === 200) {
-          const usuarioBE = response.json();
+        return response.json();
+      })
+      .then(response => {
+        if (!response.error) {
+          const usuarioBE = response;
 
           const usuarioFE = {
-            firstName: usuarioBE.nombreAutor,
-            lastName: usuarioBE.apellidoAutor,
-            username: usuarioBE.userAutor,
+            firstName: usuarioBE.nombreUsuario,
+            lastName: usuarioBE.apellidoUsuario,
+            username: usuarioBE.user,
             avatar: '../../../images/person5.jpg',
             rol: usuarioBE.tipoUsuario,
           };
