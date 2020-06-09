@@ -45,4 +45,5 @@ export const SERVIDOR = {
   ACTUALIZAR_NOTIFICACIONES_URL: `${SERVER_URL}/ActualizarNotificaciones`,
   BUSCARPROFESIONAL: (genre, rating) =>
     `${SERVER_URL}/UsuariosProfesionales?genero=${genre}&rating=${rating}`,
+  DEVOLUCIONPROFESIONAL: `${SERVER_URL}/DevolucionProfesional`,
 };

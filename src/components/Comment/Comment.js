@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Comment, Avatar, Form, Button, List, Input } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+
 import moment from 'moment';
 
 const { TextArea } = Input;
@@ -40,7 +41,7 @@ const Editor = ({ onChange, onSubmit, submitting, value, onCancel }) => (
   </div>
 );
 
-const UI_Comment = ({ onCancel }) => {
+const UI_Comment = ({ onCancel, onSubmit }) => {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState('');
 
@@ -49,8 +50,8 @@ const UI_Comment = ({ onCancel }) => {
     setComment(comment);
   };
 
-  const handleSubmit = () => {
-    //setSubmitting(true);
+  const onLocalSubmit = () => {
+    //next data is not sent to backend yet
     setComments([
       {
         author: 'Nicolas Fuentes',
@@ -60,6 +61,8 @@ const UI_Comment = ({ onCancel }) => {
       },
       ...comments,
     ]);
+
+    onSubmit();
   };
   return (
     <div>
@@ -69,7 +72,7 @@ const UI_Comment = ({ onCancel }) => {
         content={
           <Editor
             onChange={handleChange}
-            onSubmit={handleSubmit}
+            onSubmit={onLocalSubmit}
             onCancel={onCancel}
             value={comment}
           />

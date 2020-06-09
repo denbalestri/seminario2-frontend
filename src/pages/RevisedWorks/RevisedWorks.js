@@ -22,6 +22,7 @@ const RevisedWork = () => {
         const parsedWorks = response.map(work => ({
           title: `${work.nombreProfesional} ${work.apellidoProfesional}`,
           avatar: '../../../images/person3.jpg',
+          usernameProfessional: work.profesional,
           description: `Novela llamada ${work.nombreObra} del g\u00E9nero ${work.genero}`,
           content: work.mensajeCorreccion,
         }));

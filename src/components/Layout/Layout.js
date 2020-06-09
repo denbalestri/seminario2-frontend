@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -24,6 +24,10 @@ const MainLayout = ({ children }) => {
     amountOfNotifications
   );
   const user = useSelector(state => state.user);
+
+  useEffect(() => {
+    setNotificationsBadge(amountOfNotifications);
+  }, [amountOfNotifications]);
 
   const onClickNotifications = event => {
     if (!amountOfNotifications) return;
