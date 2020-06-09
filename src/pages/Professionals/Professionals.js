@@ -10,8 +10,8 @@ import useStyles from './styles';
 
 const professionalsList = [
   {
-    nombre: 'Maria',
-    apellido: 'Lopez',
+    nombreProfesional: 'Maria',
+    apellidoProfesional: 'Lopez',
     nombreUsuario: 'gnegri',
     avatar: '../../../images/person2.jpg',
     generoExperto: 'Romantico',
@@ -21,8 +21,8 @@ const professionalsList = [
       'Mi nombre es Maria Lopez y doy clases de literatura moderna en la UBA. Tengo 15 a\u00F1os de experienza en el campo, soy coordinadora de talleres online y presencial',
   },
   {
-    nombre: 'Silvia',
-    apellido: 'Carrozo',
+    nombreProfesional: 'Silvia',
+    apellidoProfesional: 'Carrozo',
     nombreUsuario: 'gnegri',
     avatar: '../../../images/person.jpg',
     generoExperto: 'Poesia',
@@ -32,8 +32,8 @@ const professionalsList = [
       'Hola! Mi nombre es Silvia y soy experta en Poesia. Hace 10 a\u00F1os que trabajo en talleres dirigiendolas. Tambien escribi ensayos sobre novelas Argentinas',
   },
   {
-    nombre: 'Nicolas',
-    apellido: 'Fuentes',
+    nombreProfesional: 'Nicolas',
+    apellidoProfesional: 'Fuentes',
     nombreUsuario: 'gnegri',
     avatar: '../../../images/person3.jpg',
     generoExperto: 'Poesia',
@@ -43,8 +43,8 @@ const professionalsList = [
       'Mi nombre es Nicolas y mi especializacion es la Poesia. Escribo desde los 10 a\u00F1os. Soy profesor en la UBA en la catedra de literatura contempora\u00F1ea.',
   },
   {
-    nombre: 'Angela',
-    apellido: 'Luz',
+    nombreProfesional: 'Angela',
+    apellidoProfesional: 'Luz',
     nombreUsuario: 'gnegri',
     avatar: '../../../images/person6.jpg',
     generoExperto: { descripcion: 'Terror, Aventuras' },
@@ -54,8 +54,8 @@ const professionalsList = [
       'Mi nombre es Angela Luz y mi especializacion es las novelas de Terror y Aventuras. Escribo desde los 10 a\u00F1os. Soy profesor en la UBA en la catedra de literatura contempora\u00F1ea.',
   },
   {
-    nombre: 'Eduardo',
-    apellido: 'Lopez',
+    nombreProfesional: 'Eduardo',
+    apellidoProfesional: 'Lopez',
     nombreUsuario: 'gnegri',
     avatar: '../../../images/person9.jpg',
     generoExperto: 'Aventuras',
@@ -65,8 +65,8 @@ const professionalsList = [
       'Mi nombre es Eduardo Lopez y mi especializacion es las novelas de Aventuras. Escribo desde los 10 a\u00F1os. Soy profesor en la UBA en la catedra de literatura contempora\u00F1ea.',
   },
   {
-    nombre: 'Mariana',
-    apellido: 'Perez',
+    nombreProfesional: 'Mariana',
+    apellidoProfesional: 'Perez',
     nombreUsuario: 'gnegri',
     avatar: '../../../images/person8.jpg',
     generoExperto: 'Aventuras',
@@ -84,16 +84,14 @@ const Professionals = () => {
     state => state.professionals.professionals
   );
 
-  console.log(professionalsSearched);
-
   useEffect(() => {
     if (!professionalsSearched.error) {
-      setProfessionals(professionalsSearched[0]);
+      setProfessionals(professionalsSearched);
     }
   }, [professionalsSearched]);
 
   useEffect(() => {
-    setProfessionals(professionalsList);
+    //setProfessionals(professionalsList);
   }, []);
 
   const onSearch = debounce(professional => {
@@ -128,7 +126,7 @@ const Professionals = () => {
       .then(response => {
         const professionals = response;
         if (!professionals.error) {
-          setProfessionals(professionals[0]);
+          setProfessionals(professionals);
         }
       })
       .catch(error => console.log(error));
@@ -143,16 +141,17 @@ const Professionals = () => {
         {professionals.length ? (
           professionals.map((professional, index) => {
             const professionalCardProps = {
-              professional: `${professional.nombre} ${professional.apellido}`,
+              professional: `${professional.nombreProfesional} ${professional.apellidoProfesional}`,
               key: index,
-              quantityReviews: professional.quantityReviews,
+              rating: professional.rating,
+              quantityReviews: professional.obrasCorregidas,
               avatar: professional.avatar,
               userProfessional: professional.nombreUsuario,
               description: `Lectura profesional: ${professional.generoExperto}`,
               descriptionProfessional: professional.description,
-              initials: `${professional.nombre.charAt(
+              initials: `${professional.nombreProfesional.charAt(
                 0
-              )}${professional.apellido.charAt(0)}`,
+              )}${professional.apellidoProfesional.charAt(0)}`,
             };
 
             return <ProfesionalCard {...professionalCardProps} />;

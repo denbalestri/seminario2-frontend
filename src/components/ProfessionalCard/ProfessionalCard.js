@@ -25,6 +25,7 @@ const ProfessionalCard = ({
   userProfessional,
   quantityReviews,
   descriptionProfessional,
+  rating,
 }) => {
   const [loading, setLoading] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false);
@@ -90,10 +91,10 @@ const ProfessionalCard = ({
       >
         <section style={{ display: 'flex' }}>
           <Avatar
-            size={100}
+            size={200}
             src={avatar}
             icon={<UserOutlined />}
-            style={{ width: 400, height: 200 }}
+            //style={{ width: 400, height: 200 }}
           />
           <aside
             style={{ marginLeft: 10, marginTop: 15, fontFamily: 'Ubuntu' }}
@@ -103,7 +104,7 @@ const ProfessionalCard = ({
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <Rating
                 name="half-rating-read"
-                defaultValue={2.5}
+                defaultValue={rating}
                 precision={0.5}
                 readOnly
               />

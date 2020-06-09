@@ -37,10 +37,7 @@ const RecievedWorkList = ({ works }) => {
           author: `${work.nombreAutor} ${work.apellidoAutor}`,
           username: work.userAutor,
           description: `El g\u00E9nero de esta obra es ${work.genero} y su nivel de cr\u00EDtica pedida es: ${work.nivelCritica}. 
-          Las montanas de la locura es un clasico de lovecraft donde el 
-          personaje viaja a un lugar recondito con nieve. Este lugar descubre
-           en un lugar con criaturas que no son del mundo. 
-           Donde encuentra un lugar que aparentemente es su escondite.
+          ${work.descripcion}
           `,
         };
         return <RecivedWorkCard {...recivedWorkProps} />;
