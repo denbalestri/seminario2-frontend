@@ -38,7 +38,7 @@ const MainLayout = ({ children }) => {
   };
 
   useInterval(() => {
-    fetch(`${SERVIDOR.NOTIFICACIONES_URL}/?username=${user.username}`, {
+    fetch(SERVIDOR.NOTIFICACIONES_URL(user.username), {
       method: 'GET',
       mode: 'cors',
       headers: {

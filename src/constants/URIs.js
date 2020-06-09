@@ -30,7 +30,8 @@ export const CLIENTE = {
 
 export const SERVIDOR = {
   OBRAS_URL: `${SERVER_URL}/obras`,
-  CORRECCIONES_URL: `${SERVER_URL}/correcciones`,
+  CORRECCIONES_URL: username =>
+    `${SERVER_URL}/correcciones?nombreUsuario=${username}`,
   OBRAS_SINCORREGIR_URL: username =>
     `${SERVER_URL}/ObraSinCorregirPorProfesional?nombreUsuarioProfesional=${username}`,
   OBRAS_CONTENIDO_URL: (nameWork, author) =>

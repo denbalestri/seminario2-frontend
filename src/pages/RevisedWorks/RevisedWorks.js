@@ -11,7 +11,7 @@ const RevisedWork = () => {
   const user = useSelector(state => state.user);
 
   useEffect(() => {
-    fetch(SERVIDOR.CORRECCIONES_URL + '?nombreUsuario=' + user.username, {
+    fetch(SERVIDOR.CORRECCIONES_URL(user.username), {
       method: 'GET',
       mode: 'cors',
     })
