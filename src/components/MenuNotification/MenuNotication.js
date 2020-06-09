@@ -6,7 +6,10 @@ import useStyles from './styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { SERVIDOR } from '../../constants/URIs';
-import { readNotifications } from '../../redux/actions/notifications';
+import {
+  setNotification,
+  readNotifications,
+} from '../../redux/actions/notifications';
 
 const getNotificationMessage = notification => (
   <span>
@@ -27,18 +30,20 @@ const getNotificationMessage = notification => (
   </span>
 );
 
-const getNotificationDestination = ({ type }) => {
-  switch (type) {
-    case 'DEVOLUCION':
-      return '/revisiones';
-    default:
-      return '/';
-  }
-};
-
 const Notifications = ({ notifications }) => {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  const getNotificationDestination = (notification, type) => {
+    dispatch(setNotification(notification));
+    switch (type) {
+      case 'DEVOLUCION':
+        return '/revisiones';
+      default:
+        return '/';
+    }
+  };
 
   return (
     <>
@@ -53,7 +58,9 @@ const Notifications = ({ notifications }) => {
             key={index}
             style={notificationStyle}
             onClick={() =>
-              history.push(getNotificationDestination(notification))
+              history.push(
+                getNotificationDestination(notification, 'DEVOLUCION')
+              )
             }
           >
             <Avatar
@@ -78,21 +85,23 @@ const MenuNotification = ({ open, anchorEl, handleMenuClose }) => {
   const notifications = useSelector(state => state.notifications.notifications);
 
   useEffect(() => {
-    dispatch(readNotifications());
-    const body = JSON.stringify({
-      username,
-    });
+    if (open) {
+      dispatch(readNotifications());
+      const body = JSON.stringify({
+        username,
+      });
 
-    fetch(SERVIDOR.ACTUALIZAR_NOTIFICACIONES_URL, {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body,
-    }).catch(error => console.log(error));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      fetch(SERVIDOR.ACTUALIZAR_NOTIFICACIONES_URL, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body,
+      }).catch(error => console.log(error));
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
+  }, [open]);
 
   return (
     <Popover

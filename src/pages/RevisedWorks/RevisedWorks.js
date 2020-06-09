@@ -7,10 +7,16 @@ import { SERVIDOR } from '../../constants/URIs';
 
 const RevisedWork = () => {
   const [revisedWorks, setRevisedWorks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const user = useSelector(state => state.user);
+  const [loading, setLoading] = useState(false);
+  const user = useSelector(state => state.user.user);
+  const notification = useSelector(state => state.notifications.notification);
 
   useEffect(() => {
+    //notifications
+  }, [notification]);
+
+  useEffect(() => {
+    setLoading(true);
     fetch(SERVIDOR.CORRECCIONES_URL(user.username), {
       method: 'GET',
       mode: 'cors',

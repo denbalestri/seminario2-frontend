@@ -29,7 +29,7 @@ const ProfessionalCard = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false);
-  const user = useSelector(state => state.user);
+  const user = useSelector(state => state.user.user);
 
   const onClickCard = () => {
     setVisibleModal(true);
@@ -49,7 +49,6 @@ const ProfessionalCard = ({
       });
 
       setLoading(true);
-
       fetch(SERVIDOR.OBRAS_URL, {
         method: 'POST',
         mode: 'cors',

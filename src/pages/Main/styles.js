@@ -11,6 +11,8 @@ export default makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'space-evenly',
     flexWrap: 'wrap',
+    marginRight: 10,
+    marginLeft: 10,
   },
   search: {
     display: 'flex',

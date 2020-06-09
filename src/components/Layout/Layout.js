@@ -23,7 +23,7 @@ const MainLayout = ({ children }) => {
   const [notificationsBadge, setNotificationsBadge] = useState(
     amountOfNotifications
   );
-  const user = useSelector(state => state.user);
+  const user = useSelector(state => state.user.user);
 
   useEffect(() => {
     setNotificationsBadge(amountOfNotifications);

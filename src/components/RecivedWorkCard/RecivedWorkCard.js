@@ -64,7 +64,7 @@ const RecivedWorkCard = ({
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [loadingFeedback, setLoadingFeedback] = useState(false);
-  const user = useSelector(state => state.user);
+  const user = useSelector(state => state.user.user);
 
   const onClickDownload = () => {
     setLoading(true);

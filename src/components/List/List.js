@@ -25,13 +25,14 @@ const ListItem = ({
 }) => {
   const [rating, setRating] = useState(0);
   const textFeedback = 'Enviar devoluci\u00F3n';
-  const user = useSelector(state => state.user);
+  const user = useSelector(state => state.user.user);
 
   const onSubmit = () => {
     const body = JSON.stringify({
       nombreUsuarioAutor: user.username,
       nombreUsuarioProfesional: usernameProfessional,
-      puntuacion: rating,
+      puntuacion: rating.toString(),
+      comentario: '',
     });
     fetch(SERVIDOR.DEVOLUCIONPROFESIONAL, {
       method: 'POST',

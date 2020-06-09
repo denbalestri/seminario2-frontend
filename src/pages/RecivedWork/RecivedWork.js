@@ -49,7 +49,7 @@ const RecievedWorkList = ({ works }) => {
 const RecivedWork = () => {
   const [loading, setLoading] = useState(false);
   const [recivedWork, setRecivedWork] = useState([]);
-  const user = useSelector(state => state.user);
+  const user = useSelector(state => state.user.user);
 
   useEffect(() => {
     getWorks();

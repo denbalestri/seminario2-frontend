@@ -73,8 +73,9 @@ const Login = () => {
           };
 
           dispatch(setUser(usuarioFE));
-
-          history.push(CLIENTE.MENUPRINCIPAL_URL);
+          if (usuarioBE.tipoUsuario === 'Autor')
+            history.push(CLIENTE.MENUPRINCIPAL_URL);
+          else history.push(CLIENTE.TRABAJOS_URL);
         } else {
           showError();
         }

@@ -135,8 +135,8 @@ const Register = () => {
             clave: form.password,
             usr: form.username,
             avatar: encodedAvatar,
-            cv: null,
-            descripcion: null,
+            cv: '',
+            descripcion: '',
           });
 
           fetch(SERVIDOR.REGISTRO_URL, {
