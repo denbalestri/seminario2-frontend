@@ -91,13 +91,11 @@ const Professionals = () => {
   }, [professionalsSearched]);
 
   useEffect(() => {
-    //setProfessionals(professionalsList);
+    getProfessionals();
   }, []);
 
-  const onSearch = debounce(professional => {
-    if (professional === '') return;
-    setLoading(true);
-    fetch(SERVIDOR.SEARCHPROFESSIONAL_URL(professional), {
+  const getProfessionals = () => {
+    fetch(SERVIDOR.USUARIOSPROFESIONALES, {
       method: 'GET',
       mode: 'cors',
       headers: {
@@ -105,12 +103,16 @@ const Professionals = () => {
       },
     })
       .then(response => {
-        const professionals = response;
-        setProfessionals(professionals);
+        return response.json();
       })
-      .catch(error => console.log(error))
-      .finally(() => setLoading(false));
-  }, 500);
+      .then(response => {
+        const professionals = response;
+        if (!professionals.error) {
+          setProfessionals(professionals);
+        }
+      })
+      .catch(error => console.log(error));
+  };
 
   const onClickSearch = ({ genre, rating }) => {
     fetch(SERVIDOR.BUSCARPROFESIONAL(genre, rating), {

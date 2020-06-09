@@ -30,6 +30,7 @@ export const CLIENTE = {
 
 export const SERVIDOR = {
   OBRAS_URL: `${SERVER_URL}/obras`,
+  USUARIOSPROFESIONALES: `${SERVER_URL}/UsuariosProfesionales`,
   CORRECCIONES_URL: username =>
     `${SERVER_URL}/correcciones?nombreUsuario=${username}`,
   OBRAS_SINCORREGIR_URL: username =>
@@ -44,6 +45,6 @@ export const SERVIDOR = {
     `${SERVER_URL}/Notificaciones?username=${username}`,
   ACTUALIZAR_NOTIFICACIONES_URL: `${SERVER_URL}/ActualizarNotificaciones`,
   BUSCARPROFESIONAL: (genre, rating) =>
-    `${SERVER_URL}/UsuariosProfesionales?genero=${genre}&rating=${rating}`,
+    `${SERVER_URL}/usuarios?genero=${genre}&rating=${rating}`,
   DEVOLUCIONPROFESIONAL: `${SERVER_URL}/DevolucionProfesional`,
 };
