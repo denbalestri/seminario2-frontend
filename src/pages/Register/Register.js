@@ -23,6 +23,7 @@ const initialState = {
   email: '',
   username: '',
   rol: '',
+  descripcion: '',
 };
 
 const Register = () => {
@@ -272,9 +273,9 @@ const Register = () => {
                       rows={4}
                       required
                       fullWidth
-                      id="descripcion"
+                      id="description"
                       label="Descripción personal"
-                      name="descripcion"
+                      name="description"
                       autoComplete="descripcion"
                       onChange={onChange}
                     />

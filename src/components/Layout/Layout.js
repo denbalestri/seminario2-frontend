@@ -10,6 +10,7 @@ import MenuNotification from '../MenuNotification';
 import AppbarAuthor from '../AppbarAuthor';
 import AppbarProfessional from '../AppbarProfessional';
 import useStyles from './styles';
+import { notification } from 'antd';
 
 const MainLayout = ({ children }) => {
   const classes = useStyles();
@@ -26,10 +27,12 @@ const MainLayout = ({ children }) => {
     amountOfNotifications
   );
   const user = useSelector(state => state.user.user);
-
   useEffect(() => {
-    if (!notifications.leidas === 'SI')
-      setNotificationsBadge(amountOfNotifications);
+    const amountNotification = notifications.reduce((acc, notification) => {
+      return notification.leida === 'SI' ? acc : acc + 1;
+    }, 0);
+
+    setNotificationsBadge(amountNotification);
   }, [amountOfNotifications]);
 
   const onClickNotifications = event => {

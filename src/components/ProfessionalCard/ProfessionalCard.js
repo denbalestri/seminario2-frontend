@@ -89,7 +89,12 @@ const ProfessionalCard = ({
         onClick={onClickCard}
       >
         <section style={{ display: 'flex' }}>
-          <Avatar size={200} src={avatar} icon={<UserOutlined />} />
+          <Avatar
+            size={200}
+            src={avatar}
+            icon={<UserOutlined />}
+            style={{ minWidth: 200, minHeight: 200 }}
+          />
           <aside
             style={{ marginLeft: 10, marginTop: 15, fontFamily: 'Ubuntu' }}
           >
@@ -104,7 +109,7 @@ const ProfessionalCard = ({
               />
               <p>({quantityReviews} opiniones)</p>
 
-              <p>{descriptionProfessional}</p>
+              <p style={{ maxWidth: 350 }}>{descriptionProfessional}</p>
             </div>
           </aside>
         </section>

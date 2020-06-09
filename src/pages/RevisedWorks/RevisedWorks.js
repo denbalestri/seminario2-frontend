@@ -9,11 +9,6 @@ const RevisedWork = () => {
   const [revisedWorks, setRevisedWorks] = useState([]);
   const [loading, setLoading] = useState(false);
   const user = useSelector(state => state.user.user);
-  const notification = useSelector(state => state.notifications.notification);
-
-  useEffect(() => {
-    //notifications
-  }, [notification]);
 
   useEffect(() => {
     setLoading(true);
@@ -27,7 +22,7 @@ const RevisedWork = () => {
       .then(response => {
         const parsedWorks = response.map(work => ({
           title: `${work.nombreProfesional} ${work.apellidoProfesional}`,
-          avatar: '../../../images/person3.jpg',
+          avatar: '',
           usernameProfessional: work.profesional,
           description: `Novela llamada ${work.nombreObra} del g\u00E9nero ${work.genero}`,
           content: work.mensajeCorreccion,

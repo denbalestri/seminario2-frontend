@@ -33,7 +33,7 @@ const RecievedWorkList = ({ works }) => {
           title: work.nombreObra,
           nameWork: work.nombreObra,
           userAuthor: work.userAutor,
-          avatar: '../../../images/person5.jpg',
+          avatar: '',
           author: `${work.nombreAutor} ${work.apellidoAutor}`,
           username: work.userAutor,
           description: `El g\u00E9nero de esta obra es ${work.genero} y su nivel de cr\u00EDtica pedida es: ${work.nivelCritica}. 

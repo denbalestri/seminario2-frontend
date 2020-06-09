@@ -33,6 +33,7 @@ export const SERVIDOR = {
   USUARIOSPROFESIONALES: `${SERVER_URL}/UsuariosProfesionales`,
   CORRECCIONES_URL: username =>
     `${SERVER_URL}/correcciones?nombreUsuario=${username}`,
+  CORRECCIONESPROFESIONAL_URL: `${SERVER_URL}/correcciones`,
   OBRAS_SINCORREGIR_URL: username =>
     `${SERVER_URL}/ObraSinCorregirPorProfesional?nombreUsuarioProfesional=${username}`,
   OBRAS_CONTENIDO_URL: (nameWork, author) =>

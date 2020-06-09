@@ -101,7 +101,7 @@ const RecivedWorkCard = ({
           nombreUsuarioProfesional: user.username,
         });
 
-        fetch(SERVIDOR.CORRECCIONES_URL, {
+        fetch(SERVIDOR.CORRECCIONESPROFESIONAL_URL, {
           method: 'POST',
           mode: 'cors',
           headers: {
