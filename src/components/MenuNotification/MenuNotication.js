@@ -81,7 +81,7 @@ const Notifications = ({ notifications }) => {
 
 const MenuNotification = ({ open, anchorEl, handleMenuClose }) => {
   const dispatch = useDispatch();
-  const username = useSelector(state => state.user.username);
+  const username = useSelector(state => state.user.user.username);
   const notifications = useSelector(state => state.notifications.notifications);
 
   useEffect(() => {

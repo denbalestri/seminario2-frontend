@@ -20,13 +20,16 @@ const MainLayout = ({ children }) => {
   const amountOfNotifications = useSelector(
     state => state.notifications.notifications.length
   );
+  const notifications = useSelector(state => state.notifications.notifications);
+
   const [notificationsBadge, setNotificationsBadge] = useState(
     amountOfNotifications
   );
   const user = useSelector(state => state.user.user);
 
   useEffect(() => {
-    setNotificationsBadge(amountOfNotifications);
+    if (!notifications.leidas === 'SI')
+      setNotificationsBadge(amountOfNotifications);
   }, [amountOfNotifications]);
 
   const onClickNotifications = event => {
