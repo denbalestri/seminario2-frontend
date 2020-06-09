@@ -20,6 +20,7 @@ const MainLayout = ({ children }) => {
   const amountOfNotifications = useSelector(
     state => state.notifications.length
   );
+
   const [notificationsBadge, setNotificationsBadge] = useState(
     amountOfNotifications
   );
@@ -38,7 +39,7 @@ const MainLayout = ({ children }) => {
   };
 
   useInterval(() => {
-    fetch(`${SERVIDOR.NOTIFICACIONES_URL}/?username=${user.username}`, {
+    fetch(SERVIDOR.NOTIFICACIONES_URL(user.username), {
       method: 'GET',
       mode: 'cors',
       headers: {
@@ -49,7 +50,7 @@ const MainLayout = ({ children }) => {
         return response.json();
       })
       .then(response => {
-        dispatch(addNotifications(response));
+        if (response !== []) dispatch(addNotifications(response));
       })
       .catch(error => console.log(error));
   }, 5000);

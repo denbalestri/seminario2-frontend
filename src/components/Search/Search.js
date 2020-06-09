@@ -23,7 +23,7 @@ const genreMap = {
 
 const initialState = {
   genre: [],
-  rating: '',
+  rating: 0,
 };
 const Search = ({ onClickSearch }) => {
   const classes = useStyles();

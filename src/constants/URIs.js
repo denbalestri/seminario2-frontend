@@ -39,6 +39,9 @@ export const SERVIDOR = {
     `${SERVER_URL}/usuarios?nombreUsuario=${professional}`,
   LOGIN_URL: `${SERVER_URL}/login`,
   REGISTRO_URL: `${SERVER_URL}/registro`,
-  NOTIFICACIONES_URL: `${SERVER_URL}/Notificaciones`,
+  NOTIFICACIONES_URL: username =>
+    `${SERVER_URL}/Notificaciones?username=${username}`,
   ACTUALIZAR_NOTIFICACIONES_URL: `${SERVER_URL}/ActualizarNotificaciones`,
+  BUSCARPROFESIONAL: (genre, rating) =>
+    `${SERVER_URL}/UsuariosProfesionales?genero=${genre}&rating=${rating}`,
 };

@@ -3,6 +3,10 @@ import MainProfessional from '../../components/MainProfessional';
 import MainLayout from '../../components/Layout';
 import Search from '../../components/Search';
 import useStyles from './styles';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { setProfessionals } from '../../redux/actions/professionals';
+import { SERVIDOR, CLIENTE } from '../../constants/URIs';
 const professionalsList = [
   {
     nombre: 'Maria',
@@ -115,7 +119,27 @@ const professionalsList = [
 ];
 const Main = () => {
   const classes = useStyles();
-  const onClickSearch = () => {};
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const onClickSearch = ({ genre, rating }) => {
+    fetch(SERVIDOR.BUSCARPROFESIONAL(genre, rating), {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        const professionals = response;
+        dispatch(setProfessionals(professionals));
+        history.push(CLIENTE.PROFESIONALES_URL);
+      })
+      .catch(error => console.log(error));
+  };
   return (
     <MainLayout>
       <p className={classes.title}>Encontrá tu profesional ideal</p>

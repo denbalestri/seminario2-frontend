@@ -14,7 +14,7 @@ const professionalsList = [
     apellido: 'Lopez',
     nombreUsuario: 'gnegri',
     avatar: '../../../images/person2.jpg',
-    genero: { descripcion: 'Romantico' },
+    generoExperto: 'Romantico',
     id: 1,
     quantityReviews: 30,
     description:
@@ -25,7 +25,7 @@ const professionalsList = [
     apellido: 'Carrozo',
     nombreUsuario: 'gnegri',
     avatar: '../../../images/person.jpg',
-    genero: { descripcion: 'Poesia' },
+    generoExperto: 'Poesia',
     id: 2,
     quantityReviews: 10,
     description:
@@ -36,7 +36,7 @@ const professionalsList = [
     apellido: 'Fuentes',
     nombreUsuario: 'gnegri',
     avatar: '../../../images/person3.jpg',
-    genero: { descripcion: 'Poesia' },
+    generoExperto: 'Poesia',
     id: 3,
     quantityReviews: 120,
     description:
@@ -47,7 +47,7 @@ const professionalsList = [
     apellido: 'Luz',
     nombreUsuario: 'gnegri',
     avatar: '../../../images/person6.jpg',
-    genero: { descripcion: 'Terror, Aventuras' },
+    generoExperto: { descripcion: 'Terror, Aventuras' },
     id: 4,
     quantityReviews: 80,
     description:
@@ -58,7 +58,7 @@ const professionalsList = [
     apellido: 'Lopez',
     nombreUsuario: 'gnegri',
     avatar: '../../../images/person9.jpg',
-    genero: { descripcion: 'Aventuras' },
+    generoExperto: 'Aventuras',
     id: 4,
     quantityReviews: 80,
     description:
@@ -69,7 +69,7 @@ const professionalsList = [
     apellido: 'Perez',
     nombreUsuario: 'gnegri',
     avatar: '../../../images/person8.jpg',
-    genero: { descripcion: 'Aventuras' },
+    generoExperto: 'Aventuras',
     id: 4,
     quantityReviews: 80,
     description:
@@ -77,13 +77,19 @@ const professionalsList = [
   },
 ];
 const Professionals = () => {
+  const classes = useStyles();
   const [professionals, setProfessionals] = useState([]);
   const [loading, setLoading] = useState(false);
-  const professionalsSearched = useSelector(state => state.professionals);
-  const classes = useStyles();
+  const professionalsSearched = useSelector(
+    state => state.professionals.professionals
+  );
+
+  console.log(professionalsSearched);
 
   useEffect(() => {
-    setProfessionals(professionalsSearched);
+    if (!professionalsSearched.error) {
+      setProfessionals(professionalsSearched[0]);
+    }
   }, [professionalsSearched]);
 
   useEffect(() => {
@@ -108,8 +114,24 @@ const Professionals = () => {
       .finally(() => setLoading(false));
   }, 500);
 
-  const onClickSearch = formSearch => {
-    //onSearch(formSearch)
+  const onClickSearch = ({ genre, rating }) => {
+    fetch(SERVIDOR.BUSCARPROFESIONAL(genre, rating), {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        const professionals = response;
+        if (!professionals.error) {
+          setProfessionals(professionals[0]);
+        }
+      })
+      .catch(error => console.log(error));
   };
 
   return (
@@ -126,7 +148,7 @@ const Professionals = () => {
               quantityReviews: professional.quantityReviews,
               avatar: professional.avatar,
               userProfessional: professional.nombreUsuario,
-              description: `Lectura profesional: ${professional.genero.descripcion}`,
+              description: `Lectura profesional: ${professional.generoExperto}`,
               descriptionProfessional: professional.description,
               initials: `${professional.nombre.charAt(
                 0
