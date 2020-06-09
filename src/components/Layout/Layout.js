@@ -18,9 +18,8 @@ const MainLayout = ({ children }) => {
   const [openNotificacion, setOpenNotificacion] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const amountOfNotifications = useSelector(
-    state => state.notifications.length
+    state => state.notifications.notifications.length
   );
-
   const [notificationsBadge, setNotificationsBadge] = useState(
     amountOfNotifications
   );
@@ -39,7 +38,7 @@ const MainLayout = ({ children }) => {
   };
 
   useInterval(() => {
-    fetch(SERVIDOR.NOTIFICACIONES_URL(user.username), {
+    fetch(`${SERVIDOR.NOTIFICACIONES_URL}/?username=${user.username}`, {
       method: 'GET',
       mode: 'cors',
       headers: {
@@ -50,7 +49,7 @@ const MainLayout = ({ children }) => {
         return response.json();
       })
       .then(response => {
-        if (response !== []) dispatch(addNotifications(response));
+        dispatch(addNotifications(response));
       })
       .catch(error => console.log(error));
   }, 5000);

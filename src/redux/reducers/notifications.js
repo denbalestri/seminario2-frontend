@@ -4,7 +4,7 @@ import {
 } from '../actions/actionTypes.json';
 
 const initialState = {
-  notifications: {},
+  notifications: [],
   read: false,
 };
 
