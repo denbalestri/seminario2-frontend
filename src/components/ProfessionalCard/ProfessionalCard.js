@@ -94,7 +94,7 @@ const ProfessionalCard = ({
             size={200}
             src={avatar}
             icon={<UserOutlined />}
-            //style={{ width: 400, height: 200 }}
+            style={{ width: 300, height: 200 }}
           />
           <aside
             style={{ marginLeft: 10, marginTop: 15, fontFamily: 'Ubuntu' }}

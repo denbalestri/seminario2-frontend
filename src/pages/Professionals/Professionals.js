@@ -150,7 +150,7 @@ const Professionals = () => {
               avatar: professional.avatar,
               userProfessional: professional.nombreUsuario,
               description: `Lectura profesional: ${professional.generoExperto}`,
-              descriptionProfessional: professional.description,
+              descriptionProfessional: professional.descripcion,
               initials: `${professional.nombreProfesional.charAt(
                 0
               )}${professional.apellidoProfesional.charAt(0)}`,
