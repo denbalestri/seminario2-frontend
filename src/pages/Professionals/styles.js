@@ -13,6 +13,7 @@ export default makeStyles(theme => ({
   },
   section: {
     display: 'flex',
+    justifyContent: 'center',
     flexFlow: 'wrap',
   },
   search: {

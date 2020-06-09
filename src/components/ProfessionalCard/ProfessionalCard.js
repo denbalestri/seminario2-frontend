@@ -80,7 +80,7 @@ const ProfessionalCard = ({
     <>
       <Card
         style={{
-          width: '45vw',
+          minWidth: 600,
           marginTop: 20,
           marginRight: 20,
           marginLeft: 40,
@@ -89,12 +89,7 @@ const ProfessionalCard = ({
         onClick={onClickCard}
       >
         <section style={{ display: 'flex' }}>
-          <Avatar
-            size={200}
-            src={avatar}
-            icon={<UserOutlined />}
-            style={{ width: 300, height: 200 }}
-          />
+          <Avatar size={200} src={avatar} icon={<UserOutlined />} />
           <aside
             style={{ marginLeft: 10, marginTop: 15, fontFamily: 'Ubuntu' }}
           >
