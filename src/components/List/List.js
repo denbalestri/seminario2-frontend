@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MessageOutlined, FileTwoTone, UserOutlined } from '@ant-design/icons';
-import { List, Avatar, Space } from 'antd';
+import { List, Avatar, Space, Rate } from 'antd';
 import { useSelector } from 'react-redux';
 import Button from '../../components/Button';
 import Comment from '../../components/Comment';
@@ -31,7 +31,7 @@ const ListItem = ({
     const body = JSON.stringify({
       nombreUsuarioAutor: user.username,
       nombreUsuarioProfesional: usernameProfessional,
-      puntuacion: rating.toString(),
+      puntuacion: rating,
       comentario: '',
     });
     fetch(SERVIDOR.DEVOLUCIONPROFESIONAL, {
@@ -44,9 +44,6 @@ const ListItem = ({
     }).catch(error => console.log(error));
   };
 
-  const onChangeRating = (event, rating) => {
-    setRating(rating);
-  };
   return (
     <List.Item
       key={title}
@@ -90,13 +87,7 @@ const ListItem = ({
         >
           Opinar
         </p>
-        <Rating
-          name="half-rating-read"
-          defaultValue={0}
-          precision={0.5}
-          onChange={onChangeRating}
-          value={rating}
-        />
+        <Rate allowHalf onChange={setRating} value={rating} />
       </section>
     </List.Item>
   );
