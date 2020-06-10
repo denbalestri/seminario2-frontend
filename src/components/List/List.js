@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { MessageOutlined, FileTwoTone, UserOutlined } from '@ant-design/icons';
-import { List, Avatar, Space } from 'antd';
+import { List, Avatar, Space, Rate } from 'antd';
+import { useSelector } from 'react-redux';
 import Button from '../../components/Button';
 import Comment from '../../components/Comment';
 import Rating from '@material-ui/lab/Rating';
+import { SERVIDOR } from '../../constants/URIs';
 const IconText = ({ icon, text, onClick }) => (
   <Space>
     <Button onClick={onClick}>
@@ -13,15 +15,33 @@ const IconText = ({ icon, text, onClick }) => (
   </Space>
 );
 
-const ListItem = ({ title, href, description, content, avatar }) => {
-  const [openComments, setOpenComments] = useState(false);
+const ListItem = ({
+  title,
+  href,
+  description,
+  content,
+  avatar,
+  usernameProfessional,
+}) => {
+  const [rating, setRating] = useState(0);
   const textFeedback = 'Enviar devoluci\u00F3n';
-  const onClickComment = () => {
-    setOpenComments(!openComments);
-  };
+  const user = useSelector(state => state.user.user);
 
-  const onCancel = () => {
-    setOpenComments(false);
+  const onSubmit = () => {
+    const body = JSON.stringify({
+      nombreUsuarioAutor: user.username,
+      nombreUsuarioProfesional: usernameProfessional,
+      puntuacion: rating,
+      comentario: '',
+    });
+    fetch(SERVIDOR.DEVOLUCIONPROFESIONAL, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body,
+    }).catch(error => console.log(error));
   };
 
   return (
@@ -38,7 +58,7 @@ const ListItem = ({ title, href, description, content, avatar }) => {
           icon={MessageOutlined}
           text={textFeedback}
           key="list-vertical-message"
-          onClick={onClickComment}
+          onClick={onSubmit}
         />,
       ]}
     >
@@ -47,13 +67,28 @@ const ListItem = ({ title, href, description, content, avatar }) => {
         title={<a href={href}>{title}</a>}
         description={description}
       />
+      <p
+        style={{
+          fontSize: 17,
+          fontFamily: 'Ubuntu',
+        }}
+      >
+        Devolucion del profesional
+      </p>
       {content}
-      {openComments && (
-        <section>
-          <Comment onCancel={onCancel} avatar={avatar} datetime={Date.now()} />
-          <Rating name="half-rating-read" defaultValue={0} precision={0.5} />
-        </section>
-      )}
+
+      <section style={{ display: 'flex', marginTop: 15 }}>
+        <p
+          style={{
+            fontSize: 17,
+            fontFamily: 'Ubuntu',
+            marginRight: 10,
+          }}
+        >
+          Opinar
+        </p>
+        <Rate allowHalf onChange={setRating} value={rating} />
+      </section>
     </List.Item>
   );
 };

@@ -25,7 +25,7 @@ const AppbarAuthor = ({
   return (
     <AppBar position="static" className={classes.appbar}>
       <Toolbar>
-        <Link to="/profesionales">
+        <Link to="/menu">
           <p className={classes.logo}>Correciones Literarias</p>
         </Link>
         <div className={classes.grow} />

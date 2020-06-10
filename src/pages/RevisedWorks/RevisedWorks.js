@@ -7,11 +7,12 @@ import { SERVIDOR } from '../../constants/URIs';
 
 const RevisedWork = () => {
   const [revisedWorks, setRevisedWorks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const user = useSelector(state => state.user);
+  const [loading, setLoading] = useState(false);
+  const user = useSelector(state => state.user.user);
 
   useEffect(() => {
-    fetch(SERVIDOR.CORRECCIONES_URL + '?nombreUsuario=' + user.username, {
+    setLoading(true);
+    fetch(SERVIDOR.CORRECCIONES_URL(user.username), {
       method: 'GET',
       mode: 'cors',
     })
@@ -21,7 +22,8 @@ const RevisedWork = () => {
       .then(response => {
         const parsedWorks = response.map(work => ({
           title: `${work.nombreProfesional} ${work.apellidoProfesional}`,
-          avatar: '../../../images/person3.jpg',
+          avatar: '',
+          usernameProfessional: work.profesional,
           description: `Novela llamada ${work.nombreObra} del g\u00E9nero ${work.genero}`,
           content: work.mensajeCorreccion,
         }));
@@ -29,6 +31,7 @@ const RevisedWork = () => {
       })
       .catch(error => console.log(error))
       .finally(() => setLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

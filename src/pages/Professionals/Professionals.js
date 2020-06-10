@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import ProfesionalCard from '../../components/ProfessionalCard';
 import { useSelector } from 'react-redux';
@@ -9,66 +10,66 @@ import useStyles from './styles';
 
 const professionalsList = [
   {
-    nombre: 'Maria',
-    apellido: 'Lopez',
-    nombreUsuario: 'srico',
+    nombreProfesional: 'Maria',
+    apellidoProfesional: 'Lopez',
+    nombreUsuario: 'gnegri',
     avatar: '../../../images/person2.jpg',
-    genero: { descripcion: 'Romantico' },
+    generoExperto: 'Romantico',
     id: 1,
     quantityReviews: 30,
     description:
       'Mi nombre es Maria Lopez y doy clases de literatura moderna en la UBA. Tengo 15 a\u00F1os de experienza en el campo, soy coordinadora de talleres online y presencial',
   },
   {
-    nombre: 'Silvia',
-    apellido: 'Carrozo',
-    nombreUsuario: 'srico',
+    nombreProfesional: 'Silvia',
+    apellidoProfesional: 'Carrozo',
+    nombreUsuario: 'gnegri',
     avatar: '../../../images/person.jpg',
-    genero: { descripcion: 'Poesia' },
+    generoExperto: 'Poesia',
     id: 2,
     quantityReviews: 10,
     description:
       'Hola! Mi nombre es Silvia y soy experta en Poesia. Hace 10 a\u00F1os que trabajo en talleres dirigiendolas. Tambien escribi ensayos sobre novelas Argentinas',
   },
   {
-    nombre: 'Nicolas',
-    apellido: 'Fuentes',
-    nombreUsuario: 'srico',
+    nombreProfesional: 'Nicolas',
+    apellidoProfesional: 'Fuentes',
+    nombreUsuario: 'gnegri',
     avatar: '../../../images/person3.jpg',
-    genero: { descripcion: 'Poesia' },
+    generoExperto: 'Poesia',
     id: 3,
     quantityReviews: 120,
     description:
       'Mi nombre es Nicolas y mi especializacion es la Poesia. Escribo desde los 10 a\u00F1os. Soy profesor en la UBA en la catedra de literatura contempora\u00F1ea.',
   },
   {
-    nombre: 'Angela',
-    apellido: 'Luz',
-    nombreUsuario: 'srico',
+    nombreProfesional: 'Angela',
+    apellidoProfesional: 'Luz',
+    nombreUsuario: 'gnegri',
     avatar: '../../../images/person6.jpg',
-    genero: { descripcion: 'Terror, Aventuras' },
+    generoExperto: { descripcion: 'Terror, Aventuras' },
     id: 4,
     quantityReviews: 80,
     description:
       'Mi nombre es Angela Luz y mi especializacion es las novelas de Terror y Aventuras. Escribo desde los 10 a\u00F1os. Soy profesor en la UBA en la catedra de literatura contempora\u00F1ea.',
   },
   {
-    nombre: 'Eduardo',
-    apellido: 'Lopez',
-    nombreUsuario: 'srico',
+    nombreProfesional: 'Eduardo',
+    apellidoProfesional: 'Lopez',
+    nombreUsuario: 'gnegri',
     avatar: '../../../images/person9.jpg',
-    genero: { descripcion: 'Aventuras' },
+    generoExperto: 'Aventuras',
     id: 4,
     quantityReviews: 80,
     description:
       'Mi nombre es Eduardo Lopez y mi especializacion es las novelas de Aventuras. Escribo desde los 10 a\u00F1os. Soy profesor en la UBA en la catedra de literatura contempora\u00F1ea.',
   },
   {
-    nombre: 'Mariana',
-    apellido: 'Perez',
-    nombreUsuario: 'srico',
+    nombreProfesional: 'Mariana',
+    apellidoProfesional: 'Perez',
+    nombreUsuario: 'gnegri',
     avatar: '../../../images/person8.jpg',
-    genero: { descripcion: 'Aventuras' },
+    generoExperto: 'Aventuras',
     id: 4,
     quantityReviews: 80,
     description:
@@ -76,23 +77,25 @@ const professionalsList = [
   },
 ];
 const Professionals = () => {
+  const classes = useStyles();
   const [professionals, setProfessionals] = useState([]);
   const [loading, setLoading] = useState(false);
-  const professionalsSearched = useSelector(state => state.professionals);
-  const classes = useStyles();
+  const professionalsSearched = useSelector(
+    state => state.professionals.professionals
+  );
 
   useEffect(() => {
-    setProfessionals(professionalsSearched);
+    if (!professionalsSearched.error) {
+      setProfessionals(professionalsSearched);
+    }
   }, [professionalsSearched]);
 
   useEffect(() => {
-    setProfessionals(professionalsList);
+    getProfessionals();
   }, []);
 
-  const onSearch = debounce(professional => {
-    if (professional === '') return;
-    setLoading(true);
-    fetch(SERVIDOR.SEARCHPROFESSIONAL_URL(professional), {
+  const getProfessionals = () => {
+    fetch(SERVIDOR.USUARIOSPROFESIONALES, {
       method: 'GET',
       mode: 'cors',
       headers: {
@@ -100,15 +103,35 @@ const Professionals = () => {
       },
     })
       .then(response => {
-        const professionals = response;
-        setProfessionals(professionals);
+        return response.json();
       })
-      .catch(error => console.log(error))
-      .finally(() => setLoading(false));
-  }, 500);
+      .then(response => {
+        const professionals = response;
+        if (!professionals.error) {
+          setProfessionals(professionals);
+        }
+      })
+      .catch(error => console.log(error));
+  };
 
-  const onClickSearch = formSearch => {
-    //onSearch(formSearch)
+  const onClickSearch = ({ genre, rating }) => {
+    fetch(SERVIDOR.BUSCARPROFESIONAL(genre, rating), {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        const professionals = response;
+        if (!professionals.error) {
+          setProfessionals(professionals);
+        }
+      })
+      .catch(error => console.log(error));
   };
 
   return (
@@ -120,16 +143,17 @@ const Professionals = () => {
         {professionals.length ? (
           professionals.map((professional, index) => {
             const professionalCardProps = {
-              professional: `${professional.nombre} ${professional.apellido}`,
+              professional: `${professional.nombreProfesional} ${professional.apellidoProfesional}`,
               key: index,
-              quantityReviews: professional.quantityReviews,
+              rating: professional.rating,
+              quantityReviews: professional.obrasCorregidas,
               avatar: professional.avatar,
               userProfessional: professional.nombreUsuario,
-              description: `Lectura profesional: ${professional.genero.descripcion}`,
-              descriptionProfessional: professional.description,
-              initials: `${professional.nombre.charAt(
+              description: `Lectura profesional: ${professional.generoExperto}`,
+              descriptionProfessional: professional.descripcion,
+              initials: `${professional.nombreProfesional.charAt(
                 0
-              )}${professional.apellido.charAt(0)}`,
+              )}${professional.apellidoProfesional.charAt(0)}`,
             };
 
             return <ProfesionalCard {...professionalCardProps} />;

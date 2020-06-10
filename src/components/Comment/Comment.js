@@ -1,18 +1,17 @@
-/** @format */
+import React, { useState } from 'react';
+import { Comment, Avatar, Form, Button, List, Input } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 
-import React, { useState } from "react";
-import { Comment, Avatar, Form, Button, List, Input } from "antd";
-import { UserOutlined } from "@ant-design/icons";
-import moment from "moment";
+import moment from 'moment';
 
 const { TextArea } = Input;
 
 const CommentList = ({ comments }) => (
   <List
     dataSource={comments}
-    header={`${comments.length} ${comments.length > 1 ? "replies" : "reply"}`}
+    header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
     itemLayout="horizontal"
-    renderItem={(props) => <Comment {...props} />}
+    renderItem={props => <Comment {...props} />}
   />
 );
 
@@ -42,27 +41,28 @@ const Editor = ({ onChange, onSubmit, submitting, value, onCancel }) => (
   </div>
 );
 
-const UI_Comment = ({ onCancel }) => {
+const UI_Comment = ({ onCancel, onSubmit }) => {
   const [comments, setComments] = useState([]);
-  const [submitting, setSubmitting] = useState(false);
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState('');
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const comment = e.target.value;
     setComment(comment);
   };
 
-  const handleSubmit = () => {
-    //setSubmitting(true);
+  const onLocalSubmit = () => {
+    //next data is not sent to backend yet
     setComments([
       {
-        author: "Nicolas Fuentes",
-        avatar: "",
+        author: 'Nicolas Fuentes',
+        avatar: '',
         content: <p>{comment}</p>,
         datetime: moment().fromNow(),
       },
       ...comments,
     ]);
+
+    onSubmit();
   };
   return (
     <div>
@@ -72,9 +72,8 @@ const UI_Comment = ({ onCancel }) => {
         content={
           <Editor
             onChange={handleChange}
-            onSubmit={handleSubmit}
+            onSubmit={onLocalSubmit}
             onCancel={onCancel}
-            submitting={submitting}
             value={comment}
           />
         }

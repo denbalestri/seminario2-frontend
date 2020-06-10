@@ -19,6 +19,7 @@ const initialState = {
   nameWork: '',
   review: [],
   genre: [],
+  description: '',
 };
 const ModalSendWork = ({
   visible,
@@ -32,6 +33,7 @@ const ModalSendWork = ({
   const [form, setForm] = useState(initialState);
   const placeholderReview = 'Seleccione un nivel de cr\u00EDtica';
   const placeholderGenre = 'Seleccione el g\u00E9nero';
+
   useEffect(() => {
     setFile({});
     setFileList([]);
@@ -70,6 +72,14 @@ const ModalSendWork = ({
     setForm({
       ...form,
       review,
+    });
+  };
+
+  const onChangeDescription = event => {
+    const description = event.target.value;
+    setForm({
+      ...form,
+      description,
     });
   };
 
@@ -128,7 +138,11 @@ const ModalSendWork = ({
       <p style={{ fontSize: 15, marginTop: 10 }}>
         Escriba una descripcion de la obra
       </p>
-      <TextArea rows={4} />
+      <TextArea
+        rows={4}
+        value={form.description}
+        onChange={onChangeDescription}
+      />
       <section style={{ marginTop: 20 }}>
         <Upload {...uploadProps} onChange={handleChange}>
           <Button type="">

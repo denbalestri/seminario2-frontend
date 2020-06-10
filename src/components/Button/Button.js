@@ -1,9 +1,7 @@
-/** @format */
-
-import React from "react";
-import { Button } from "antd";
-import PropTypes from "prop-types";
-import "antd/dist/antd.css";
+import React from 'react';
+import { Button } from 'antd';
+import PropTypes from 'prop-types';
+import 'antd/dist/antd.css';
 
 const UI_Button = ({ children, loading, type, size, ...props }) => {
   return (
@@ -21,7 +19,7 @@ UI_Button.propTypes = {
 };
 
 UI_Button.defaultProps = {
-  type: "primary",
+  type: 'primary',
 };
 
 export default UI_Button;

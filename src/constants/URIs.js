@@ -12,6 +12,7 @@ const INFORMACIONPROFESIONAL_URL = '/informacion-profesional';
 const LOGIN_URL = '/iniciar-sesion';
 const REGISTER_URL = '/registracion';
 const MENUPRINCIPAL_URL = '/menu';
+
 export const CLIENTE = {
   INICIO_URL,
   PERFIL_URL,
@@ -29,11 +30,22 @@ export const CLIENTE = {
 
 export const SERVIDOR = {
   OBRAS_URL: `${SERVER_URL}/obras`,
-  CORRECCIONES_URL: `${SERVER_URL}/correcciones`,
+  USUARIOSPROFESIONALES: `${SERVER_URL}/UsuariosProfesionales`,
+  CORRECCIONES_URL: username =>
+    `${SERVER_URL}/correcciones?nombreUsuario=${username}`,
+  CORRECCIONESPROFESIONAL_URL: `${SERVER_URL}/correcciones`,
   OBRAS_SINCORREGIR_URL: username =>
     `${SERVER_URL}/ObraSinCorregirPorProfesional?nombreUsuarioProfesional=${username}`,
   OBRAS_CONTENIDO_URL: (nameWork, author) =>
     `${SERVER_URL}/ContenidoObras?nombreObra=${nameWork}&userAutor=${author}`,
   SEARCHPROFESSIONAL_URL: professional =>
     `${SERVER_URL}/usuarios?nombreUsuario=${professional}`,
+  LOGIN_URL: `${SERVER_URL}/login`,
+  REGISTRO_URL: `${SERVER_URL}/registro`,
+  NOTIFICACIONES_URL: username =>
+    `${SERVER_URL}/Notificaciones?username=${username}`,
+  ACTUALIZAR_NOTIFICACIONES_URL: `${SERVER_URL}/ActualizarNotificaciones`,
+  BUSCARPROFESIONAL: (genre, rating) =>
+    `${SERVER_URL}/usuarios?genero=${genre}&rating=${rating}`,
+  DEVOLUCIONPROFESIONAL: `${SERVER_URL}/DevolucionProfesional`,
 };

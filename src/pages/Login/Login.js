@@ -2,26 +2,42 @@ import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-
 import Typography from '@material-ui/core/Typography';
+import { notification } from 'antd';
+import { useDispatch } from 'react-redux';
+
+import { SERVIDOR, CLIENTE } from '../../constants/URIs';
+import { setUser } from '../../redux/actions/user';
 
 import useStyles from './styles';
+
 const initialState = {
-  password: '',
   email: '',
+  clave: '',
 };
+
+const showError = () => {
+  notification.error({
+    message: 'Error',
+    description: 'La combinación ingresada es invalida, intentelo nuevamente',
+  });
+};
+
 const Login = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const dispatch = useDispatch();
   const loginText = 'Iniciar sesi\u00F3n';
   const passwordText = 'Contrase\u00F1a';
   const emailText = 'Correo electr\u00F3nico';
   const [form, setForm] = useState(initialState);
 
-  const onChange = (name, e) => {
+  const onChange = e => {
     const value = e.target.value;
+    const name = e.target.name;
     setForm({
       ...form,
       [name]: value,
@@ -29,7 +45,42 @@ const Login = () => {
   };
 
   const onClickSubmit = () => {
-    //send data to backend and verify
+    const body = JSON.stringify({
+      email: form.email,
+      clave: form.clave,
+    });
+    fetch(SERVIDOR.LOGIN_URL, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body,
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        if (!response.error) {
+          const usuarioBE = response;
+
+          const usuarioFE = {
+            firstName: usuarioBE.nombreUsuario,
+            lastName: usuarioBE.apellidoUsuario,
+            username: usuarioBE.user,
+            avatar: '../../../images/person5.jpg',
+            rol: usuarioBE.tipoUsuario,
+          };
+
+          dispatch(setUser(usuarioFE));
+          if (usuarioBE.tipoUsuario === 'Autor')
+            history.push(CLIENTE.MENUPRINCIPAL_URL);
+          else history.push(CLIENTE.TRABAJOS_URL);
+        } else {
+          showError();
+        }
+      })
+      .catch(error => console.log(error));
   };
   return (
     <Grid container component="main" className={classes.root}>
@@ -51,6 +102,7 @@ const Login = () => {
               required
               fullWidth
               id="email"
+              name="email"
               label={emailText}
               autoFocus
               onChange={onChange}

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import { Upload } from 'antd';
+import Button from '../../components/Button';
+import { Upload, notification } from 'antd';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import { UploadOutlined } from '@ant-design/icons';
@@ -11,7 +11,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import useStyles from './styles';
+import { SERVIDOR, CLIENTE } from '../../constants/URIs';
 import Select from '../../components/Select';
+import { getBase64 } from '../../constants/base64';
 import './Register.css';
 
 const initialState = {
@@ -19,16 +21,22 @@ const initialState = {
   lastName: '',
   password: '',
   email: '',
+  username: '',
+  rol: '',
+  descripcion: '',
 };
+
 const Register = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const [loading, setLoading] = useState(false);
   const signUpText = 'Registraci\u00F3n';
   const emailText = 'Correo electr\u00F3nico';
   const passwordText = 'Contrase\u00F1a';
   const [fileList, setFileList] = useState([]);
-  const [file, setFile] = useState({});
+  const [file, setFile] = useState(null);
   const [cvFileList, setCVFileList] = useState([]);
-  const [cv, setCVFile] = useState({});
+  const [cv, setCVFile] = useState(null);
   const [form, setForm] = useState(initialState);
 
   const onChange = e => {
@@ -70,8 +78,89 @@ const Register = () => {
     cvFileList,
     onChange: handleUploadCV,
   };
+
+  const showSuccess = () => {
+    notification.success({
+      message: 'Éxito',
+      description: 'El registro fue exitoso!',
+      onClose: onRedirect,
+    });
+  };
+
+  const onRedirect = () => {
+    history.push(CLIENTE.LOGIN_URL);
+  };
   const onClickSubmit = () => {
-    //send data to backend
+    setLoading(true);
+    if (file) {
+      getBase64(file.originFileObj).then(encodedAvatar => {
+        if (cv) {
+          getBase64(cv.originFileObj).then(encodedCV => {
+            const body = JSON.stringify({
+              tipoUsuario: '2',
+              nombre: form.firstName,
+              apellido: form.lastName,
+              mail: form.email,
+              clave: form.password,
+              usr: form.username,
+              avatar: encodedAvatar,
+              cv: encodedCV,
+              descripcion: form.description,
+            });
+
+            fetch(SERVIDOR.REGISTRO_URL, {
+              method: 'POST',
+              mode: 'cors',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+              },
+              body,
+            })
+              .then(response => {
+                if (response.ok) {
+                  showSuccess();
+                  setLoading(false);
+                }
+              })
+              .catch(error => {
+                setLoading(false);
+                console.log(error);
+              });
+          });
+        } else {
+          const body = JSON.stringify({
+            tipoUsuario: '1',
+            nombre: form.firstName,
+            apellido: form.lastName,
+            mail: form.email,
+            clave: form.password,
+            usr: form.username,
+            avatar: encodedAvatar,
+            cv: '',
+            descripcion: '',
+          });
+
+          fetch(SERVIDOR.REGISTRO_URL, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body,
+          })
+            .then(response => {
+              if (response.ok) {
+                showSuccess();
+                setLoading(false);
+              }
+            })
+            .catch(error => {
+              setLoading(false);
+              console.log(error);
+            });
+        }
+      });
+    }
   };
   return (
     <section
@@ -144,11 +233,22 @@ const Register = () => {
                   onChange={onChange}
                 />
               </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="username"
+                  label="Nombre usuario"
+                  id="username"
+                  onChange={onChange}
+                />
+              </Grid>
               <Grid item xs={6}>
                 <Select
                   placeholder={'Seleccione su Rol'}
                   optionItems={['Autor', 'Corrector']}
-                  valueSelected={form.genre}
+                  valueSelected={form.rol}
                   onChange={onChangeRole}
                 />
               </Grid>
@@ -173,9 +273,9 @@ const Register = () => {
                       rows={4}
                       required
                       fullWidth
-                      id="descripcion"
+                      id="description"
                       label="Descripción personal"
-                      name="descripcion"
+                      name="description"
                       autoComplete="descripcion"
                       onChange={onChange}
                     />
@@ -192,11 +292,10 @@ const Register = () => {
               </Grid>
             </Grid>
             <Button
-              fullWidth
-              variant="contained"
-              color="primary"
+              type="primary"
               className={classes.submit}
               onClick={onClickSubmit}
+              loading={loading}
             >
               Registrarse
             </Button>

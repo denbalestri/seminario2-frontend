@@ -1,28 +1,43 @@
 import React, { useState, useEffect } from 'react';
-
 import { useSelector, useDispatch } from 'react-redux';
-import { logoutUser } from '../../redux/actions/user';
 import { useHistory } from 'react-router-dom';
+
+import { logoutUser } from '../../redux/actions/user';
+import { addNotifications } from '../../redux/actions/notifications';
 import useInterval from '../../Hooks/useInterval';
-import { CLIENTE } from '../../constants/URIs';
+import { SERVIDOR } from '../../constants/URIs';
 import MenuNotification from '../MenuNotification';
 import AppbarAuthor from '../AppbarAuthor';
 import AppbarProfessional from '../AppbarProfessional';
 import useStyles from './styles';
+import { notification } from 'antd';
 
 const MainLayout = ({ children }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [placeholder, setPlaceholder] = useState('');
-  const [searchHide, setSearchHide] = useState(false);
   const history = useHistory();
-  const location = history.location.pathname;
   const [openNotificacion, setOpenNotificacion] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [notificationsBadge, setNotificationsBadge] = useState(1);
-  const user = useSelector(state => state.user);
+  const amountOfNotifications = useSelector(
+    state => state.notifications.notifications.length
+  );
+  const notifications = useSelector(state => state.notifications.notifications);
+
+  const [notificationsBadge, setNotificationsBadge] = useState(
+    amountOfNotifications
+  );
+  const user = useSelector(state => state.user.user);
+  useEffect(() => {
+    const amountNotification = notifications.reduce((acc, notification) => {
+      return notification.leida === 'SI' ? acc : acc + 1;
+    }, 0);
+
+    setNotificationsBadge(amountNotification);
+  }, [amountOfNotifications]);
 
   const onClickNotifications = event => {
+    if (!amountOfNotifications) return;
+
     setAnchorEl(event.currentTarget);
     setOpenNotificacion(true);
     setNotificationsBadge(0);
@@ -33,19 +48,21 @@ const MainLayout = ({ children }) => {
   };
 
   useInterval(() => {
-    //call server to get all new reviews, the interval 'll call every five seconds
-    //dispatch a action to updated the store and when the user open the notifications,
-    // set notificationsRead (notifications recived - notifications read)
+    fetch(SERVIDOR.NOTIFICACIONES_URL(user.username), {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        dispatch(addNotifications(response));
+      })
+      .catch(error => console.log(error));
   }, 5000);
-
-  useEffect(() => {
-    if (location === CLIENTE.PROFESIONALES_URL) {
-      setSearchHide(false);
-      setPlaceholder('B\u00FAsqueda por profesional o g\u00E9nero');
-    } else {
-      setSearchHide(true);
-    }
-  }, [location]);
 
   const onClickReview = () => {
     history.push('/revisiones');

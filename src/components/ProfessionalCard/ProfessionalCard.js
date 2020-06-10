@@ -25,10 +25,11 @@ const ProfessionalCard = ({
   userProfessional,
   quantityReviews,
   descriptionProfessional,
+  rating,
 }) => {
   const [loading, setLoading] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false);
-  const user = useSelector(state => state.user);
+  const user = useSelector(state => state.user.user);
 
   const onClickCard = () => {
     setVisibleModal(true);
@@ -44,10 +45,10 @@ const ProfessionalCard = ({
         nombreUsuarioProfesional: userProfessional,
         formatoArchivodeObra: file.type,
         nivelDeCritica: form.review,
+        descripcionObra: form.description,
       });
 
       setLoading(true);
-
       fetch(SERVIDOR.OBRAS_URL, {
         method: 'POST',
         mode: 'cors',
@@ -79,7 +80,7 @@ const ProfessionalCard = ({
     <>
       <Card
         style={{
-          width: '45vw',
+          minWidth: 600,
           marginTop: 20,
           marginRight: 20,
           marginLeft: 40,
@@ -89,10 +90,10 @@ const ProfessionalCard = ({
       >
         <section style={{ display: 'flex' }}>
           <Avatar
-            size={100}
+            size={200}
             src={avatar}
             icon={<UserOutlined />}
-            style={{ width: 400, height: 200 }}
+            style={{ minWidth: 200, minHeight: 200 }}
           />
           <aside
             style={{ marginLeft: 10, marginTop: 15, fontFamily: 'Ubuntu' }}
@@ -102,13 +103,13 @@ const ProfessionalCard = ({
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <Rating
                 name="half-rating-read"
-                defaultValue={2.5}
+                defaultValue={rating}
                 precision={0.5}
                 readOnly
               />
               <p>({quantityReviews} opiniones)</p>
 
-              <p>{descriptionProfessional}</p>
+              <p style={{ maxWidth: 350 }}>{descriptionProfessional}</p>
             </div>
           </aside>
         </section>

@@ -28,26 +28,15 @@ const ProfessionalInfo = () => {
     state => state.professionals.professionalSelected
   );
   const [fileList, setFileList] = useState([]);
-  const [file, setFile] = useState({});
   const [form, setForm] = useState(initialState);
   const placeholderReview = 'Seleccione un nivel de cr\u00EDtica';
   const placeholderGenre = 'Seleccione el g\u00E9nero';
   useEffect(() => {
-    setFile({});
     setFileList([]);
     setForm(initialState);
   }, []);
 
-  const onLocalSendWork = () => {
-    const work = {
-      form,
-      file,
-    };
-    //onSendWork(work);
-  };
-
   const handleChange = info => {
-    setFile(info.file);
     setFileList(info.fileList.slice(-1));
   };
 

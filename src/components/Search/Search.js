@@ -23,7 +23,7 @@ const genreMap = {
 
 const initialState = {
   genre: [],
-  rating: '',
+  rating: 0,
 };
 const Search = ({ onClickSearch }) => {
   const classes = useStyles();
@@ -83,7 +83,7 @@ const Search = ({ onClickSearch }) => {
         </Select>
       </FormControl>
       <section className={classes.section}>
-        <p className={classes.rating}>Opiniones mínimo</p>
+        <p className={classes.rating}>Clasificaciones mínimas</p>
         <Rating
           name="half-rating-read"
           defaultValue={0}

@@ -64,7 +64,7 @@ const RecivedWorkCard = ({
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [loadingFeedback, setLoadingFeedback] = useState(false);
-  const user = useSelector(state => state.user);
+  const user = useSelector(state => state.user.user);
 
   const onClickDownload = () => {
     setLoading(true);
@@ -101,7 +101,7 @@ const RecivedWorkCard = ({
           nombreUsuarioProfesional: user.username,
         });
 
-        fetch(SERVIDOR.CORRECCIONES_URL, {
+        fetch(SERVIDOR.CORRECCIONESPROFESIONAL_URL, {
           method: 'POST',
           mode: 'cors',
           headers: {
