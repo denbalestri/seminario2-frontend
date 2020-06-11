@@ -8,7 +8,7 @@ const ContentGroup = ({ titleGroup, postItems }) => {
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <img
           src="../../images/Essential-Books.jpg"
-          style={{ width: 1200, height: 400 }}
+          style={{ width: '60vw', height: 400 }}
           alt="grupo"
         ></img>
       </div>
@@ -24,7 +24,7 @@ const ContentGroup = ({ titleGroup, postItems }) => {
         <p style={{ fontSize: 30, fontWeight: 400 }}>{titleGroup}</p>
         <aside
           style={{
-            width: 1200,
+            width: '70vw',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',

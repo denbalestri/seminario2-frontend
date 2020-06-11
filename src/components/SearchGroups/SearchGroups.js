@@ -44,8 +44,8 @@ const SearchGroups = ({ onClickCreateGroup }) => {
           borderRadius: '2em',
           border: 'solid 2px',
           display: 'flex',
-          width: 420,
-          marginLeft: 10,
+          width: '25vw',
+          marginLeft: 5,
         }}
       >
         <InputBase

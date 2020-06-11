@@ -3,8 +3,6 @@ import { MessageOutlined, FileTwoTone, UserOutlined } from '@ant-design/icons';
 import { List, Avatar, Space, Rate } from 'antd';
 import { useSelector } from 'react-redux';
 import Button from '../../components/Button';
-import Comment from '../../components/Comment';
-import Rating from '@material-ui/lab/Rating';
 import { SERVIDOR } from '../../constants/URIs';
 const IconText = ({ icon, text, onClick }) => (
   <Space>

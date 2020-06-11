@@ -119,7 +119,7 @@ const Groups = () => {
   return (
     <MainLayout>
       <article style={{ display: 'flex', height: '100%' }}>
-        <Paper elevation={3} style={{ width: 450 }}>
+        <Paper elevation={3} style={{ width: '29vw' }}>
           <SearchGroup onClickCreateGroup={onClickCreateGroup} />
           <aside style={{ overflowY: 'scroll', height: 800 }}>
             {groupsItems.map((group, index) => {
