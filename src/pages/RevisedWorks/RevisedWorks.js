@@ -60,7 +60,6 @@ const RevisedWork = () => {
               style={{
                 fontSize: 35,
                 marginTop: 50,
-                fontFamily: 'Pangolin, cursive',
               }}
             >
               Tus Correcciones

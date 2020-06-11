@@ -3,7 +3,6 @@ export default makeStyles(theme => ({
   title: {
     fontSize: 40,
     marginTop: 15,
-    fontFamily: 'Pangolin, cursive',
     justifyContent: 'center',
     display: 'flex',
   },

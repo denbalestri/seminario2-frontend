@@ -25,7 +25,10 @@ const initialState = {
   rol: '',
   descripcion: '',
 };
-
+const optionItems = {
+  Autor: 'Autor',
+  Corrector: 'Corrector',
+};
 const Register = () => {
   const classes = useStyles();
   const history = useHistory();
@@ -33,6 +36,7 @@ const Register = () => {
   const signUpText = 'Registraci\u00F3n';
   const emailText = 'Correo electr\u00F3nico';
   const passwordText = 'Contrase\u00F1a';
+  const loginText = 'Tienes cuenta? Inicia sesi\u00F3n';
   const [fileList, setFileList] = useState([]);
   const [file, setFile] = useState(null);
   const [cvFileList, setCVFileList] = useState([]);
@@ -247,7 +251,7 @@ const Register = () => {
               <Grid item xs={6}>
                 <Select
                   placeholder={'Seleccione su Rol'}
-                  optionItems={['Autor', 'Corrector']}
+                  optionItems={optionItems}
                   valueSelected={form.rol}
                   onChange={onChangeRole}
                 />
@@ -301,9 +305,7 @@ const Register = () => {
             </Button>
             <Grid container>
               <Grid item>
-                <Link to="/iniciar-sesion">
-                  {'Tienes cuenta? Inicia sesion'}
-                </Link>
+                <Link to="/iniciar-sesion">{loginText}</Link>
               </Grid>
             </Grid>
           </form>

@@ -26,7 +26,7 @@ const ListItem = ({
   const [rating, setRating] = useState(0);
   const textFeedback = 'Enviar devoluci\u00F3n';
   const user = useSelector(state => state.user.user);
-
+  const titleText = 'Devoluci\u00F3n del profesional';
   const onSubmit = () => {
     const body = JSON.stringify({
       nombreUsuarioAutor: user.username,
@@ -73,7 +73,7 @@ const ListItem = ({
           fontFamily: 'Ubuntu',
         }}
       >
-        Devolucion del profesional
+        {titleText}
       </p>
       {content}
 

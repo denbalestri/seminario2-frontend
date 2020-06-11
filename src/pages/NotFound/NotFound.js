@@ -16,7 +16,6 @@ const NotFound = () => {
           style={{
             fontSize: 30,
             marginTop: 20,
-            fontFamily: 'Pangolin, cursive',
           }}
         >
           Oh no! La pagina buscada no existe!

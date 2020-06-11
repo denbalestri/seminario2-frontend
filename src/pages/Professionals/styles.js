@@ -4,6 +4,10 @@ export default makeStyles(theme => ({
     margin: theme.spacing(1),
     minWidth: 120,
   },
+  professionalsContainer: {
+    overflowY: 'scroll',
+    height: '100%',
+  },
   title: {
     fontSize: 40,
     marginTop: 30,

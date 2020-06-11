@@ -7,14 +7,15 @@ import Select from '../Select';
 
 const { TextArea } = Input;
 const optionItemsReview = ['Objetiva', 'Subjetiva'];
-const optionItemsGenre = [
-  'Romantico',
-  'Aventura',
-  'Accion',
-  'Terror',
-  'Suspenso',
-  'Drama',
-];
+const genreMap = {
+  romantico: 'Romántico',
+  aventura: 'Aventura',
+  accion: 'Acción',
+  terror: 'Terror',
+  suspenso: 'Suspenso',
+  drama: 'Drama',
+  poesia: 'Poesía',
+};
 const initialState = {
   nameWork: '',
   review: [],
@@ -33,7 +34,7 @@ const ModalSendWork = ({
   const [form, setForm] = useState(initialState);
   const placeholderReview = 'Seleccione un nivel de cr\u00EDtica';
   const placeholderGenre = 'Seleccione el g\u00E9nero';
-
+  const descripctionText = ' Escriba una descripci\u00F3n de la obra';
   useEffect(() => {
     setFile({});
     setFileList([]);
@@ -124,7 +125,7 @@ const ModalSendWork = ({
       />
       <Select
         placeholder={placeholderGenre}
-        optionItems={optionItemsGenre}
+        optionItems={genreMap}
         valueSelected={form.genre}
         onChange={onChangeGenre}
       />
@@ -135,9 +136,7 @@ const ModalSendWork = ({
         style={{ marginTop: 10, width: 300 }}
         onChange={onChangeNameWork}
       />
-      <p style={{ fontSize: 15, marginTop: 10 }}>
-        Escriba una descripcion de la obra
-      </p>
+      <p style={{ fontSize: 15, marginTop: 10 }}>{descripctionText}</p>
       <TextArea
         rows={4}
         value={form.description}

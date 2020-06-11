@@ -20,7 +20,6 @@ const RecievedWorkList = ({ works }) => {
         style={{
           fontSize: 40,
           marginTop: 30,
-          fontFamily: 'Pangolin, cursive',
           justifyContent: 'center',
           display: 'flex',
         }}
@@ -97,7 +96,6 @@ const RecivedWork = () => {
               style={{
                 fontSize: 30,
                 marginTop: 20,
-                fontFamily: 'Pangolin, cursive',
               }}
             >
               Nuestro autor esta escribiendo obras estupendas, intente

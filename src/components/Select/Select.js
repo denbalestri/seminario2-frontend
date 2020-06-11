@@ -1,18 +1,25 @@
 import React from 'react';
 import { Select } from 'antd';
 const { Option } = Select;
-const UI_Select = ({ placeholder, optionItems, valueSelected, onChange }) => {
+const UI_Select = ({
+  placeholder,
+  optionItems,
+  valueSelected,
+  onChange,
+  ...othersProps
+}) => {
   return (
     <Select
       placeholder={placeholder}
       onChange={onChange}
       allowClear
       value={valueSelected}
+      {...othersProps}
     >
-      {optionItems.map((item, index) => {
+      {Object.keys(optionItems).map((item, index) => {
         return (
           <Option value={item} key={index}>
-            {item}
+            {optionItems[item]}
           </Option>
         );
       })}
