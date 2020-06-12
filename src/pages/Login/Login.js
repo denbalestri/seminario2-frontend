@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { notification } from 'antd';
 import { useDispatch } from 'react-redux';
-
+import { addNotifications } from '../../redux/actions/notifications';
 import { SERVIDOR, CLIENTE } from '../../constants/URIs';
 import { setUser } from '../../redux/actions/user';
 
@@ -73,6 +73,7 @@ const Login = () => {
           };
 
           dispatch(setUser(usuarioFE));
+          getNotifications(usuarioBE.user);
           if (usuarioBE.tipoUsuario === 'Autor')
             history.push(CLIENTE.MENUPRINCIPAL_URL);
           else history.push(CLIENTE.TRABAJOS_URL);
@@ -82,6 +83,24 @@ const Login = () => {
       })
       .catch(error => console.log(error));
   };
+
+  const getNotifications = username => {
+    fetch(SERVIDOR.NOTIFICACIONES_URL(username), {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        dispatch(addNotifications(response));
+      })
+      .catch(error => console.log(error));
+  };
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />

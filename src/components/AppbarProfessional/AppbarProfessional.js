@@ -23,10 +23,17 @@ const AppbarProfessional = ({
     <AppBar position="static" className={classes.appbar}>
       <Toolbar>
         <Link to="/trabajos">
-          <p className={classes.logo}>Correciones Literarias</p>
+          <p className={classes.logo}>Correcciones Literarias</p>
         </Link>
         <div className={classes.grow} />
         <div className={classes.sectionDesktop}>
+          <IconButton color="inherit" onClick={onClickNotifications}>
+            <Tooltip title="Notificaciones" aria-label="Notificaciones">
+              <Badge badgeContent={notificationsBadge} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </Tooltip>
+          </IconButton>
           <IconButton color="inherit" onClick={onClickWork}>
             <Tooltip title="Trabajo" aria-label="trabajo">
               <AssignmentIcon />
@@ -35,13 +42,6 @@ const AppbarProfessional = ({
           <IconButton color="inherit" onClick={onClickGroup}>
             <Tooltip title="Grupos" aria-label="Grupos">
               <GroupIcon />
-            </Tooltip>
-          </IconButton>
-          <IconButton color="inherit" onClick={onClickNotifications}>
-            <Tooltip title="Notificaciones" aria-label="Notificaciones">
-              <Badge badgeContent={notificationsBadge} color="secondary">
-                <NotificationsIcon />
-              </Badge>
             </Tooltip>
           </IconButton>
           <IconButton onClick={handleClickLogout} color="inherit">

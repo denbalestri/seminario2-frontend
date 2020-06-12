@@ -45,7 +45,7 @@ const ListItem = ({
   return (
     <List.Item
       key={title}
-      style={{ width: '80vw' }}
+      style={{ width: '30vw' }}
       actions={[
         <IconText
           icon={FileTwoTone}
@@ -99,11 +99,12 @@ const WorkToReviseList = ({
 }) => {
   return (
     <List
-      {...othersProps}
       itemLayout="vertical"
       size="large"
+      grid={{ gutter: 15, column: 2 }}
       dataSource={listRevisedWorks}
       renderItem={(item, index) => <ListItem key={index} {...item} />}
+      {...othersProps}
     />
   );
 };

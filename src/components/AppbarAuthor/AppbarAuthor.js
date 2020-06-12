@@ -4,7 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
-
+import Button from '@material-ui/core/Button';
 import GroupIcon from '@material-ui/icons/Group';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import RateReviewIcon from '@material-ui/icons/RateReview';
@@ -26,10 +26,17 @@ const AppbarAuthor = ({
     <AppBar position="static" className={classes.appbar}>
       <Toolbar>
         <Link to="/menu">
-          <p className={classes.logo}>Correciones Literarias</p>
+          <p className={classes.logo}>Correcciones Literarias</p>
         </Link>
         <div className={classes.grow} />
         <div className={classes.sectionDesktop}>
+          <IconButton color="inherit" onClick={onClickNotifications}>
+            <Tooltip title="Notificaciones" aria-label="Notificaciones">
+              <Badge badgeContent={notificationsBadge} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </Tooltip>
+          </IconButton>
           <IconButton color="inherit" onClick={onClickProfessional}>
             <Tooltip title="Profesionales" aria-label="Profesionales">
               <LocalLibraryIcon />
@@ -40,20 +47,11 @@ const AppbarAuthor = ({
               <GroupIcon />
             </Tooltip>
           </IconButton>
-          <IconButton color="inherit" onClick={onClickNotifications}>
-            <Tooltip title="Notificaciones" aria-label="Notificaciones">
-              <Badge badgeContent={notificationsBadge} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </Tooltip>
-          </IconButton>
-
           <IconButton onClick={onClickReview} color="inherit">
-            <Tooltip title="Revisiones" aria-label="Revisiones">
+            <Tooltip title="Correcciones" aria-label="Correcciones">
               <RateReviewIcon />
             </Tooltip>
           </IconButton>
-
           <IconButton onClick={handleClickLogout} color="inherit">
             <Tooltip title={logoutText} aria-label={logoutText}>
               <ExitToAppIcon />

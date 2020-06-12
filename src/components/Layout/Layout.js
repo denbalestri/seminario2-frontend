@@ -10,7 +10,6 @@ import MenuNotification from '../MenuNotification';
 import AppbarAuthor from '../AppbarAuthor';
 import AppbarProfessional from '../AppbarProfessional';
 import useStyles from './styles';
-import { notification } from 'antd';
 
 const MainLayout = ({ children }) => {
   const classes = useStyles();

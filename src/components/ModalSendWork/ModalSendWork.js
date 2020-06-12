@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Upload, Input } from 'antd';
+import { Radio } from 'antd';
 import { UploadOutlined, ReadOutlined } from '@ant-design/icons';
 import isEmpty from 'lodash/isEmpty';
 import Button from '../../components/Button';
 import Select from '../Select';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from '@material-ui/pickers';
 
 const { TextArea } = Input;
-const optionItemsReview = ['Objetiva', 'Subjetiva'];
+const optionItemsReview = {
+  Objetiva: 'Objetiva',
+  Subjetiva: 'Subjetiva',
+};
 const genreMap = {
   romantico: 'Romántico',
   aventura: 'Aventura',
@@ -32,6 +41,7 @@ const ModalSendWork = ({
   const [fileList, setFileList] = useState([]);
   const [file, setFile] = useState({});
   const [form, setForm] = useState(initialState);
+  const [selectedDate, setSelectedDate] = useState(Date.now());
   const placeholderReview = 'Seleccione un nivel de cr\u00EDtica';
   const placeholderGenre = 'Seleccione el g\u00E9nero';
   const descripctionText = ' Escriba una descripci\u00F3n de la obra';
@@ -91,6 +101,10 @@ const ModalSendWork = ({
     });
   };
 
+  const handleDateChange = date => {
+    setSelectedDate(date);
+  };
+
   return (
     <Modal
       visible={visible}
@@ -142,6 +156,30 @@ const ModalSendWork = ({
         value={form.description}
         onChange={onChangeDescription}
       />
+      <section
+        style={{
+          display: 'flex',
+          alignItems: 'flex-end',
+          marginBottom: 10,
+        }}
+      >
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <KeyboardDatePicker
+            disableToolbar
+            variant="inline"
+            format="dd/MM/yyyy"
+            margin="normal"
+            id="date"
+            label="Fecha limite"
+            value={selectedDate}
+            onChange={handleDateChange}
+            disablePast
+            KeyboardButtonProps={{
+              'aria-label': 'change date',
+            }}
+          />
+        </MuiPickersUtilsProvider>
+      </section>
       <section style={{ marginTop: 20 }}>
         <Upload {...uploadProps} onChange={handleChange}>
           <Button type="">

@@ -26,21 +26,29 @@ const RecievedWorkList = ({ works }) => {
       >
         Obras a corregir
       </p>
-      {works.map((work, index) => {
-        const recivedWorkProps = {
-          key: index,
-          title: work.nombreObra,
-          nameWork: work.nombreObra,
-          userAuthor: work.userAutor,
-          avatar: '',
-          author: `${work.nombreAutor} ${work.apellidoAutor}`,
-          username: work.userAutor,
-          description: `El g\u00E9nero de esta obra es ${work.genero} y su nivel de cr\u00EDtica pedida es: ${work.nivelCritica}. 
-          ${work.descripcion}
+      <section
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '400px 400px 400px',
+          justifyContent: 'center',
+        }}
+      >
+        {works.map((work, index) => {
+          const recivedWorkProps = {
+            key: index,
+            nameWork: work.nombreObra,
+            userAuthor: work.userAutor,
+            avatar: '',
+            date: '12/08/2020',
+            author: `${work.nombreAutor} ${work.apellidoAutor}`,
+            username: work.userAutor,
+            synopsis: work.descripcion,
+            description: `El g\u00E9nero de esta obra es ${work.genero} y su nivel de cr\u00EDtica pedida es: ${work.nivelCritica}. 
           `,
-        };
-        return <RecivedWorkCard {...recivedWorkProps} />;
-      })}
+          };
+          return <RecivedWorkCard {...recivedWorkProps} />;
+        })}
+      </section>
     </section>
   );
 };
@@ -49,7 +57,6 @@ const RecivedWork = () => {
   const [loading, setLoading] = useState(false);
   const [recivedWork, setRecivedWork] = useState([]);
   const user = useSelector(state => state.user.user);
-
   useEffect(() => {
     getWorks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,6 +76,7 @@ const RecivedWork = () => {
       })
       .then(response => {
         const recivedWork = response;
+        console.log(RecivedWork);
         if (recivedWork === []) setRecivedWork('');
         else setRecivedWork(recivedWork);
       })

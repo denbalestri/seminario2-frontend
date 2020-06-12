@@ -1,14 +1,20 @@
-import React, { useState, Fragment } from 'react';
-import { Skeleton, Card, Avatar } from 'antd';
-import { EditOutlined, FileTextTwoTone, UserOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
 import { SERVIDOR } from '../../constants/URIs';
-import Button from '../../components/Button';
 import Modal from '../../components/Modal';
 import { getBase64 } from '../../constants/base64';
 import { notification } from 'antd';
 import statuses from '../../constants/Notification';
 import { useSelector } from 'react-redux';
-const { Meta } = Card;
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import GetAppIcon from '@material-ui/icons/GetApp';
+import SendIcon from '@material-ui/icons/Send';
+import useStyles from './styles';
 
 const openNotification = type => {
   notification[type]({
@@ -53,19 +59,19 @@ const downloadFile = (blob, fileName) => {
 };
 
 const RecivedWorkCard = ({
-  title,
   description,
   nameWork,
   author,
   userAuthor,
   username,
-  avatar,
+  synopsis,
+  date,
 }) => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [loadingFeedback, setLoadingFeedback] = useState(false);
   const user = useSelector(state => state.user.user);
-
+  const classes = useStyles();
   const onClickDownload = () => {
     setLoading(true);
     fetch(SERVIDOR.OBRAS_CONTENIDO_URL(nameWork, username), {
@@ -137,37 +143,55 @@ const RecivedWorkCard = ({
   };
 
   return (
-    <Fragment>
-      <Card
-        style={{
-          width: '80vw',
-          marginTop: 20,
-          marginLeft: 'auto',
-          marginRight: 'auto',
-        }}
-        title={title}
-        actions={[
-          <Button type="" onClick={onClickSendMessage}>
-            {' '}
-            Enviar Mensaje
-            <EditOutlined />
-          </Button>,
-          <Button type="" onClick={onClickDownload} loading={loading}>
-            {' '}
-            Descargar obra literaria
-            <FileTextTwoTone />
-          </Button>,
-        ]}
-      >
-        <Skeleton loading={false} avatar active>
-          <Meta
-            avatar={
-              <Avatar icon={<UserOutlined />} src={avatar} size="large" />
-            }
-            title={author}
-            description={description}
+    <section>
+      <Card className={classes.card}>
+        <CardActionArea>
+          <CardMedia
+            component="img"
+            alt="obras-corregir"
+            height="140"
+            image="../../images/corrector.jpg"
           />
-        </Skeleton>
+          <CardContent>
+            <Typography gutterBottom variant="body1" component="p">
+              {nameWork} creado por {author}
+            </Typography>
+            {date ? (
+              <Typography
+                gutterBottom
+                variant="body1"
+                component="p"
+                className={classes.date}
+              >
+                Fecha Limite: {date}
+              </Typography>
+            ) : (
+              ''
+            )}
+            <Typography variant="body2" color="textSecondary" component="p">
+              {description}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              {synopsis}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions>
+          <Button
+            size="small"
+            onClick={onClickSendMessage}
+            endIcon={<SendIcon />}
+          >
+            Enviar Mensaje
+          </Button>
+          <Button
+            size="small"
+            onClick={onClickDownload}
+            startIcon={<GetAppIcon />}
+          >
+            Descargar obra
+          </Button>
+        </CardActions>
       </Card>
       <Modal
         visible={visible}
@@ -176,7 +200,7 @@ const RecivedWorkCard = ({
         loading={loadingFeedback}
         onSendFeedback={onSendFeedback}
       />
-    </Fragment>
+    </section>
   );
 };
 
