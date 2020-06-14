@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Upload, Input } from 'antd';
-import { Radio } from 'antd';
 import { UploadOutlined, ReadOutlined } from '@ant-design/icons';
 import isEmpty from 'lodash/isEmpty';
 import Button from '../../components/Button';

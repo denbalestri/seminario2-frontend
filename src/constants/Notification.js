@@ -23,4 +23,15 @@ const statusesRecivedWork = {
   info: { message: 'Informaci\u00D3n', description: '' },
 };
 
-export default { statusesRecivedWork, statusesProfessional };
+const statusesGroups = {
+  error: {
+    message: 'Error',
+    description: 'No se pudo crear el grupo, intente nuevamente mas tarde',
+  },
+  success: {
+    message: 'Exito',
+    description: 'Se creo el grupo exitosamente',
+  },
+};
+
+export default { statusesRecivedWork, statusesProfessional, statusesGroups };

@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import SearchGroup from '../../components/SearchGroups';
 import GroupCard from '../../components/GroupCard';
 import MainLayout from '../../components/Layout';
 import Paper from '@material-ui/core/Paper';
 import ContentGroup from '../../components/ContentGroup';
 import ModalCreateGroup from '../../components/ModalCreateGroup';
+import { SERVIDOR } from '../../constants/URIs';
+import { notification } from 'antd';
+import statuses from '../../constants/Notification';
+
 const postItemsGroup = [
   {
     avatar: '../../images/person5.jpg',
@@ -90,13 +95,21 @@ const groupsItems = [
     title: 'Novelas romanticas',
   },
 ];
+
+const openNotification = type => {
+  notification[type]({
+    message: statuses.statusesProfessional[type].message,
+    description: statuses.statusesProfessional[type].description,
+  });
+};
+
 const Groups = () => {
   const [titleGroup, setTitleGroup] = useState('');
   const [postItems, setPostItems] = useState([]);
   const [visibleModal, setVisibleModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
-
+  const user = useSelector(state => state.user.user);
   useEffect(() => {
     //first render set for default first group
     setTitleGroup('Escritores amantes de las novelas Romanticas');
@@ -115,7 +128,36 @@ const Groups = () => {
     setVisibleModal(false);
   };
 
-  const onSubmitCreateGroup = () => {};
+  const onSubmitCreateGroup = form => {
+    const body = JSON.stringify({
+      descripcion: form.description,
+      nombreUsuarioOwner: user.username,
+      nombreGrupo: form.titleGroup,
+      genero: titleGroup.genre,
+      avatar: '',
+      tipoLiteratura: form.literaryTypes,
+    });
+    fetch(SERVIDOR.CREARGRUPO_URL, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body,
+    })
+      .then(response => {
+        if (response.status === 200) {
+          openNotification('success');
+        } else {
+          openNotification('error');
+        }
+      })
+      .catch(error => console.log(error))
+      .finally(() => {
+        setLoading(false);
+        setVisibleModal(false);
+      });
+  };
   return (
     <MainLayout>
       <article style={{ display: 'flex', height: '100%' }}>

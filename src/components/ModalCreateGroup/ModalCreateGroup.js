@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Input } from 'antd';
 import Button from '../../components/Button';
 import Select from '../Select';
-
+const { TextArea } = Input;
 const genreMap = {
   romantico: 'Romántico',
   aventura: 'Aventura',
@@ -23,11 +23,12 @@ const initialState = {
   titleGroup: '',
   literaryTypes: [],
   genres: [],
+  description: '',
 };
 const ModalCreateGroup = ({ visible, onCancel, onSubmit, loading }) => {
   const [form, setForm] = useState(initialState);
   const placeholderGenre = 'Seleccione el/los g\u00E9neros';
-
+  const descripctionText = 'Descripci\u00F3n del grupo';
   useEffect(() => {
     if (visible) setForm(initialState);
   }, [visible]);
@@ -53,6 +54,15 @@ const ModalCreateGroup = ({ visible, onCancel, onSubmit, loading }) => {
       literaryTypes,
     });
   };
+
+  const onChangeDescription = event => {
+    const description = event.target.value;
+    setForm({
+      ...form,
+      description,
+    });
+  };
+
   return (
     <Modal
       visible={visible}
@@ -95,6 +105,12 @@ const ModalCreateGroup = ({ visible, onCancel, onSubmit, loading }) => {
         onChange={onChangeGenre}
         style={{ marginBottom: 20 }}
         mode="multiple"
+      />
+      <p style={{ fontSize: 15, marginTop: 10 }}>{descripctionText}</p>
+      <TextArea
+        rows={4}
+        value={form.description}
+        onChange={onChangeDescription}
       />
     </Modal>
   );
