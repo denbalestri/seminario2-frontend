@@ -133,7 +133,7 @@ const Groups = () => {
       descripcion: form.description,
       nombreUsuarioOwner: user.username,
       nombreGrupo: form.titleGroup,
-      genero: titleGroup.genre,
+      genero: form.genre,
       avatar: '',
       tipoLiteratura: form.literaryTypes,
     });
