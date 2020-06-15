@@ -30,7 +30,7 @@ export const CLIENTE = {
 
 export const SERVIDOR = {
   OBRAS_URL: `${SERVER_URL}/obras`,
-  CREARGRUPO_URL: `${SERVER_URL}/grupos`,
+  CREARGRUPO_URL: `${SERVER_URL}/Grupo`,
   BUSCAR_GRUPO_URL: nombre => `${SERVER_URL}/BuscarGrupo?nombreGrupo=${nombre}`,
   PUBLICACIONES_GRUPO_URL: id =>
     `${SERVER_URL}/PublicacionesGrupo?idGrupo=${id}`,
