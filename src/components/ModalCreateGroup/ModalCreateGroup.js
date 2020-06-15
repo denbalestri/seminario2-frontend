@@ -96,7 +96,6 @@ const ModalCreateGroup = ({ visible, onCancel, onSubmit, loading }) => {
         valueSelected={form.literaryTypes}
         onChange={onChangeLiteraryTypes}
         style={{ marginBottom: 20 }}
-        mode="multiple"
       />
       <Select
         placeholder={placeholderGenre}
@@ -104,7 +103,6 @@ const ModalCreateGroup = ({ visible, onCancel, onSubmit, loading }) => {
         valueSelected={form.genre}
         onChange={onChangeGenre}
         style={{ marginBottom: 20 }}
-        mode="multiple"
       />
       <p style={{ fontSize: 15, marginTop: 10 }}>{descripctionText}</p>
       <TextArea
