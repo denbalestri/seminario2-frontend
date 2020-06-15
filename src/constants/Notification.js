@@ -34,4 +34,20 @@ const statusesGroups = {
   },
 };
 
-export default { statusesRecivedWork, statusesProfessional, statusesGroups };
+const statusesGroupPosts = {
+  error: {
+    message: 'Error',
+    description: 'No se publicar el mensaje, intente nuevamente mas tarde',
+  },
+  success: {
+    message: 'Exito',
+    description: 'Se publicó el mensaje exitosamente',
+  },
+};
+
+export default {
+  statusesRecivedWork,
+  statusesProfessional,
+  statusesGroups,
+  statusesGroupPosts,
+};

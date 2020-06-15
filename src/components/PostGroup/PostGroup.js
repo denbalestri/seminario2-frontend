@@ -1,16 +1,30 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import { Input, Avatar } from 'antd';
 import { Upload } from 'antd';
 import IconButton from '@material-ui/core/IconButton';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import Button from '../Button';
+import { SERVIDOR } from '../../constants/URIs';
+import { getBase64 } from '../../constants/base64';
+import { notification } from 'antd';
+import statuses from '../../constants/Notification';
+
 const { TextArea } = Input;
 
-const PostGroup = () => {
-  const [file, setFile] = useState('');
+const openNotification = type => {
+  notification[type]({
+    message: statuses.statusesGroupPosts[type].message,
+    description: statuses.statusesGroupPosts[type].description,
+  });
+};
+
+const PostGroup = ({ idGrupo }) => {
+  const [file, setFile] = useState(undefined);
   const [fileList, setFileList] = useState('');
   const [post, setPost] = useState('');
+  const user = useSelector(state => state.user.user);
   const handleUpload = info => {
     setFile(info.file);
     setFileList(info.fileList.slice(-1));
@@ -20,7 +34,7 @@ const PostGroup = () => {
     name: 'obra',
     listType: 'picture',
     customRequest: ({ onSuccess }) => setTimeout(() => onSuccess('ok'), 0),
-    FileList,
+    fileList,
     onChange: handleUpload,
   };
 
@@ -30,6 +44,54 @@ const PostGroup = () => {
   };
   const onSubmit = () => {
     //send to backend the post and file and then get all the new comments
+    if (file) {
+      getBase64(file.originFileObj).then(encodedFile => {
+        const body = JSON.stringify({
+          nombreUsuarioAutor: user.username,
+          comentario: post,
+          idGrupo,
+          documento: encodedFile,
+        });
+        fetch(SERVIDOR.PUBLICAR_GRUPO, {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body,
+        })
+          .then(response => {
+            if (response.status === 200) {
+              openNotification('success');
+            } else {
+              openNotification('error');
+            }
+          })
+          .catch(error => console.log(error));
+      });
+    } else {
+      const body = JSON.stringify({
+        nombreUsuarioAutor: user.username,
+        comentario: post,
+        idGrupo,
+      });
+      fetch(SERVIDOR.PUBLICAR_GRUPO, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body,
+      })
+        .then(response => {
+          if (response.status === 200) {
+            openNotification('success');
+          } else {
+            openNotification('error');
+          }
+        })
+        .catch(error => console.log(error));
+    }
   };
   return (
     <Paper>

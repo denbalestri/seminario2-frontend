@@ -4,12 +4,10 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles';
-const SearchGroups = ({ onClickCreateGroup }) => {
+const SearchGroups = ({ onClickCreateGroup, onClickSearchGroup }) => {
   const classes = useStyles();
   const [group, setGroup] = useState('');
-  const onClickSearch = () => {
-    //send to backend the search
-  };
+
   const onChange = e => {
     const group = e.target.value;
     setGroup(group);
@@ -57,8 +55,9 @@ const SearchGroups = ({ onClickCreateGroup }) => {
           type="submit"
           className={classes.iconButton}
           aria-label="search"
+          onClick={() => onClickSearchGroup(group)}
         >
-          <SearchIcon onClick={onClickSearch} />
+          <SearchIcon />
         </IconButton>
       </section>
     </>

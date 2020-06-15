@@ -2,7 +2,7 @@ import React from 'react';
 import CommentGroup from '../CommentGroup';
 import PostGroup from '../PostGroup';
 
-const ContentGroup = ({ titleGroup, postItems }) => {
+const ContentGroup = ({ titleGroup, postItems, idGrupo }) => {
   return (
     <section style={{ marginTop: 40 }}>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -30,10 +30,11 @@ const ContentGroup = ({ titleGroup, postItems }) => {
             justifyContent: 'center',
           }}
         >
-          <PostGroup />
+          <PostGroup idGroupo={idGrupo} />
           {postItems.map((post, index) => {
             return (
               <CommentGroup
+                key={index}
                 avatar={post.avatar}
                 post={post.post}
                 username={`${post.firstName} ${post.lastName}`}

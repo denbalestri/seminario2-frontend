@@ -10,92 +10,6 @@ import { SERVIDOR } from '../../constants/URIs';
 import { notification } from 'antd';
 import statuses from '../../constants/Notification';
 
-const postItemsGroup = [
-  {
-    avatar: '../../images/person5.jpg',
-    firstName: 'Nicolas',
-    lastName: 'Fuentes',
-    userType: 1,
-    post:
-      'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently',
-  },
-  {
-    avatar: '../../images/person8.jpg',
-    firstName: 'Ana',
-    lastName: 'Luz',
-    userType: 1,
-    post:
-      'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently',
-  },
-  {
-    avatar: '../../images/person9.jpg',
-    firstName: 'Eduardo',
-    lastName: 'Carrozo',
-    userType: 2,
-    post:
-      'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently',
-  },
-  {
-    avatar: '../../images/person4.jpg',
-    firstName: 'Angela',
-    userType: 2,
-    lastName: 'Barro',
-    post:
-      'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently',
-  },
-];
-
-const groupsItems = [
-  {
-    image: '../../images/escritor.jpg',
-    genre: 'Romantico, Terror, Suspenso',
-    literaryTypes: 'Cuentos, Novelas, Cuentos Cortos',
-    title: 'Escritores Aficionados',
-  },
-  {
-    image: '../../images/corrector.jpg',
-    genre: 'Romantico, Terror, Suspenso',
-    literaryTypes: 'Cuentos, Novelas, Cuentos Cortos',
-    title: 'Escritores amantes de las novelas Romanticas',
-  },
-  {
-    image: '../../images/smpbooks2.jpg',
-    genre: 'Romantico, Terror, Suspenso',
-    literaryTypes: 'Cuentos, Novelas, Cuentos Cortos',
-    title: 'Novelas de suspenso y terror',
-  },
-  {
-    image: '../../images/escritor.jpg',
-    genre: 'Romantico, Terror, Suspenso',
-    literaryTypes: 'Cuentos, Novelas, Cuentos Cortos',
-    title: 'Escritores y Poesias',
-  },
-  {
-    image: '../../images/escritor.jpg',
-    genre: 'Romantico, Terror, Suspenso',
-    literaryTypes: 'Cuentos, Novelas, Cuentos Cortos',
-    title: 'Literatura moderna ',
-  },
-  {
-    image: '../../images/escritor.jpg',
-    genre: 'Romantico, Terror, Suspenso',
-    literaryTypes: 'Cuentos, Novelas, Cuentos Cortos',
-    title: 'Cuentos y Novelas infantiles',
-  },
-  {
-    image: '../../images/escritor.jpg',
-    genre: 'Romantico, Terror, Suspenso',
-    literaryTypes: 'Cuentos, Novelas, Cuentos Cortos',
-    title: 'Poesias romanticas',
-  },
-  {
-    image: '../../images/escritor.jpg',
-    genre: 'Romantico, Terror, Suspenso',
-    literaryTypes: 'Cuentos, Novelas, Cuentos Cortos',
-    title: 'Novelas romanticas',
-  },
-];
-
 const openNotification = type => {
   notification[type]({
     message: statuses.statusesProfessional[type].message,
@@ -104,22 +18,46 @@ const openNotification = type => {
 };
 
 const Groups = () => {
-  const [titleGroup, setTitleGroup] = useState('');
+  const [selectedGroup, setSelectedGroup] = useState({});
   const [postItems, setPostItems] = useState([]);
   const [visibleModal, setVisibleModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(null);
+  const [groups, setGroups] = useState([]);
   const user = useSelector(state => state.user.user);
+
   useEffect(() => {
     //first render set for default first group
-    setTitleGroup('Escritores amantes de las novelas Romanticas');
-    setPostItems(postItemsGroup);
   }, []);
 
   const onClickCard = title => {
-    setSelectedCard(title);
-    //send to backend id group and it will return post items and title group
+    const group = groups.find(group => group.title === title);
+    setSelectedGroup(group);
+    const { id } = group;
+    fetch(SERVIDOR.PUBLICACIONES_GRUPO_URL(id), {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+      .then(response => response.json())
+      .then(posts => {
+        setPostItems(
+          posts.map(post => {
+            return {
+              avatar: '../../images/person5.jpg',
+              firstName: post.usuarioPublica,
+              lastName: 'Fuentes',
+              userType: 1,
+              date: post.fecha,
+              post: post.comentario,
+              document: post.documento,
+            };
+          })
+        );
+      });
   };
+
   const onClickCreateGroup = () => {
     setVisibleModal(true);
   };
@@ -128,8 +66,31 @@ const Groups = () => {
     setVisibleModal(false);
   };
 
+  const onClickSearchGroup = name => {
+    fetch(SERVIDOR.BUSCAR_GRUPO_URL(name), {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+      .then(response => response.json())
+      .then(groups =>
+        setGroups(
+          groups.map(group => {
+            return {
+              image: group.avatar,
+              genre: group.tipoGenero,
+              literaryTypes: group.tipoLiteratura,
+              title: group.nombreGrupo,
+              idGrupo: group.idGrupo,
+            };
+          })
+        )
+      );
+  };
+
   const onSubmitCreateGroup = form => {
-    console.log(form);
     const body = JSON.stringify({
       descripcion: form.description,
       nombreUsuarioOwner: user.username,
@@ -163,9 +124,12 @@ const Groups = () => {
     <MainLayout>
       <article style={{ display: 'flex', height: '100%' }}>
         <Paper elevation={3} style={{ width: '29vw' }}>
-          <SearchGroup onClickCreateGroup={onClickCreateGroup} />
+          <SearchGroup
+            onClickCreateGroup={onClickCreateGroup}
+            onClickSearchGroup={onClickSearchGroup}
+          />
           <aside style={{ overflowY: 'scroll', height: 800 }}>
-            {groupsItems.map((group, index) => {
+            {groups.map((group, index) => {
               return (
                 <GroupCard
                   key={index}
@@ -174,7 +138,7 @@ const Groups = () => {
                   genre={group.genre}
                   literaryTypes={group.literaryTypes}
                   onClickCard={onClickCard}
-                  selected={group.title === selectedCard}
+                  selected={group.title === selectedGroup.title}
                 />
               );
             })}
@@ -182,7 +146,11 @@ const Groups = () => {
         </Paper>
         <aside style={{ width: '100%', overflowY: 'scroll' }}>
           {postItems.length > 0 ? (
-            <ContentGroup postItems={postItems} titleGroup={titleGroup} />
+            <ContentGroup
+              postItems={postItems}
+              titleGroup={selectedGroup.title}
+              idGrupo={selectedGroup.idGrupo}
+            />
           ) : (
             ''
           )}
