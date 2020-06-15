@@ -4,21 +4,21 @@ import Button from '../../components/Button';
 import Select from '../Select';
 const { TextArea } = Input;
 const genreMap = {
-  romantico: 'Romántico',
-  aventura: 'Aventura',
+  Romantico: 'Romántico',
+  Aventuras: 'Aventuras',
   accion: 'Acción',
-  terror: 'Terror',
-  suspenso: 'Suspenso',
-  drama: 'Drama',
-  poesia: 'Poesía',
+  Terror: 'Terror',
+  Drama: 'Drama',
+  Fantastico: 'Fantastico',
+  Comedia: 'Comedia',
+  Poema: 'Poemas',
 };
 const literaryTypesMap = {
-  cuento: 'Cuentos',
-  poesia: 'Poesias',
-  novela: 'Novelas',
-  cuentosCortos: 'Cuentos Cortos',
-  fabulas: 'Fabulas',
+  Cuento: 'Cuentos',
+  Poesia: 'Poesias',
+  Novela: 'Novelas',
 };
+
 const initialState = {
   titleGroup: '',
   literaryTypes: [],
