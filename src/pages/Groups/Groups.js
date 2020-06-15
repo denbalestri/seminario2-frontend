@@ -129,11 +129,12 @@ const Groups = () => {
   };
 
   const onSubmitCreateGroup = form => {
+    console.log(form);
     const body = JSON.stringify({
       descripcion: form.description,
       nombreUsuarioOwner: user.username,
       nombreGrupo: form.titleGroup,
-      genero: form.genre,
+      genero: form.genres,
       avatar: '',
       tipoLiteratura: form.literaryTypes,
     });
