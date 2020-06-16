@@ -97,9 +97,9 @@ const Groups = () => {
       descripcion: form.description,
       nombreUsuarioOwner: user.username,
       nombreGrupo: form.titleGroup,
-      genero: form.genres,
+      genero: form.genre,
       avatar: '',
-      tipoLiteratura: form.literaryTypes,
+      tipoLiteratura: form.literaryType,
     });
     fetch(SERVIDOR.CREARGRUPO_URL, {
       method: 'POST',
@@ -154,7 +154,7 @@ const Groups = () => {
             descriptionGroup={selectedGroup.description}
             genreGroup={selectedGroup.genre}
             literaryType={selectedGroup.literaryType}
-            idGrupo={selectedGroup.idGrupo}
+            idGroup={selectedGroup.idGrupo}
           />
         </aside>
         <section>

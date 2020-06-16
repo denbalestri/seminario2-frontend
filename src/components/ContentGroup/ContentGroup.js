@@ -5,7 +5,7 @@ import PostGroup from '../PostGroup';
 const ContentGroup = ({
   titleGroup,
   postItems,
-  idGrupo,
+  idGroup,
   descriptionGroup,
   literaryType,
   genreGroup,
@@ -42,7 +42,7 @@ const ContentGroup = ({
             justifyContent: 'center',
           }}
         >
-          <PostGroup idGroupo={idGrupo} />
+          <PostGroup idGroup={idGroup} />
           {postItems.map((post, index) => {
             return (
               <CommentGroup

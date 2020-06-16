@@ -20,7 +20,7 @@ const openNotification = type => {
   });
 };
 
-const PostGroup = ({ idGrupo }) => {
+const PostGroup = ({ idGroup }) => {
   const [file, setFile] = useState(undefined);
   const [fileList, setFileList] = useState('');
   const [post, setPost] = useState('');
@@ -45,11 +45,12 @@ const PostGroup = ({ idGrupo }) => {
   const onSubmit = () => {
     //send to backend the post and file and then get all the new comments
     if (file) {
+      const idGroupString = idGroup.toString();
       getBase64(file.originFileObj).then(encodedFile => {
         const body = JSON.stringify({
           nombreUsuarioAutor: user.username,
           comentario: post,
-          idGrupo,
+          idGrupo: idGroupString,
           documento: encodedFile,
         });
         fetch(SERVIDOR.PUBLICAR_GRUPO, {
@@ -70,10 +71,12 @@ const PostGroup = ({ idGrupo }) => {
           .catch(error => console.log(error));
       });
     } else {
+      const idGroupString = idGroup.toString();
       const body = JSON.stringify({
         nombreUsuarioAutor: user.username,
         comentario: post,
-        idGrupo,
+        idGrupo: idGroupString,
+        documento: '',
       });
       fetch(SERVIDOR.PUBLICAR_GRUPO, {
         method: 'POST',
@@ -108,7 +111,7 @@ const PostGroup = ({ idGrupo }) => {
           name="post"
           value={post}
           placeholder="Publica algo interesante..."
-          style={{ borderRadius: '1em', height: 50, width: 1100 }}
+          style={{ borderRadius: '1em', height: 100, width: '70vw' }}
         />
       </section>
       <section style={{ display: 'flex' }}>
