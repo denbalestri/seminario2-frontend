@@ -32,8 +32,9 @@ const Groups = () => {
   const onClickCard = title => {
     const group = groups.find(group => group.title === title);
     setSelectedGroup(group);
-    const { id } = group;
-    fetch(SERVIDOR.PUBLICACIONES_GRUPO_URL(id), {
+    const { idGrupo } = group;
+    console.log(idGrupo);
+    fetch(SERVIDOR.PUBLICACIONES_GRUPO_URL(idGrupo), {
       method: 'GET',
       mode: 'cors',
       headers: {
@@ -79,11 +80,12 @@ const Groups = () => {
         setGroups(
           groups.map(group => {
             return {
-              image: group.avatar,
+              image: '../../images/escritor.jpg',
               genre: group.tipoGenero,
-              literaryTypes: group.tipoLiteratura,
+              literaryType: group.tipoLiteratura,
               title: group.nombreGrupo,
               idGrupo: group.idGrupo,
+              description: group.descripcion,
             };
           })
         )
@@ -130,13 +132,14 @@ const Groups = () => {
           />
           <aside style={{ overflowY: 'scroll', height: 800 }}>
             {groups.map((group, index) => {
+              console.log('here', group);
               return (
                 <GroupCard
                   key={index}
                   image={group.image}
                   title={group.title}
                   genre={group.genre}
-                  literaryTypes={group.literaryTypes}
+                  literaryType={group.literaryType}
                   onClickCard={onClickCard}
                   selected={group.title === selectedGroup.title}
                 />
@@ -145,15 +148,14 @@ const Groups = () => {
           </aside>
         </Paper>
         <aside style={{ width: '100%', overflowY: 'scroll' }}>
-          {postItems.length > 0 ? (
-            <ContentGroup
-              postItems={postItems}
-              titleGroup={selectedGroup.title}
-              idGrupo={selectedGroup.idGrupo}
-            />
-          ) : (
-            ''
-          )}
+          <ContentGroup
+            postItems={postItems}
+            titleGroup={selectedGroup.title}
+            descriptionGroup={selectedGroup.description}
+            genreGroup={selectedGroup.genre}
+            literaryType={selectedGroup.literaryType}
+            idGrupo={selectedGroup.idGrupo}
+          />
         </aside>
         <section>
           <ModalCreateGroup

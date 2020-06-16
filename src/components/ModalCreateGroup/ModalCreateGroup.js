@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Input } from 'antd';
+import { Modal, Input, Form } from 'antd';
 import Button from '../../components/Button';
 import Select from '../Select';
+import { isEmpty } from 'lodash';
 const { TextArea } = Input;
 const genreMap = {
   Romantico: 'Romántico',
@@ -21,37 +22,65 @@ const literaryTypesMap = {
 
 const initialState = {
   titleGroup: '',
-  literaryTypes: [],
-  genres: [],
+  literaryType: [],
+  genre: [],
   description: '',
 };
 const ModalCreateGroup = ({ visible, onCancel, onSubmit, loading }) => {
   const [form, setForm] = useState(initialState);
-  const placeholderGenre = 'Seleccione el/los g\u00E9neros';
+  const [formError, setFormError] = useState([]);
+  const placeholderGenre = 'Seleccione el g\u00E9nero';
+  const textErrorGenre = 'Por favor, agregue el g\u00E9nero';
   const descripctionText = 'Descripci\u00F3n del grupo';
+  const textErrorDescription =
+    'Por favor, agregue la descripci\u00F3n del grupo';
   useEffect(() => {
-    if (visible) setForm(initialState);
+    if (visible) {
+      setForm(initialState);
+      setFormError([]);
+    }
   }, [visible]);
 
   const onLocalSubmit = () => {
-    onSubmit(form);
+    if (checkEmptyForm()) onSubmit(form);
+    else {
+      getEmptyFields();
+    }
   };
+
+  const getEmptyFields = () => {
+    let fieldsKeys = [];
+    const arrayForm = Object.entries(form);
+    arrayForm.map((field, index) => {
+      const valueField = field[1];
+      if (isEmpty(valueField)) {
+        const keyField = field[0];
+        fieldsKeys.push(keyField);
+      }
+    });
+    setFormError(fieldsKeys);
+  };
+
+  const checkEmptyForm = () => {
+    return Object.values(form).every(field => !isEmpty(field));
+  };
+
   const onChangeTitleGroup = e => {
     const titleGroup = e.target.value;
     setForm({ ...form, titleGroup });
   };
 
-  const onChangeGenre = genres => {
+  const onChangeGenre = genre => {
     setForm({
       ...form,
-      genres,
+      genre,
     });
   };
 
-  const onChangeLiteraryTypes = literaryTypes => {
+  const onChangeLiteraryTypes = literaryType => {
     setForm({
       ...form,
-      literaryTypes,
+      literaryType,
     });
   };
 
@@ -84,32 +113,86 @@ const ModalCreateGroup = ({ visible, onCancel, onSubmit, loading }) => {
         </Button>,
       ]}
     >
-      <Input
-        placeholder="Nombre del grupo..."
-        value={form.titleGroup}
-        style={{ marginTop: 10, width: 300, marginBottom: 20 }}
-        onChange={onChangeTitleGroup}
-      />
-      <Select
-        placeholder="Tipos de textos literarios"
-        optionItems={literaryTypesMap}
-        valueSelected={form.literaryTypes}
-        onChange={onChangeLiteraryTypes}
-        style={{ marginBottom: 20 }}
-      />
-      <Select
-        placeholder={placeholderGenre}
-        optionItems={genreMap}
-        valueSelected={form.genre}
-        onChange={onChangeGenre}
-        style={{ marginBottom: 20 }}
-      />
+      {formError.includes('titleGroup') ? (
+        <Form.Item
+          validateStatus="error"
+          help="Por favor, escriba el titulo del grupo"
+        >
+          <Input
+            placeholder="Nombre del grupo..."
+            tyle={{ marginTop: 10, width: 300 }}
+            onChange={onChangeTitleGroup}
+            value={form.titleGroup}
+          />
+        </Form.Item>
+      ) : (
+        <Input
+          placeholder="Nombre del grupo..."
+          value={form.titleGroup}
+          style={{ marginTop: 10, width: 300 }}
+          onChange={onChangeTitleGroup}
+        />
+      )}
+
+      {formError.includes('literaryType') ? (
+        <Form.Item
+          validateStatus="error"
+          help="Por favor, agregue un tipo de texto literario"
+        >
+          <Select
+            placeholder="Tipos de textos literarios"
+            optionItems={literaryTypesMap}
+            valueSelected={form.literaryType}
+            onChange={onChangeLiteraryTypes}
+            style={{ marginTop: 20 }}
+          />
+        </Form.Item>
+      ) : (
+        <Select
+          placeholder="Tipos de textos literarios"
+          optionItems={literaryTypesMap}
+          valueSelected={form.literaryType}
+          onChange={onChangeLiteraryTypes}
+          style={{ marginTop: 20 }}
+        />
+      )}
+
+      {formError.includes('genre') ? (
+        <Form.Item validateStatus="error" help={textErrorGenre}>
+          <Select
+            placeholder={placeholderGenre}
+            optionItems={genreMap}
+            valueSelected={form.genre}
+            onChange={onChangeGenre}
+            style={{ marginTop: 20 }}
+          />
+        </Form.Item>
+      ) : (
+        <Select
+          placeholder={placeholderGenre}
+          optionItems={genreMap}
+          valueSelected={form.genre}
+          onChange={onChangeGenre}
+          style={{ marginTop: 20 }}
+        />
+      )}
       <p style={{ fontSize: 15, marginTop: 10 }}>{descripctionText}</p>
-      <TextArea
-        rows={4}
-        value={form.description}
-        onChange={onChangeDescription}
-      />
+
+      {formError.includes('description') ? (
+        <Form.Item validateStatus="error" help={textErrorDescription}>
+          <TextArea
+            rows={4}
+            value={form.description}
+            onChange={onChangeDescription}
+          />
+        </Form.Item>
+      ) : (
+        <TextArea
+          rows={4}
+          value={form.description}
+          onChange={onChangeDescription}
+        />
+      )}
     </Modal>
   );
 };

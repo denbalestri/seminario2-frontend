@@ -2,7 +2,14 @@ import React from 'react';
 import { Card } from 'antd';
 import clsx from 'clsx';
 import useStyles from './styles';
-const GroupCard = ({ image, title, literaryTypes, onClickCard, selected }) => {
+const GroupCard = ({
+  image,
+  title,
+  literaryType,
+  onClickCard,
+  selected,
+  genre,
+}) => {
   const classes = useStyles();
   const cardStyles = clsx({
     [classes.root]: true, //always apply
@@ -19,8 +26,9 @@ const GroupCard = ({ image, title, literaryTypes, onClickCard, selected }) => {
         <aside style={{ marginLeft: 10 }}>
           <p style={{ fontSize: 13, marginTop: '-10px' }}>{title}</p>
           <p style={{ fontSize: 12, marginTop: '-10px' }}>
-            Tipos Literarios: {literaryTypes}
+            Tipo Literario: {literaryType}
           </p>
+          <p style={{ fontSize: 12, marginTop: '-10px' }}>Genero: {genre}</p>
         </aside>
       </section>
     </Card>
