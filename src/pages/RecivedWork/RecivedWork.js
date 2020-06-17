@@ -39,7 +39,7 @@ const RecievedWorkList = ({ works }) => {
             nameWork: work.nombreObra,
             userAuthor: work.userAutor,
             avatar: '',
-            date: '12/08/2020',
+            date: work.fechaLimite,
             author: `${work.nombreAutor} ${work.apellidoAutor}`,
             username: work.userAutor,
             synopsis: work.descripcion,
@@ -76,7 +76,6 @@ const RecivedWork = () => {
       })
       .then(response => {
         const recivedWork = response;
-        console.log(RecivedWork);
         if (recivedWork === []) setRecivedWork('');
         else setRecivedWork(recivedWork);
       })

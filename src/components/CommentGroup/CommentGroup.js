@@ -32,7 +32,7 @@ const CommentGroup = ({ avatar, post, username, userType }) => {
           style={{
             marginLeft: 10,
             marginRight: 20,
-            width: 60,
+            width: '17vw',
             height: 60,
             marginTop: 20,
           }}

@@ -40,7 +40,7 @@ const ModalSendWork = ({
   const [fileList, setFileList] = useState([]);
   const [file, setFile] = useState({});
   const [form, setForm] = useState(initialState);
-  const [selectedDate, setSelectedDate] = useState(Date.now());
+  const [selectedDate, setSelectedDate] = useState(null);
   const placeholderReview = 'Seleccione un nivel de cr\u00EDtica';
   const placeholderGenre = 'Seleccione el g\u00E9nero';
   const descripctionText = ' Escriba una descripci\u00F3n de la obra';
@@ -50,8 +50,11 @@ const ModalSendWork = ({
   }, [visible]);
 
   const onLocalSendWork = () => {
+    let date = '';
+    if (date) date = convertDate(selectedDate);
     const work = {
       form,
+      date,
       file,
     };
     onSendWork(work);
@@ -99,7 +102,12 @@ const ModalSendWork = ({
       genre,
     });
   };
-
+  const convertDate = date => {
+    var newDate = new Date(date),
+      mnth = ('0' + (newDate.getMonth() + 1)).slice(-2),
+      day = ('0' + newDate.getDate()).slice(-2);
+    return [day, mnth, newDate.getFullYear()].join('-');
+  };
   const handleDateChange = date => {
     setSelectedDate(date);
   };

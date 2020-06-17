@@ -35,7 +35,7 @@ const ProfessionalCard = ({
     setVisibleModal(true);
   };
 
-  const onSubmit = ({ form, file }) => {
+  const onSubmit = ({ form, date, file }) => {
     getBase64(file.originFileObj).then(encodedFile => {
       const body = JSON.stringify({
         contenido: encodedFile,
@@ -46,6 +46,7 @@ const ProfessionalCard = ({
         formatoArchivodeObra: file.type,
         nivelDeCritica: form.review,
         descripcionObra: form.description,
+        fechaLimite: date,
       });
 
       setLoading(true);

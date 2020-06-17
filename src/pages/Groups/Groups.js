@@ -124,13 +124,16 @@ const Groups = () => {
   };
   return (
     <MainLayout>
-      <article style={{ display: 'flex', height: '100%' }}>
-        <Paper elevation={3} style={{ width: '29vw' }}>
+      <article style={{ display: 'flex', height: '100%', overflow: 'hidden' }}>
+        <Paper
+          elevation={3}
+          style={{ minWidth: 400, display: 'flex', flexDirection: 'column' }}
+        >
           <SearchGroup
             onClickCreateGroup={onClickCreateGroup}
             onClickSearchGroup={onClickSearchGroup}
           />
-          <aside style={{ overflowY: 'scroll', height: 800 }}>
+          <aside style={{ overflowY: 'scroll', flexGrow: 1 }}>
             {groups.map((group, index) => {
               console.log('here', group);
               return (

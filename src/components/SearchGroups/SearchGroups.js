@@ -4,6 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles';
+
 const SearchGroups = ({ onClickCreateGroup, onClickSearchGroup }) => {
   const classes = useStyles();
   const [group, setGroup] = useState('');
@@ -42,8 +43,8 @@ const SearchGroups = ({ onClickCreateGroup, onClickSearchGroup }) => {
           borderRadius: '2em',
           border: 'solid 2px',
           display: 'flex',
-          width: '25vw',
-          marginLeft: 5,
+          width: 300,
+          alignSelf: 'center',
         }}
       >
         <InputBase
