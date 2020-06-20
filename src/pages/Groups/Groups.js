@@ -9,6 +9,7 @@ import ModalCreateGroup from '../../components/ModalCreateGroup';
 import { SERVIDOR } from '../../constants/URIs';
 import { notification } from 'antd';
 import statuses from '../../constants/Notification';
+import { isEmpty } from 'lodash';
 
 const openNotification = type => {
   notification[type]({
@@ -26,15 +27,7 @@ const Groups = () => {
   const user = useSelector(state => state.user.user);
 
   useEffect(() => {
-    //first render set for default first group
-  }, []);
-
-  const onClickCard = title => {
-    const group = groups.find(group => group.title === title);
-    setSelectedGroup(group);
-    const { idGrupo } = group;
-    console.log(idGrupo);
-    fetch(SERVIDOR.PUBLICACIONES_GRUPO_URL(idGrupo), {
+    fetch(SERVIDOR.TOP_10_GRUPOS_URL, {
       method: 'GET',
       mode: 'cors',
       headers: {
@@ -42,7 +35,37 @@ const Groups = () => {
       },
     })
       .then(response => response.json())
-      .then(posts => {
+      .then(groups =>
+        setGroups(
+          groups.map(group => {
+            return {
+              image: '../../images/escritor.jpg',
+              genre: group.tipoGenero,
+              literaryType: group.tipoLiteratura,
+              title: group.nombreGrupo,
+              idGrupo: group.idGrupo,
+              description: group.descripcion,
+            };
+          })
+        )
+      );
+  }, []);
+
+  const onClickCard = title => {
+    const group = groups.find(group => group.title === title);
+    setSelectedGroup(group);
+    console.log(group);
+    const { idGrupo } = group;
+    fetch(SERVIDOR.PUBLICACIONES_GRUPO_URL(idGrupo, user.username), {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+      .then(response => response.json())
+      .then(response => {
+        const posts = response;
         setPostItems(
           posts.map(post => {
             return {
@@ -135,7 +158,6 @@ const Groups = () => {
           />
           <aside style={{ overflowY: 'scroll', flexGrow: 1 }}>
             {groups.map((group, index) => {
-              console.log('here', group);
               return (
                 <GroupCard
                   key={index}
@@ -151,14 +173,18 @@ const Groups = () => {
           </aside>
         </Paper>
         <aside style={{ width: '100%', overflowY: 'scroll' }}>
-          <ContentGroup
-            postItems={postItems}
-            titleGroup={selectedGroup.title}
-            descriptionGroup={selectedGroup.description}
-            genreGroup={selectedGroup.genre}
-            literaryType={selectedGroup.literaryType}
-            idGroup={selectedGroup.idGrupo}
-          />
+          {isEmpty(selectedGroup) ? (
+            ''
+          ) : (
+            <ContentGroup
+              postItems={postItems}
+              titleGroup={selectedGroup.title}
+              descriptionGroup={selectedGroup.description}
+              genreGroup={selectedGroup.genre}
+              literaryType={selectedGroup.literaryType}
+              idGroup={selectedGroup.idGrupo}
+            />
+          )}
         </aside>
         <section>
           <ModalCreateGroup

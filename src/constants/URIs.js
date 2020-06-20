@@ -32,8 +32,9 @@ export const SERVIDOR = {
   OBRAS_URL: `${SERVER_URL}/obras`,
   CREARGRUPO_URL: `${SERVER_URL}/Grupo`,
   BUSCAR_GRUPO_URL: nombre => `${SERVER_URL}/BuscarGrupo?nombreGrupo=${nombre}`,
-  PUBLICACIONES_GRUPO_URL: id =>
-    `${SERVER_URL}/PublicacionesGrupo?idGrupo=${id}`,
+  TOP_10_GRUPOS_URL: `${SERVER_URL}/GrupoTop10`,
+  PUBLICACIONES_GRUPO_URL: (id, username) =>
+    `${SERVER_URL}/PublicacionesGrupo?idGrupo=${id}&username=${username}`,
   PUBLICAR_GRUPO: `${SERVER_URL}/Publicacion`,
   USUARIOSPROFESIONALES: `${SERVER_URL}/UsuariosProfesionales`,
   CORRECCIONES_URL: username =>

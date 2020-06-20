@@ -47,11 +47,13 @@ const ModalSendWork = ({
   useEffect(() => {
     setFile({});
     setFileList([]);
+    setSelectedDate(null);
   }, [visible]);
 
   const onLocalSendWork = () => {
-    let date = '';
-    if (date) date = convertDate(selectedDate);
+    let date;
+    if (selectedDate) date = convertDate(selectedDate);
+    else date = '';
     const work = {
       form,
       date,
@@ -181,6 +183,7 @@ const ModalSendWork = ({
             value={selectedDate}
             onChange={handleDateChange}
             disablePast
+            autoOk
             KeyboardButtonProps={{
               'aria-label': 'change date',
             }}
