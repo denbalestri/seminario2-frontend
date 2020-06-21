@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles(theme => ({
   paper: {
-    marginTop: theme.spacing(8),
+    margin: theme.spacing(8, 4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -18,15 +18,21 @@ export default makeStyles(theme => ({
     margin: theme.spacing(3, 0, 2),
     width: '100%',
   },
+  logoTitle: {
+    marginBottom: 10,
+    fontFamily: 'Ubuntu',
+  },
   title: {
     fontFamily: 'Ubuntu',
-    fontSize: 30,
-    fontWeight: 700,
   },
   subTitle: {
     fontFamily: 'Ubuntu',
     fontSize: 23,
     width: '100%',
     marginTop: 25,
+  },
+  section: {
+    width: '100%',
+    height: '100%',
   },
 }));

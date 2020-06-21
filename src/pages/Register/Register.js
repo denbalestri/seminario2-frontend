@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '../../components/Button';
+import Button from '@material-ui/core/Button';
 import { Upload, notification } from 'antd';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import { UploadOutlined } from '@ant-design/icons';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
 import useStyles from './styles';
 import { SERVIDOR, CLIENTE } from '../../constants/URIs';
 import Select from '../../components/Select';
@@ -29,14 +28,10 @@ const optionItems = {
   Autor: 'Autor',
   Corrector: 'Corrector',
 };
-const Register = () => {
+const Register = ({ onClickLogin }) => {
   const classes = useStyles();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
-  const signUpText = 'Registraci\u00F3n';
-  const emailText = 'Correo electr\u00F3nico';
-  const passwordText = 'Contrase\u00F1a';
-  const loginText = 'Tienes cuenta? Inicia sesi\u00F3n';
   const [fileList, setFileList] = useState([]);
   const [file, setFile] = useState(null);
   const [cvFileList, setCVFileList] = useState([]);
@@ -167,151 +162,147 @@ const Register = () => {
     }
   };
   return (
-    <section
-      style={{
-        width: '100%',
-        height: '100%',
-      }}
-    >
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5" className={classes.title}>
-            {signUpText}
-          </Typography>
-          <Typography component="h1" variant="h5" className={classes.subTitle}>
-            Datos Personales
-          </Typography>
-          <form className={classes.form} noValidate>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="fname"
-                  name="firstName"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="Nombre"
-                  autoFocus
-                  onChange={onChange}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Apellido"
-                  name="lastName"
-                  autoComplete="lname"
-                  onChange={onChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="email"
-                  label={emailText}
-                  name="email"
-                  autoComplete="email"
-                  onChange={onChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label={passwordText}
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  onChange={onChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="username"
-                  label="Nombre usuario"
-                  id="username"
-                  onChange={onChange}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <Select
-                  placeholder={'Seleccione su Rol'}
-                  optionItems={optionItems}
-                  valueSelected={form.rol}
-                  onChange={onChangeRole}
-                />
-              </Grid>
-              {form.rol === 'Corrector' && (
-                <>
-                  <Grid item xs={6}>
-                    <Upload {...uploadPropsCV} onChange={handleUploadCV}>
-                      <Button
-                        color="primary"
-                        variant="outlined"
-                        style={{ width: '100%' }}
-                      >
-                        <UploadOutlined style={{ marginRight: '10px' }} />
-                        Cargar CV
-                      </Button>
-                    </Upload>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
+    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <div className={classes.paper}>
+        <Typography component="h1" variant="h5" className={classes.logoTitle}>
+          Bienvenido a Correciones Literarias!
+        </Typography>
+        <Typography component="h1" variant="h5" className={classes.title}>
+          Registrate!
+        </Typography>
+        <Typography component="h1" variant="h5" className={classes.subTitle}>
+          Datos Personales
+        </Typography>
+        <form className={classes.form} noValidate>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                autoComplete="fname"
+                name="firstName"
+                variant="outlined"
+                required
+                fullWidth
+                id="firstName"
+                label="Nombre"
+                autoFocus
+                onChange={onChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="lastName"
+                label="Apellido"
+                name="lastName"
+                autoComplete="lname"
+                onChange={onChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Correo electrónico"
+                name="email"
+                autoComplete="email"
+                onChange={onChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Contraseña"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={onChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="username"
+                label="Nombre usuario"
+                id="username"
+                onChange={onChange}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Select
+                placeholder={'Seleccione su Rol'}
+                optionItems={optionItems}
+                valueSelected={form.rol}
+                onChange={onChangeRole}
+              />
+            </Grid>
+            {form.rol === 'Corrector' && (
+              <>
+                <Grid item xs={6}>
+                  <Upload {...uploadPropsCV} onChange={handleUploadCV}>
+                    <Button
+                      color="primary"
                       variant="outlined"
-                      multiline
-                      rows={4}
-                      required
-                      fullWidth
-                      id="description"
-                      label="Descripción personal"
-                      name="description"
-                      autoComplete="descripcion"
-                      onChange={onChange}
-                    />
-                  </Grid>
-                </>
-              )}
-              <Grid item xs={12} align>
-                <Upload {...uploadProps} onChange={handleChange}>
-                  <Button color="primary" variant="outlined">
-                    <UploadOutlined style={{ marginRight: '10px' }} />
-                    Elegir foto
-                  </Button>
-                </Upload>
-              </Grid>
+                      style={{ width: '100%' }}
+                    >
+                      <UploadOutlined style={{ marginRight: '10px' }} />
+                      Cargar CV
+                    </Button>
+                  </Upload>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    multiline
+                    rows={4}
+                    required
+                    fullWidth
+                    id="description"
+                    label="Descripción personal"
+                    name="description"
+                    autoComplete="descripcion"
+                    onChange={onChange}
+                  />
+                </Grid>
+              </>
+            )}
+            <Grid item xs={12} align>
+              <Upload {...uploadProps} onChange={handleChange}>
+                <Button color="primary" variant="outlined">
+                  <UploadOutlined style={{ marginRight: '10px' }} />
+                  Elegir foto
+                </Button>
+              </Upload>
             </Grid>
-            <Button
-              type="primary"
-              className={classes.submit}
-              onClick={onClickSubmit}
-              loading={loading}
-            >
-              Registrarse
-            </Button>
-            <Grid container>
-              <Grid item>
-                <Link to="/iniciar-sesion">{loginText}</Link>
-              </Grid>
+          </Grid>
+          <Button
+            type="primary"
+            className={classes.submit}
+            onClick={onClickSubmit}
+            loading={loading}
+            variant="contained"
+            color="primary"
+          >
+            Registrarse
+          </Button>
+          <Grid container>
+            <Grid item>
+              <Button onClick={onClickLogin}>
+                Tienes cuenta? Inicia sesión
+              </Button>
             </Grid>
-          </form>
-        </div>
-      </Container>
-    </section>
+          </Grid>
+        </form>
+      </div>
+    </Grid>
   );
 };
 

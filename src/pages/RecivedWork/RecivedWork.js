@@ -187,22 +187,42 @@ const RecievedWorkList = ({ works }) => {
     >
       <MaterialTable
         icons={tableIcons}
+        localization={{ header: { actions: 'Acciones' } }}
+        options={{
+          actionsColumnIndex: -1,
+          headerStyle: {
+            backgroundColor: '#51B0FA',
+            color: '#FFF',
+          },
+          search: false,
+        }}
         columns={[
-          { title: 'Titulo', field: 'nombreObra' },
-          { title: 'Genero', field: 'genero' },
-          { title: 'Autor', field: 'userAutor' },
+          {
+            field: 'url',
+            title: 'Avatar',
+            render: rowData => (
+              <img
+                alt="avatar"
+                src=".../../images/person5.jpg"
+                style={{ width: 50, borderRadius: '50%' }}
+              />
+            ),
+          },
+          { title: 'Título', field: 'nombreObra' },
+          { title: 'Género', field: 'genero' },
+          { title: 'Autor', field: 'fullName' },
           { title: 'Fecha Límite', field: 'fechaLimite' },
           { title: 'Descripción', field: 'descripcion' },
         ]}
         actions={[
           {
             icon: tableIcons.Email,
-            tooltip: 'Enviar Feedback',
+            tooltip: 'Enviar devolución',
             onClick: onClickSendMessage,
           },
           {
             icon: tableIcons.Download,
-            tooltip: 'Descargar Obra',
+            tooltip: 'Descargar obra',
             onClick: onClickDownload,
           },
         ]}
@@ -244,10 +264,20 @@ const RecivedWork = () => {
       .then(response => {
         const recivedWork = response;
         if (recivedWork === []) setRecivedWork('');
-        else setRecivedWork(recivedWork);
+        else mapRecivedWork(recivedWork);
       })
       .catch(error => console.log(error))
       .finally(() => setLoading(false));
+  };
+
+  const mapRecivedWork = recivedWork => {
+    const recivedworkWithFullName = recivedWork.map((work, index) => {
+      return {
+        ...work,
+        fullName: `${work.nombreAutor} ${work.apellidoAutor}`,
+      };
+    });
+    setRecivedWork(recivedworkWithFullName);
   };
 
   return (

@@ -41,9 +41,6 @@ const ModalSendWork = ({
   const [file, setFile] = useState({});
   const [form, setForm] = useState(initialState);
   const [selectedDate, setSelectedDate] = useState(null);
-  const placeholderReview = 'Seleccione un nivel de cr\u00EDtica';
-  const placeholderGenre = 'Seleccione el g\u00E9nero';
-  const descripctionText = ' Escriba una descripci\u00F3n de la obra';
   useEffect(() => {
     setFile({});
     setFileList([]);
@@ -141,13 +138,13 @@ const ModalSendWork = ({
       ]}
     >
       <Select
-        placeholder={placeholderReview}
+        placeholder="Seleccione un nivel de crítica"
         optionItems={optionItemsReview}
         valueSelected={form.review}
         onChange={onChangeReview}
       />
       <Select
-        placeholder={placeholderGenre}
+        placeholder="Seleccione el género"
         optionItems={genreMap}
         valueSelected={form.genre}
         onChange={onChangeGenre}
@@ -159,7 +156,9 @@ const ModalSendWork = ({
         style={{ marginTop: 10, width: 300 }}
         onChange={onChangeNameWork}
       />
-      <p style={{ fontSize: 15, marginTop: 10 }}>{descripctionText}</p>
+      <p style={{ fontSize: 15, marginTop: 10 }}>
+        Escriba una descripción de la obra
+      </p>
       <TextArea
         rows={4}
         value={form.description}
