@@ -21,6 +21,7 @@ export default makeStyles(theme => ({
   logoTitle: {
     marginBottom: 10,
     fontFamily: 'Ubuntu',
+    fontWeight: 600,
   },
   title: {
     fontFamily: 'Ubuntu',

@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import { Upload, notification } from 'antd';
 import TextField from '@material-ui/core/TextField';
 import { UploadOutlined } from '@ant-design/icons';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import useStyles from './styles';
@@ -31,7 +29,6 @@ const optionItems = {
 const Register = ({ onClickLogin }) => {
   const classes = useStyles();
   const history = useHistory();
-  const [loading, setLoading] = useState(false);
   const [fileList, setFileList] = useState([]);
   const [file, setFile] = useState(null);
   const [cvFileList, setCVFileList] = useState([]);
@@ -90,7 +87,6 @@ const Register = ({ onClickLogin }) => {
     history.push(CLIENTE.LOGIN_URL);
   };
   const onClickSubmit = () => {
-    setLoading(true);
     if (file) {
       getBase64(file.originFileObj).then(encodedAvatar => {
         if (cv) {
@@ -118,11 +114,9 @@ const Register = ({ onClickLogin }) => {
               .then(response => {
                 if (response.ok) {
                   showSuccess();
-                  setLoading(false);
                 }
               })
               .catch(error => {
-                setLoading(false);
                 console.log(error);
               });
           });
@@ -150,11 +144,9 @@ const Register = ({ onClickLogin }) => {
             .then(response => {
               if (response.ok) {
                 showSuccess();
-                setLoading(false);
               }
             })
             .catch(error => {
-              setLoading(false);
               console.log(error);
             });
         }
@@ -165,10 +157,10 @@ const Register = ({ onClickLogin }) => {
     <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
       <div className={classes.paper}>
         <Typography component="h1" variant="h5" className={classes.logoTitle}>
-          Bienvenido a Correciones Literarias!
+          Revisiones de Obras Literarias
         </Typography>
-        <Typography component="h1" variant="h5" className={classes.title}>
-          Registrate!
+        <Typography component="h2" variant="h6" className={classes.title}>
+          Registro
         </Typography>
         <Typography component="h1" variant="h5" className={classes.subTitle}>
           Datos Personales
@@ -284,12 +276,11 @@ const Register = ({ onClickLogin }) => {
             </Grid>
           </Grid>
           <Button
-            type="primary"
-            className={classes.submit}
-            onClick={onClickSubmit}
-            loading={loading}
+            fullWidth
             variant="contained"
             color="primary"
+            className={classes.submit}
+            onClick={onClickSubmit}
           >
             Registrarse
           </Button>

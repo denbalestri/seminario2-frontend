@@ -166,8 +166,8 @@ const RecievedWorkList = ({ works }) => {
   };
 
   const onClickSendMessage = (event, rowData) => {
-    setUserAuthor(rowData.userAuthor);
-    setNameWork(rowData.nameWork);
+    setUserAuthor(rowData.userAutor);
+    setNameWork(rowData.nombreObra);
     setAuthor(`${rowData.nombreAutor} ${rowData.apellidoAutor}`);
     openModal();
   };

@@ -9,6 +9,7 @@ export default makeStyles(theme => ({
   title: {
     marginBottom: 10,
     fontFamily: 'Ubuntu',
+    fontWeight: 600,
   },
   image: {
     backgroundImage: 'url(../../../images/autorEscribiendo.gif)',

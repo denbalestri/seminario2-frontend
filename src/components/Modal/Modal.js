@@ -33,6 +33,8 @@ const UI_Modal = ({ visible, loading, author, onCancel, onSendFeedback }) => {
 
   useEffect(() => {
     setFeedback('');
+    setFile(null);
+    setFileList([]);
   }, [visible]);
 
   const onChange = e => {

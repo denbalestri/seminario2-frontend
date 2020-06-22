@@ -23,7 +23,7 @@ const AppbarProfessional = ({
     <AppBar position="static" className={classes.appbar}>
       <Toolbar>
         <Link to="/trabajos">
-          <p className={classes.logo}>Correcciones Literarias</p>
+          <p className={classes.logo}>ROL</p>
         </Link>
         <div className={classes.grow} />
         <div className={classes.sectionDesktop}>

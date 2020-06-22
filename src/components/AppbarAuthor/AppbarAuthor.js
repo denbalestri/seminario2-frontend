@@ -25,7 +25,7 @@ const AppbarAuthor = ({
     <AppBar position="static" className={classes.appbar}>
       <Toolbar>
         <Link to="/menu">
-          <p className={classes.logo}>Correcciones Literarias</p>
+          <p className={classes.logo}>ROL</p>
         </Link>
         <div className={classes.grow} />
         <div className={classes.sectionDesktop}>

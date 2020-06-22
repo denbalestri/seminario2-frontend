@@ -4,6 +4,7 @@ import { List, Avatar, Space, Rate } from 'antd';
 import { useSelector } from 'react-redux';
 import Button from '../../components/Button';
 import { SERVIDOR } from '../../constants/URIs';
+
 const IconText = ({ icon, text, onClick }) => (
   <Space>
     <Button onClick={onClick}>
@@ -29,7 +30,7 @@ const ListItem = ({
     const body = JSON.stringify({
       nombreUsuarioAutor: user.username,
       nombreUsuarioProfesional: usernameProfessional,
-      puntuacion: rating,
+      puntuacion: rating.toString(),
       comentario: '',
     });
     fetch(SERVIDOR.DEVOLUCIONPROFESIONAL, {

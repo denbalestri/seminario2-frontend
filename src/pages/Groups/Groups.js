@@ -70,8 +70,8 @@ const Groups = () => {
           posts.map(post => {
             return {
               avatar: '../../images/person5.jpg',
-              firstName: post.usuarioPublica,
-              lastName: 'Fuentes',
+              firstName: post.nombrePublica,
+              lastName: post.apellidoPublica,
               userType: 1,
               date: post.fecha,
               post: post.comentario,

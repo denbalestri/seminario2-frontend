@@ -14,11 +14,11 @@ const statusesRecivedWork = {
   error: {
     message: 'Error',
     description:
-      'La devoluci\u00D3an no se ha podido enviar, Por favor intente nuevamente',
+      'La devolución no se ha podido enviar, Por favor intente nuevamente',
   },
   success: {
     message: 'Exito',
-    description: 'La devoluci\u00D3n se ha enviado exitosamente!',
+    description: 'La devolución se ha enviado exitosamente!',
   },
   info: { message: 'Informaci\u00D3n', description: '' },
 };

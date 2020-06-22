@@ -102,9 +102,8 @@ const Login = ({ onClickRegister }) => {
     <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
       <div className={classes.paper}>
         <Typography component="h1" variant="h5" className={classes.title}>
-          Bienvenido a Correciones Literarias!
+          Revisiones de Obras Literarias
         </Typography>
-
         <Typography component="h2" variant="h6" className={classes.subTitle}>
           Iniciar sesión
         </Typography>
