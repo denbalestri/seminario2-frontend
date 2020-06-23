@@ -27,7 +27,7 @@ const ListItem = ({
   const user = useSelector(state => state.user.user);
   const titleText = 'Devolución del profesional';
 
-  const onSubmit = () => {
+  const onSubmit = rating => {
     const body = JSON.stringify({
       nombreUsuarioAutor: user.username,
       nombreUsuarioProfesional: usernameProfessional,
@@ -43,7 +43,10 @@ const ListItem = ({
       body,
     }).catch(error => console.log(error));
   };
-
+  const onChangeRating = value => {
+    setRating(value);
+    onSubmit(value);
+  };
   return (
     <Paper style={{ marginTop: 40, marginRight: 20, marginLeft: 20 }}>
       <List.Item
@@ -82,7 +85,7 @@ const ListItem = ({
           >
             Opinar
           </p>
-          <Rate allowHalf onChange={onSubmit} value={rating} />
+          <Rate onChange={onChangeRating} value={rating} />
         </section>
       </List.Item>
     </Paper>
