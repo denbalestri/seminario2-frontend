@@ -7,16 +7,15 @@ const { TextArea } = Input;
 const genreMap = {
   Romantico: 'Romántico',
   Aventuras: 'Aventuras',
-  accion: 'Acción',
   Terror: 'Terror',
   Drama: 'Drama',
-  Fantastico: 'Fantastico',
+  Fantastico: 'Fantástico',
   Comedia: 'Comedia',
   Poema: 'Poemas',
 };
 const literaryTypesMap = {
   Cuento: 'Cuentos',
-  Poesia: 'Poesias',
+  Poesia: 'Poesía',
   Novela: 'Novelas',
 };
 

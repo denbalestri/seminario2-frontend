@@ -59,7 +59,6 @@ const Groups = () => {
   const onClickCard = title => {
     const group = groups.find(group => group.title === title);
     setSelectedGroup(group);
-    console.log(group);
     const { idGrupo } = group;
     fetch(SERVIDOR.PUBLICACIONES_GRUPO_URL(idGrupo, user.username), {
       method: 'GET',
