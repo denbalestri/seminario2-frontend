@@ -7,20 +7,20 @@ const statusesProfessional = {
     message: '\u00C9xito',
     description: 'La obra se ha enviado exitosamente!',
   },
-  info: { message: 'Informaci\u00D3n', description: '' },
+  info: { message: 'Información', description: '' },
 };
 
 const statusesRecivedWork = {
   error: {
     message: 'Error',
     description:
-      'La devolución no se ha podido enviar, Por favor intente nuevamente',
+      'La devolución no se ha podido enviar, por favor intente nuevamente',
   },
   success: {
     message: 'Exito',
     description: 'La devolución se ha enviado exitosamente!',
   },
-  info: { message: 'Informaci\u00D3n', description: '' },
+  info: { message: 'Información', description: '' },
 };
 
 const statusesGroups = {
@@ -30,7 +30,7 @@ const statusesGroups = {
   },
   success: {
     message: 'Exito',
-    description: 'Se creo el grupo exitosamente',
+    description: 'Se creó el grupo exitosamente',
   },
 };
 

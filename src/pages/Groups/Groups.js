@@ -13,8 +13,8 @@ import { isEmpty } from 'lodash';
 
 const openNotification = type => {
   notification[type]({
-    message: statuses.statusesProfessional[type].message,
-    description: statuses.statusesProfessional[type].description,
+    message: statuses.statusesGroups[type].message,
+    description: statuses.statusesGroups[type].description,
   });
 };
 
@@ -35,20 +35,25 @@ const Groups = () => {
       },
     })
       .then(response => response.json())
-      .then(groups =>
-        setGroups(
-          groups.map(group => {
-            return {
-              image: '../../images/escritor.jpg',
-              genre: group.tipoGenero,
-              literaryType: group.tipoLiteratura,
-              title: group.nombreGrupo,
-              idGrupo: group.idGrupo,
-              description: group.descripcion,
-            };
-          })
-        )
-      );
+      .then(groups => {
+        if (!groups.error) {
+          console.log('GRUPOS', groups);
+          setGroups(
+            groups.map(group => {
+              return {
+                image: '../../images/escritor.jpg',
+                genre: group.tipoGenero,
+                literaryType: group.tipoLiteratura,
+                title: group.nombreGrupo,
+                idGrupo: group.idGrupo,
+                description: group.descripcion,
+              };
+            })
+          );
+        } else {
+          setGroups([]);
+        }
+      });
   }, []);
 
   const onClickCard = title => {
@@ -64,21 +69,25 @@ const Groups = () => {
       },
     })
       .then(response => response.json())
-      .then(response => {
-        const posts = response;
-        setPostItems(
-          posts.map(post => {
-            return {
-              avatar: '../../images/person5.jpg',
-              firstName: post.nombrePublica,
-              lastName: post.apellidoPublica,
-              userType: 1,
-              date: post.fecha,
-              post: post.comentario,
-              document: post.documento,
-            };
-          })
-        );
+      .then(posts => {
+        console.log('POSTS', posts);
+        if (!posts.error) {
+          setPostItems(
+            posts.map(post => {
+              return {
+                avatar: '../../images/person5.jpg',
+                firstName: post.nombrePublica,
+                lastName: post.apellidoPublica,
+                userType: 1,
+                date: post.fecha,
+                post: post.comentario,
+                document: post.documento,
+              };
+            })
+          );
+        } else {
+          setPostItems([]);
+        }
       });
   };
 
