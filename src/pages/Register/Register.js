@@ -114,6 +114,7 @@ const Register = ({ onClickLogin }) => {
               .then(response => {
                 if (response.ok) {
                   showSuccess();
+                  onClickLogin();
                 }
               })
               .catch(error => {
