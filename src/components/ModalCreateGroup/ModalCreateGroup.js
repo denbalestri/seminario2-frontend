@@ -28,11 +28,10 @@ const initialState = {
 const ModalCreateGroup = ({ visible, onCancel, onSubmit, loading }) => {
   const [form, setForm] = useState(initialState);
   const [formError, setFormError] = useState([]);
-  const placeholderGenre = 'Seleccione el g\u00E9nero';
-  const textErrorGenre = 'Por favor, agregue el g\u00E9nero';
-  const descripctionText = 'Descripci\u00F3n del grupo';
-  const textErrorDescription =
-    'Por favor, agregue la descripci\u00F3n del grupo';
+  const placeholderGenre = 'Seleccione el género';
+  const textErrorGenre = 'Por favor, agregue el género';
+  const descripctionText = 'Descripción del grupo';
+  const textErrorDescription = 'Por favor, agregue la descripción del grupo';
   useEffect(() => {
     if (visible) {
       setForm(initialState);
