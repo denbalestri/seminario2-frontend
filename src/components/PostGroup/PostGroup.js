@@ -20,11 +20,12 @@ const openNotification = type => {
   });
 };
 
-const PostGroup = ({ idGroup }) => {
+const PostGroup = ({ idGroup, getPosts }) => {
   const [file, setFile] = useState(undefined);
   const [fileList, setFileList] = useState('');
   const [post, setPost] = useState('');
   const user = useSelector(state => state.user.user);
+
   const handleUpload = info => {
     setFile(info.file);
     setFileList(info.fileList.slice(-1));
@@ -63,12 +64,17 @@ const PostGroup = ({ idGroup }) => {
         })
           .then(response => {
             if (response.status === 200) {
-              openNotification('success');
+              getPosts(idGroup);
             } else {
               openNotification('error');
             }
           })
-          .catch(error => console.log(error));
+          .catch(error => console.log(error))
+          .finally(() => {
+            setPost('');
+            setFileList('');
+            setFile(undefined);
+          });
       });
     } else {
       const idGroupString = idGroup.toString();
@@ -88,19 +94,25 @@ const PostGroup = ({ idGroup }) => {
       })
         .then(response => {
           if (response.status === 200) {
-            openNotification('success');
+            getPosts(idGroup);
           } else {
             openNotification('error');
           }
         })
-        .catch(error => console.log(error));
+        .catch(error => console.log(error))
+        .finally(() => {
+          setPost('');
+          setFileList('');
+          setFile(undefined);
+        });
     }
   };
+
   return (
     <Paper>
       <section style={{ display: 'flex', marginTop: 15 }}>
         <Avatar
-          src="../../images/person5.jpg"
+          src={user.avatar}
           alt="persona"
           size="large"
           style={{ marginLeft: 10, marginRight: 20, width: 60, height: 60 }}

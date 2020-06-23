@@ -65,7 +65,7 @@ const Login = ({ onClickRegister }) => {
             firstName: usuarioBE.nombreUsuario,
             lastName: usuarioBE.apellidoUsuario,
             username: usuarioBE.user,
-            avatar: '../../../images/person5.jpg',
+            avatar: usuarioBE.avatar,
             rol: usuarioBE.tipoUsuario,
           };
 

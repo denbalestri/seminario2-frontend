@@ -1,5 +1,6 @@
 import React, { createElement, useState } from 'react';
 import { Avatar, Tooltip } from 'antd';
+//import Avatar from '@material-ui/core/Avatar';
 import {
   LikeOutlined,
   LikeFilled,
@@ -26,17 +27,19 @@ const CommentGroup = ({ avatar, post, username, userType }) => {
   return (
     <Paper style={{ marginTop: 40 }}>
       <section style={{ display: 'flex' }}>
-        <Avatar
-          src={avatar}
-          alt="persona"
-          style={{
-            marginLeft: 10,
-            marginRight: 20,
-            width: '17vw',
-            height: 60,
-            marginTop: 20,
-          }}
-        />
+        <div>
+          <Avatar
+            src={avatar}
+            alt="persona"
+            style={{
+              marginTop: 10,
+              marginLeft: 10,
+              marginRight: 10,
+              width: '3vw',
+              height: '3vw',
+            }}
+          />
+        </div>
         <aside>
           <section style={{ display: 'flex' }}>
             <p style={{ fontWeight: 500, marginRight: 10, marginTop: 20 }}>

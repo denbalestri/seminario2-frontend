@@ -1,6 +1,7 @@
 import React from 'react';
 import CommentGroup from '../CommentGroup';
 import PostGroup from '../PostGroup';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const ContentGroup = ({
   titleGroup,
@@ -9,6 +10,8 @@ const ContentGroup = ({
   descriptionGroup,
   literaryType,
   genreGroup,
+  getPosts,
+  loading,
 }) => {
   return (
     <section style={{ marginTop: 40 }}>
@@ -42,18 +45,30 @@ const ContentGroup = ({
             justifyContent: 'center',
           }}
         >
-          <PostGroup idGroup={idGroup} />
-          {postItems.map((post, index) => {
-            return (
-              <CommentGroup
-                key={index}
-                avatar={post.avatar}
-                post={post.post}
-                username={`${post.firstName} ${post.lastName}`}
-                userType={post.userType}
-              />
-            );
-          })}
+          <PostGroup idGroup={idGroup} getPosts={getPosts} />
+          {loading ? (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: 20,
+              }}
+            >
+              <CircularProgress />
+            </div>
+          ) : (
+            postItems.map((post, index) => {
+              return (
+                <CommentGroup
+                  key={index}
+                  avatar={post.avatar}
+                  post={post.post}
+                  username={`${post.firstName} ${post.lastName}`}
+                  userType={post.userType}
+                />
+              );
+            })
+          )}
         </aside>
       </section>
     </section>

@@ -24,6 +24,7 @@ const Groups = () => {
   const [visibleModal, setVisibleModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [groups, setGroups] = useState([]);
+  const [loadingPosts, setLoadingPosts] = useState(false);
   const user = useSelector(state => state.user.user);
 
   useEffect(() => {
@@ -37,7 +38,6 @@ const Groups = () => {
       .then(response => response.json())
       .then(groups => {
         if (!groups.error) {
-          console.log('GRUPOS', groups);
           setGroups(
             groups.map(group => {
               return {
@@ -57,9 +57,14 @@ const Groups = () => {
   }, []);
 
   const onClickCard = title => {
+    setLoadingPosts(true);
     const group = groups.find(group => group.title === title);
     setSelectedGroup(group);
     const { idGrupo } = group;
+    getPosts(idGrupo);
+  };
+
+  const getPosts = idGrupo => {
     fetch(SERVIDOR.PUBLICACIONES_GRUPO_URL(idGrupo, user.username), {
       method: 'GET',
       mode: 'cors',
@@ -69,12 +74,11 @@ const Groups = () => {
     })
       .then(response => response.json())
       .then(posts => {
-        console.log('POSTS', posts);
         if (!posts.error) {
           setPostItems(
             posts.map(post => {
               return {
-                avatar: '../../images/person5.jpg',
+                avatar: post.avatar,
                 firstName: post.nombrePublica,
                 lastName: post.apellidoPublica,
                 userType: 1,
@@ -87,6 +91,9 @@ const Groups = () => {
         } else {
           setPostItems([]);
         }
+      })
+      .finally(() => {
+        setLoadingPosts(false);
       });
   };
 
@@ -153,6 +160,7 @@ const Groups = () => {
         setVisibleModal(false);
       });
   };
+
   return (
     <MainLayout>
       <article style={{ display: 'flex', height: '100%', overflow: 'hidden' }}>
@@ -191,6 +199,8 @@ const Groups = () => {
               genreGroup={selectedGroup.genre}
               literaryType={selectedGroup.literaryType}
               idGroup={selectedGroup.idGrupo}
+              getPosts={getPosts}
+              loading={loadingPosts}
             />
           )}
         </aside>
