@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Upload, Input } from 'antd';
+import { Modal, Upload, Input, Form } from 'antd';
 import { UploadOutlined, ReadOutlined } from '@ant-design/icons';
 import isEmpty from 'lodash/isEmpty';
 import Button from '../../components/Button';
@@ -41,6 +41,7 @@ const ModalSendWork = ({
   const [file, setFile] = useState({});
   const [form, setForm] = useState(initialState);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [formError, setFormError] = useState([]);
   useEffect(() => {
     setFile({});
     setFileList([]);
@@ -56,7 +57,10 @@ const ModalSendWork = ({
       date,
       file,
     };
-    onSendWork(work);
+    if (checkEmptyForm()) onSendWork(work);
+    else {
+      getEmptyFields();
+    }
   };
 
   const handleChange = info => {
@@ -111,6 +115,23 @@ const ModalSendWork = ({
     setSelectedDate(date);
   };
 
+  const checkEmptyForm = () => {
+    return Object.values(form).every(field => !isEmpty(field));
+  };
+
+  const getEmptyFields = () => {
+    let fieldsKeys = [];
+    const arrayForm = Object.entries(form);
+    arrayForm.map((field, index) => {
+      const valueField = field[1];
+      if (isEmpty(valueField)) {
+        const keyField = field[0];
+        fieldsKeys.push(keyField);
+      }
+    });
+    setFormError(fieldsKeys);
+  };
+
   return (
     <Modal
       visible={visible}
@@ -137,33 +158,85 @@ const ModalSendWork = ({
         </Button>,
       ]}
     >
-      <Select
-        placeholder="Seleccione un nivel de crítica"
-        optionItems={optionItemsReview}
-        valueSelected={form.review}
-        onChange={onChangeReview}
-      />
-      <Select
-        placeholder="Seleccione el género"
-        optionItems={genreMap}
-        valueSelected={form.genre}
-        onChange={onChangeGenre}
-      />
-      <Input
-        placeholder="Nombre de la obra..."
-        prefix={<ReadOutlined />}
-        value={form.nameWork}
-        style={{ marginTop: 10, width: 300 }}
-        onChange={onChangeNameWork}
-      />
+      {formError.includes('review') ? (
+        <Form.Item validateStatus="error" help="Por favor, agregue una crítica">
+          <Select
+            placeholder="Seleccione un nivel de crítica"
+            optionItems={optionItemsReview}
+            valueSelected={form.review}
+            onChange={onChangeReview}
+          />
+        </Form.Item>
+      ) : (
+        <Select
+          placeholder="Seleccione un nivel de crítica"
+          optionItems={optionItemsReview}
+          valueSelected={form.review}
+          onChange={onChangeReview}
+        />
+      )}
+      {formError.includes('genre') ? (
+        <Form.Item validateStatus="error" help="Por favor, agregue un género">
+          <Select
+            placeholder="Seleccione el género"
+            optionItems={genreMap}
+            valueSelected={form.genre}
+            onChange={onChangeGenre}
+          />
+        </Form.Item>
+      ) : (
+        <Select
+          placeholder="Seleccione el género"
+          optionItems={genreMap}
+          valueSelected={form.genre}
+          onChange={onChangeGenre}
+        />
+      )}
+      {formError.includes('nameWork') ? (
+        <Form.Item
+          validateStatus="error"
+          help="Por favor, agregue un nombre a la obra"
+        >
+          <Input
+            placeholder="Nombre de la obra..."
+            prefix={<ReadOutlined />}
+            value={form.nameWork}
+            style={{ marginTop: 10, width: 300 }}
+            onChange={onChangeNameWork}
+          />
+        </Form.Item>
+      ) : (
+        <Input
+          placeholder="Nombre de la obra..."
+          prefix={<ReadOutlined />}
+          value={form.nameWork}
+          style={{ marginTop: 10, width: 300 }}
+          onChange={onChangeNameWork}
+        />
+      )}
+
       <p style={{ fontSize: 15, marginTop: 10 }}>
         Escriba una descripción de la obra
       </p>
-      <TextArea
-        rows={4}
-        value={form.description}
-        onChange={onChangeDescription}
-      />
+      {formError.includes('description') ? (
+        <Form.Item
+          validateStatus="error"
+          help="Por favor, agregue una descripción"
+        >
+          <TextArea
+            rows={4}
+            value={form.description}
+            onChange={onChangeDescription}
+          />
+        </Form.Item>
+      ) : (
+        <TextArea
+          rows={4}
+          value={form.description}
+          onChange={onChangeDescription}
+        />
+      )}
+
       <section
         style={{
           display: 'flex',
