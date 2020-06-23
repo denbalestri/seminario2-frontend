@@ -10,7 +10,7 @@ import {
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import DescriptionIcon from '@material-ui/icons/Description';
-const CommentGroup = ({ avatar, post, username, userType }) => {
+const CommentGroup = ({ avatar, post, username, userType, file }) => {
   const [likes, setLikes] = useState(0);
   const [action, setAction] = useState(null);
   const [likesProfessional, setLikesProfessional] = useState(0);
@@ -70,17 +70,21 @@ const CommentGroup = ({ avatar, post, username, userType }) => {
                 <span className="comment-action">{likesProfessional}</span>
               </Tooltip>
             </span>
-            <IconButton
-              color="primary"
-              aria-label="upload picture"
-              component="span"
-              onClick={onClickDownloadFile}
-            >
-              <DescriptionIcon fontSize="small" />
-              <p style={{ fontSize: 13, marginLeft: 5, marginTop: 10 }}>
-                Descargar obra
-              </p>
-            </IconButton>
+            {file === '' ? (
+              ''
+            ) : (
+              <IconButton
+                color="primary"
+                aria-label="upload picture"
+                component="span"
+                onClick={onClickDownloadFile}
+              >
+                <DescriptionIcon fontSize="small" />
+                <p style={{ fontSize: 13, marginLeft: 5, marginTop: 10 }}>
+                  Descargar obra
+                </p>
+              </IconButton>
+            )}
           </div>
         </aside>
       </section>

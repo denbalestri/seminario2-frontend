@@ -65,6 +65,7 @@ const ContentGroup = ({
                   post={post.post}
                   username={`${post.firstName} ${post.lastName}`}
                   userType={post.userType}
+                  file={post.document}
                 />
               );
             })
