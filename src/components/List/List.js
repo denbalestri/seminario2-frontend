@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { MessageOutlined, FileTwoTone, UserOutlined } from '@ant-design/icons';
+import { FileTwoTone, UserOutlined } from '@ant-design/icons';
 import { List, Avatar, Space, Rate } from 'antd';
 import { useSelector } from 'react-redux';
 import Button from '../../components/Button';
+import Paper from '@material-ui/core/Paper';
 import { SERVIDOR } from '../../constants/URIs';
 
 const IconText = ({ icon, text, onClick }) => (
@@ -23,9 +24,9 @@ const ListItem = ({
   usernameProfessional,
 }) => {
   const [rating, setRating] = useState(0);
-  const textFeedback = 'Enviar devoluci\u00F3n';
   const user = useSelector(state => state.user.user);
-  const titleText = 'Devoluci\u00F3n del profesional';
+  const titleText = 'Devolución del profesional';
+
   const onSubmit = () => {
     const body = JSON.stringify({
       nombreUsuarioAutor: user.username,
@@ -44,51 +45,47 @@ const ListItem = ({
   };
 
   return (
-    <List.Item
-      key={title}
-      style={{ width: '30vw' }}
-      actions={[
-        <IconText
-          icon={FileTwoTone}
-          text="Descargar obra"
-          key="list-vertical-star-o"
-        />,
-        <IconText
-          icon={MessageOutlined}
-          text={textFeedback}
-          key="list-vertical-message"
-          onClick={onSubmit}
-        />,
-      ]}
-    >
-      <List.Item.Meta
-        avatar={<Avatar icon={<UserOutlined />} src={avatar} size={100} />}
-        title={<a href={href}>{title}</a>}
-        description={description}
-      />
-      <p
-        style={{
-          fontSize: 17,
-          fontFamily: 'Ubuntu',
-        }}
+    <Paper style={{ marginTop: 40, marginRight: 20, marginLeft: 20 }}>
+      <List.Item
+        key={title}
+        style={{ width: '40vw', marginLeft: 20 }}
+        actions={[
+          <IconText
+            icon={FileTwoTone}
+            text="Descargar obra"
+            key="list-vertical-star-o"
+          />,
+        ]}
       >
-        {titleText}
-      </p>
-      {content}
-
-      <section style={{ display: 'flex', marginTop: 15 }}>
+        <List.Item.Meta
+          avatar={<Avatar icon={<UserOutlined />} src={avatar} size={100} />}
+          title={<a href={href}>{title}</a>}
+          description={description}
+        />
         <p
           style={{
             fontSize: 17,
             fontFamily: 'Ubuntu',
-            marginRight: 10,
           }}
         >
-          Opinar
+          {titleText}
         </p>
-        <Rate allowHalf onChange={setRating} value={rating} />
-      </section>
-    </List.Item>
+        {content}
+
+        <section style={{ display: 'flex', marginTop: 15 }}>
+          <p
+            style={{
+              fontSize: 17,
+              fontFamily: 'Ubuntu',
+              marginRight: 10,
+            }}
+          >
+            Opinar
+          </p>
+          <Rate allowHalf onChange={onSubmit} value={rating} />
+        </section>
+      </List.Item>
+    </Paper>
   );
 };
 
@@ -102,7 +99,7 @@ const WorkToReviseList = ({
     <List
       itemLayout="vertical"
       size="large"
-      grid={{ gutter: 15, column: 2 }}
+      grid={{ gutter: 20, column: 1 }}
       dataSource={listRevisedWorks}
       renderItem={(item, index) => <ListItem key={index} {...item} />}
       {...othersProps}
