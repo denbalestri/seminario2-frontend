@@ -266,7 +266,7 @@ const Register = ({ onClickLogin }) => {
                 </Grid>
               </>
             )}
-            <Grid item xs={12} align>
+            <Grid item xs={12}>
               <Upload {...uploadProps} onChange={handleChange}>
                 <Button color="primary" variant="outlined">
                   <UploadOutlined style={{ marginRight: '10px' }} />
