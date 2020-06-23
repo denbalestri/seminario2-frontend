@@ -1,9 +1,7 @@
 import { SET_USER, LOGOUT_USER } from '../actions/actionTypes.json';
 
 const initialState = {
-  user: {
-    rol: 'Autor',
-  },
+  user: {},
 };
 
 export default function user(state = initialState, action) {

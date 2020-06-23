@@ -10,18 +10,21 @@ import Launch from '../pages/Launch';
 import Groups from '../pages/Groups';
 import { CLIENTE } from '../constants/URIs';
 import { Route } from 'react-router-dom';
-
+import PrivateRoute from './PrivateRoute';
 const Routes = () => {
   return (
     <Switch>
-      <Route path={CLIENTE.MENUPRINCIPAL_URL} component={Main} />
+      <PrivateRoute path={CLIENTE.MENUPRINCIPAL_URL} component={Main} />
       <Route path={CLIENTE.LOGIN_URL} component={Launch} />
       <Route path={CLIENTE.REGISTER_URL} component={Register} />
-      <Route path={CLIENTE.REVISIONES_URL} component={RevisedWorks} />
-      <Route path={CLIENTE.PROFESIONALES_URL} component={Professionals} />
-      <Route path={CLIENTE.TRABAJOS_URL} component={RecivedWork} />
-      <Route path={CLIENTE.GRUPOS_URL} component={Groups} />
-      <Route path={CLIENTE.NOTFOUND_URL} component={NotFound} />
+      <PrivateRoute path={CLIENTE.REVISIONES_URL} component={RevisedWorks} />
+      <PrivateRoute
+        path={CLIENTE.PROFESIONALES_URL}
+        component={Professionals}
+      />
+      <PrivateRoute path={CLIENTE.TRABAJOS_URL} component={RecivedWork} />
+      <PrivateRoute path={CLIENTE.GRUPOS_URL} component={Groups} />
+      <PrivateRoute path={CLIENTE.NOTFOUND_URL} component={NotFound} />
     </Switch>
   );
 };
