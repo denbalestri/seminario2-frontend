@@ -1,0 +1,15 @@
+.ant-select {
+  width: 100%;
+}
+
+.ant-select > .ant-select-selector {
+  height: 36.5px !important;
+}
+
+.ant-upload-select {
+  width: 100%;
+}
+
+.ant-notification {
+  top: 85px !important;
+}
